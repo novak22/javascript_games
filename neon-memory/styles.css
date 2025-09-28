@@ -1,0 +1,227 @@
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background: radial-gradient(circle at top, rgba(44, 20, 76, 0.9), #050513 72%);
+}
+
+.arcade-main {
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.memory {
+  display: grid;
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  background: rgba(10, 15, 45, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 28px 60px rgba(8, 10, 30, 0.55);
+}
+
+.memory__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  flex-wrap: wrap;
+}
+
+.memory__intro {
+  max-width: 34ch;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.memory__intro h2 {
+  margin: 0;
+  font-size: clamp(1.6rem, 3vw, 2rem);
+}
+
+.memory__intro p {
+  margin: 0;
+  color: rgba(248, 249, 255, 0.7);
+  font-size: 0.98rem;
+}
+
+.memory__controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.memory__stat {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: 14px;
+  background: rgba(14, 24, 64, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(123, 91, 255, 0.1);
+}
+
+.memory__stat .label {
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(248, 249, 255, 0.55);
+}
+
+.memory__stat .value {
+  font-size: 1.45rem;
+  font-weight: 600;
+}
+
+.memory__reset {
+  padding: 0.75rem 1.2rem;
+  border-radius: 12px;
+  border: 1px solid rgba(86, 220, 255, 0.5);
+  background: linear-gradient(135deg, rgba(86, 220, 255, 0.15), rgba(147, 128, 255, 0.25));
+  color: #f8f9ff;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+  box-shadow: 0 16px 38px rgba(6, 12, 44, 0.45);
+}
+
+.memory__reset:hover,
+.memory__reset:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 44px rgba(6, 12, 44, 0.55);
+  outline: none;
+}
+
+.memory__status {
+  margin: 0;
+  font-size: 0.95rem;
+  color: rgba(248, 249, 255, 0.7);
+}
+
+.memory__board {
+  --card-size: min(120px, 24vw);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-size), 1fr));
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+  justify-items: center;
+}
+
+.memory-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border: none;
+  border-radius: 18px;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 320ms ease;
+  box-shadow: 0 18px 42px rgba(6, 12, 40, 0.45);
+}
+
+.memory-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(123, 91, 255, 0.35);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.memory-card:focus-visible {
+  outline: none;
+  box-shadow: 0 20px 48px rgba(40, 86, 255, 0.5);
+}
+
+.memory-card:focus-visible::after {
+  opacity: 1;
+  border-color: rgba(86, 220, 255, 0.75);
+  box-shadow: 0 0 0 6px rgba(86, 220, 255, 0.25);
+}
+
+.memory-card__face {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  backface-visibility: hidden;
+  background: linear-gradient(140deg, rgba(34, 38, 92, 0.9), rgba(12, 18, 42, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.memory-card__face--back {
+  background: linear-gradient(135deg, rgba(123, 91, 255, 0.4), rgba(34, 170, 255, 0.45));
+  box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.35);
+}
+
+.memory-card__face--front {
+  transform: rotateY(180deg);
+  text-shadow: 0 8px 26px rgba(0, 0, 0, 0.4);
+}
+
+.memory-card.is-flipped {
+  transform: rotateY(180deg) scale(1.02);
+}
+
+.memory-card.is-matched {
+  transform: rotateY(180deg) scale(1.04);
+}
+
+.memory-card.is-matched::after {
+  opacity: 1;
+  border-color: rgba(86, 220, 255, 0.85);
+  box-shadow: 0 0 0 8px rgba(86, 220, 255, 0.22);
+}
+
+.memory-help {
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  display: grid;
+  gap: 1rem;
+  background: rgba(10, 15, 45, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 56px rgba(8, 12, 36, 0.5);
+}
+
+.memory-help h2 {
+  margin: 0;
+}
+
+.memory-help ol {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: rgba(248, 249, 255, 0.75);
+  display: grid;
+  gap: 0.5rem;
+}
+
+.memory-help__tip {
+  margin: 0;
+  color: rgba(86, 220, 255, 0.85);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 640px) {
+  .memory__controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .memory__reset {
+    grid-column: span 2;
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .memory-card,
+  .memory-card::after,
+  .memory__reset {
+    transition: none;
+  }
+}

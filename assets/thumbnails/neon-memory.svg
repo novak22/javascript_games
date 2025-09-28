@@ -1,0 +1,44 @@
+<svg width="320" height="200" viewBox="0 0 320 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="320" height="200" rx="24" fill="url(#paint0_linear)" />
+  <g filter="url(#filter0_d)">
+    <rect x="68" y="44" width="184" height="132" rx="20" fill="url(#paint1_linear)" stroke="rgba(255,255,255,0.15)" stroke-width="2" />
+    <g transform="translate(0,-6)">
+      <rect x="92" y="78" width="64" height="84" rx="14" fill="url(#paintCard1)" stroke="rgba(123,91,255,0.45)" stroke-width="2" />
+      <rect x="140" y="60" width="64" height="84" rx="14" fill="url(#paintCard2)" stroke="rgba(86,220,255,0.5)" stroke-width="2" />
+      <rect x="188" y="90" width="64" height="84" rx="14" fill="url(#paintCard3)" stroke="rgba(255,214,102,0.6)" stroke-width="2" />
+      <text x="172" y="112" text-anchor="middle" font-family="'Space Grotesk', 'Poppins', sans-serif" font-weight="600" font-size="34" fill="#F1F4FF">👾</text>
+      <text x="220" y="142" text-anchor="middle" font-family="'Space Grotesk', 'Poppins', sans-serif" font-weight="600" font-size="34" fill="#F1F4FF">💾</text>
+      <text x="124" y="150" text-anchor="middle" font-family="'Space Grotesk', 'Poppins', sans-serif" font-weight="600" font-size="34" fill="#F1F4FF">🔮</text>
+    </g>
+    <path d="M100 66h120" stroke="rgba(86,220,255,0.35)" stroke-width="4" stroke-linecap="round" stroke-dasharray="12 10" />
+    <path d="M116 170c40-22 88-22 128 0" stroke="rgba(123,209,255,0.35)" stroke-width="5" stroke-linecap="round" />
+  </g>
+  <defs>
+    <linearGradient id="paint0_linear" x1="40" y1="12" x2="280" y2="188" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B0B2D" />
+      <stop offset="1" stop-color="#1A1F52" />
+    </linearGradient>
+    <linearGradient id="paint1_linear" x1="68" y1="44" x2="252" y2="176" gradientUnits="userSpaceOnUse">
+      <stop stop-color="rgba(18,24,60,0.92)" />
+      <stop offset="1" stop-color="rgba(10,16,44,0.95)" />
+    </linearGradient>
+    <linearGradient id="paintCard1" x1="92" y1="78" x2="156" y2="162" gradientUnits="userSpaceOnUse">
+      <stop stop-color="rgba(60,28,112,0.85)" />
+      <stop offset="1" stop-color="rgba(30,16,78,0.9)" />
+    </linearGradient>
+    <linearGradient id="paintCard2" x1="140" y1="60" x2="204" y2="144" gradientUnits="userSpaceOnUse">
+      <stop stop-color="rgba(24,82,134,0.85)" />
+      <stop offset="1" stop-color="rgba(14,32,94,0.9)" />
+    </linearGradient>
+    <linearGradient id="paintCard3" x1="188" y1="90" x2="252" y2="174" gradientUnits="userSpaceOnUse">
+      <stop stop-color="rgba(116,76,34,0.85)" />
+      <stop offset="1" stop-color="rgba(74,42,10,0.88)" />
+    </linearGradient>
+    <filter id="filter0_d" x="48" y="28" width="224" height="172" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feOffset dy="10" />
+      <feGaussianBlur stdDeviation="16" result="blur" />
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.02  0 0 0 0 0.08  0 0 0 0 0.24  0 0 0 0.42 0" result="shadow" />
+      <feBlend in="SourceGraphic" in2="shadow" mode="normal" />
+    </filter>
+  </defs>
+</svg>

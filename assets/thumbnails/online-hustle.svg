@@ -1,0 +1,47 @@
+<svg width="320" height="200" viewBox="0 0 320 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="320" height="200" rx="24" fill="url(#paint0_linear)"/>
+  <g filter="url(#filter0_d)">
+    <rect x="60" y="48" width="200" height="120" rx="16" fill="url(#paint1_linear)" stroke="rgba(255,255,255,0.18)" stroke-width="2" />
+    <path d="M76 152h168" stroke="rgba(123,209,255,0.6)" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 8" />
+    <rect x="90" y="74" width="80" height="48" rx="10" fill="rgba(10,16,48,0.85)" stroke="rgba(123,91,255,0.55)" stroke-width="2" />
+    <path d="M102 102c8-14 30-14 38 0" stroke="rgba(123,209,255,0.85)" stroke-width="3" stroke-linecap="round" />
+    <circle cx="112" cy="94" r="6" fill="rgba(123,209,255,0.85)" />
+    <circle cx="132" cy="94" r="6" fill="rgba(123,91,255,0.85)" />
+    <rect x="186" y="74" width="64" height="54" rx="12" fill="rgba(123,91,255,0.18)" stroke="rgba(123,91,255,0.45)" stroke-width="2" />
+    <path d="M202 124h32" stroke="rgba(255,255,255,0.55)" stroke-width="3" stroke-linecap="round" />
+    <path d="M198 94h40" stroke="rgba(255,255,255,0.35)" stroke-width="4" stroke-linecap="round" stroke-dasharray="12 10" />
+    <g>
+      <circle cx="112" cy="154" r="16" fill="rgba(255,214,102,0.9)" stroke="rgba(255,240,180,0.8)" stroke-width="3" />
+      <text x="112" y="159" text-anchor="middle" font-family="'Space Grotesk', 'Poppins', sans-serif" font-weight="600" font-size="12" fill="#23133A">XP</text>
+    </g>
+    <g>
+      <circle cx="152" cy="154" r="12" fill="rgba(123,209,255,0.9)" stroke="rgba(180,236,255,0.8)" stroke-width="3" />
+      <text x="152" y="159" text-anchor="middle" font-family="'Space Grotesk', 'Poppins', sans-serif" font-weight="600" font-size="10" fill="#05102A">$</text>
+    </g>
+    <g>
+      <circle cx="188" cy="154" r="14" fill="rgba(164,120,255,0.9)" stroke="rgba(210,188,255,0.8)" stroke-width="3" />
+      <text x="188" y="159" text-anchor="middle" font-family="'Space Grotesk', 'Poppins', sans-serif" font-weight="600" font-size="10" fill="#0C0C24">+1</text>
+    </g>
+  </g>
+  <defs>
+    <linearGradient id="paint0_linear" x1="32" y1="12" x2="296" y2="188" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#120D3B" />
+      <stop offset="1" stop-color="#1B2B68" />
+    </linearGradient>
+    <linearGradient id="paint1_linear" x1="60" y1="48" x2="260" y2="168" gradientUnits="userSpaceOnUse">
+      <stop stop-color="rgba(28,36,92,0.95)" />
+      <stop offset="1" stop-color="rgba(14,18,52,0.95)" />
+    </linearGradient>
+    <filter id="filter0_d" x="40" y="32" width="240" height="160" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feOffset dy="10" />
+      <feGaussianBlur stdDeviation="18" result="blur" />
+      <feColorMatrix
+        in="blur"
+        type="matrix"
+        values="0 0 0 0 0.02  0 0 0 0 0.05  0 0 0 0 0.18  0 0 0 0.45 0"
+        result="shadow"
+      />
+      <feBlend in="SourceGraphic" in2="shadow" mode="normal" />
+    </filter>
+  </defs>
+</svg>
