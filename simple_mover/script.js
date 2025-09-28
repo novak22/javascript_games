@@ -1,14 +1,17 @@
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
+const gameOverOverlay = document.getElementById("game-over");
+const retryButton = document.getElementById("retry-btn");
+const finalScoreEl = document.getElementById("final-score");
 
 const state = {
   player: {
-    x: canvas.width / 2 - 16,
-    y: canvas.height / 2 - 16,
-    size: 32,
+    x: 0,
+    y: 0,
+    size: 36,
     color: "#4db5ff",
-    speed: 150,
-    dashSpeed: 320,
+    speed: 200,
+    dashSpeed: 380,
     dashCooldown: 0,
   },
   keys: new Set(),
@@ -23,21 +26,45 @@ function randInt(min, max) {
 }
 
 function createWalls() {
+  const margin = 90;
+  const thickness = 30;
+  const innerSpan = canvas.width - margin * 2 - thickness * 2;
+
   state.walls = [
-    { x: 40, y: 40, width: 400, height: 20 },
-    { x: 40, y: 260, width: 400, height: 20 },
-    { x: 40, y: 40, width: 20, height: 240 },
-    { x: 420, y: 40, width: 20, height: 240 },
-    { x: 150, y: 120, width: 180, height: 20 },
-    { x: 150, y: 200, width: 180, height: 20 },
+    { x: margin, y: margin, width: canvas.width - margin * 2, height: thickness },
+    {
+      x: margin,
+      y: canvas.height - margin - thickness,
+      width: canvas.width - margin * 2,
+      height: thickness,
+    },
+    { x: margin, y: margin, width: thickness, height: canvas.height - margin * 2 },
+    {
+      x: canvas.width - margin - thickness,
+      y: margin,
+      width: thickness,
+      height: canvas.height - margin * 2,
+    },
+    {
+      x: margin + thickness + innerSpan * 0.1,
+      y: canvas.height / 2 - thickness * 1.5,
+      width: innerSpan * 0.8,
+      height: thickness,
+    },
+    {
+      x: margin + thickness + innerSpan * 0.1,
+      y: canvas.height / 2 + thickness * 0.5,
+      width: innerSpan * 0.8,
+      height: thickness,
+    },
   ];
 }
 
 function spawnStar() {
-  const padding = 48;
+  const padding = 120;
   let x;
   let y;
-  const size = 14;
+  const size = 16;
 
   do {
     x = randInt(padding, canvas.width - padding - size);
@@ -91,7 +118,7 @@ function updatePlayer(delta) {
   const playerRect = { x: nextX, y: nextY, width: p.size, height: p.size };
 
   if (state.walls.some((wall) => rectIntersect(playerRect, wall))) {
-    state.playing = false;
+    endGame();
     return;
   }
 
@@ -161,15 +188,6 @@ function draw() {
   ctx.fillText(`Score: ${state.score}`, 24, 36);
 
   if (!state.playing) {
-    ctx.fillStyle = "rgba(10, 12, 21, 0.8)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = "#ffffff";
-    ctx.font = "28px 'Segoe UI', sans-serif";
-    ctx.textAlign = "center";
-    ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2 - 10);
-    ctx.font = "18px 'Segoe UI', sans-serif";
-    ctx.fillText("Refresh the page to try again", canvas.width / 2, canvas.height / 2 + 20);
     ctx.textAlign = "left";
   }
 }
@@ -185,9 +203,35 @@ function loop(now) {
   requestAnimationFrame(loop);
 }
 
-function init() {
+function resetPlayerPosition() {
+  state.player.x = canvas.width / 2 - state.player.size / 2;
+  state.player.y = canvas.height / 2 - state.player.size / 2;
+}
+
+function resetGame() {
+  state.score = 0;
+  state.player.dashCooldown = 0;
+  state.keys.clear();
+  resetPlayerPosition();
   createWalls();
   spawnStar();
+  state.playing = true;
+  gameOverOverlay.hidden = true;
+  previous = performance.now();
+}
+
+function endGame() {
+  if (!state.playing) {
+    return;
+  }
+  state.playing = false;
+  finalScoreEl.textContent = state.score.toString();
+  gameOverOverlay.hidden = false;
+  retryButton.focus();
+}
+
+function init() {
+  resetGame();
   requestAnimationFrame(loop);
 }
 
@@ -200,6 +244,10 @@ window.addEventListener("keydown", (event) => {
 
 window.addEventListener("keyup", (event) => {
   state.keys.delete(event.key);
+});
+
+retryButton.addEventListener("click", () => {
+  resetGame();
 });
 
 init();
