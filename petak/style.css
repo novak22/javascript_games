@@ -1,0 +1,175 @@
+:root {
+  color-scheme: light dark;
+  --bg: #f5f5f5;
+  --bg-dark: #121213;
+  --tile-border: #d3d6da;
+  --tile-border-dark: #3a3a3c;
+  --text: #1a1a1a;
+  --text-dark: #f5f5f5;
+  --correct: #6aaa64;
+  --present: #c9b458;
+  --absent: #787c7e;
+  --keyboard-bg: #d3d6da;
+  --keyboard-text: #1a1a1a;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
+  }
+  .tile {
+    border-color: var(--tile-border-dark);
+  }
+  .keyboard-key {
+    background-color: #3a3a3c;
+    color: var(--text-dark);
+  }
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.game-container {
+  width: min(600px, 100%);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.game-header h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3rem);
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+}
+
+.language-picker {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.language-picker select {
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.4rem;
+  border: 1px solid var(--tile-border);
+  background-color: white;
+  font-size: 1rem;
+}
+
+.board {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.board-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.tile {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  border: 2px solid var(--tile-border);
+  display: grid;
+  place-items: center;
+  font-size: clamp(1.5rem, 6vw, 2.2rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 0.4rem;
+}
+
+.tile.filled {
+  border-color: var(--tile-border-dark);
+}
+
+.tile.correct {
+  background-color: var(--correct);
+  border-color: var(--correct);
+  color: white;
+}
+
+.tile.present {
+  background-color: var(--present);
+  border-color: var(--present);
+  color: white;
+}
+
+.tile.absent {
+  background-color: var(--absent);
+  border-color: var(--absent);
+  color: white;
+}
+
+.keyboard {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.keyboard-key {
+  padding: 0.75rem;
+  background-color: var(--keyboard-bg);
+  color: var(--keyboard-text);
+  border: none;
+  border-radius: 0.4rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: uppercase;
+  min-width: 2.6rem;
+  transition: transform 0.1s ease;
+}
+
+.keyboard-key:active {
+  transform: scale(0.95);
+}
+
+.keyboard-key.wide {
+  min-width: 4rem;
+}
+
+.instructions {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  .game-container {
+    padding: 1rem;
+  }
+
+  .keyboard-key {
+    min-width: 2.2rem;
+    padding: 0.6rem 0.4rem;
+  }
+}
