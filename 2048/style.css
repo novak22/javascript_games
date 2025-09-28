@@ -280,6 +280,10 @@ body {
   backdrop-filter: blur(8px);
 }
 
+.message[hidden] {
+  display: none !important;
+}
+
 .message-box {
   display: grid;
   gap: 1rem;
