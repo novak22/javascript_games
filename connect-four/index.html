@@ -28,25 +28,33 @@
       </header>
 
       <main class="arcade-main">
-        <div class="game-shell">
-          <header class="game-header">
-            <h2>Arcade Connect Four</h2>
-            <p class="subtitle">Drop the discs, line up four, and outsmart the arcade AI.</p>
-          </header>
-          <section class="game-area">
-            <section class="status-panel">
-              <p id="status" class="status-text">Your turn! Tap or click a column to drop a disc.</p>
-            </section>
-            <section class="board-wrapper">
-              <div id="board" class="board" aria-label="Connect Four board" role="grid"></div>
-            </section>
-            <section class="controls">
-              <button id="resetBtn" class="reset-btn" type="button" aria-label="Reset game">
-                Reset Game
-              </button>
-            </section>
-          </section>
-        </div>
+        <section class="arcade-game">
+          <div class="arcade-game__layout">
+            <div class="arcade-game__frame card-surface">
+              <header class="arcade-game__header">
+                <h2>Arcade Connect Four</h2>
+                <p class="subtitle">Drop the discs, line up four, and outsmart the arcade AI.</p>
+              </header>
+              <div class="board-wrapper">
+                <div id="board" class="board" aria-label="Connect Four board" role="grid"></div>
+              </div>
+            </div>
+            <aside class="arcade-game__sidebar">
+              <article class="arcade-panel">
+                <h3 class="panel-title">Game Status</h3>
+                <p id="status" class="status-text" role="status" aria-live="polite">
+                  Your turn! Tap or click a column to drop a disc.
+                </p>
+              </article>
+              <article class="arcade-panel">
+                <h3 class="panel-title">Controls</h3>
+                <button id="resetBtn" class="reset-btn" type="button" aria-label="Reset game">
+                  Reset Game
+                </button>
+              </article>
+            </aside>
+          </div>
+        </section>
       </main>
 
       <footer class="arcade-footer">
