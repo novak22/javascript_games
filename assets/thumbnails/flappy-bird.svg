@@ -1,0 +1,16 @@
+<svg width="160" height="120" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradFlappy" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4facfe"/>
+      <stop offset="100%" stop-color="#00f2fe"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="160" height="120" rx="16" fill="url(#gradFlappy)"/>
+  <g stroke="#fff" stroke-width="4" stroke-linecap="round" fill="none">
+    <path d="M40 70 Q60 40 80 60 T120 50"/>
+    <circle cx="70" cy="55" r="12" fill="#ffd166" stroke="none"/>
+    <circle cx="74" cy="52" r="4" fill="#1d3557" stroke="none"/>
+    <polyline points="62,55 56,60 60,66" stroke="#ef476f" fill="none" stroke-width="3"/>
+  </g>
+  <text x="80" y="100" font-size="16" fill="#fff" font-family="'Poppins', sans-serif" font-weight="600" text-anchor="middle">Tap to fly</text>
+</svg>

@@ -1,0 +1,13 @@
+<svg width="160" height="120" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad2048" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f7b733"/>
+      <stop offset="100%" stop-color="#fc4a1a"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="160" height="120" rx="16" fill="url(#grad2048)"/>
+  <g fill="#fff" font-family="'Poppins', sans-serif" font-weight="700" text-anchor="middle">
+    <text x="80" y="60" font-size="48">2048</text>
+    <text x="80" y="90" font-size="14">Swipe &amp; merge</text>
+  </g>
+</svg>
