@@ -22,13 +22,177 @@
       }
 
       .hero {
+        position: relative;
         display: grid;
-        gap: 1.5rem;
+        gap: clamp(1.75rem, 3vw, 2.4rem);
         padding: clamp(1.8rem, 4vw, 3rem);
-        background: linear-gradient(135deg, rgba(123, 91, 255, 0.28), rgba(12, 19, 67, 0.86));
+        background: linear-gradient(135deg, rgba(123, 91, 255, 0.3), rgba(12, 19, 67, 0.92));
         border-radius: 28px;
         border: 1px solid rgba(255, 255, 255, 0.08);
         box-shadow: 0 32px 60px rgba(5, 8, 31, 0.45);
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 20% 20%, rgba(123, 209, 255, 0.14), transparent 45%),
+          radial-gradient(circle at 80% 30%, rgba(255, 135, 219, 0.18), transparent 50%),
+          radial-gradient(circle at 50% 80%, rgba(123, 91, 255, 0.18), transparent 50%);
+        filter: blur(0px);
+        opacity: 0.8;
+        pointer-events: none;
+      }
+
+      .hero-main,
+      .hero-widget {
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero-main {
+        display: grid;
+        gap: clamp(1.5rem, 3vw, 2rem);
+      }
+
+      .hero-ticker {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.85rem 1.1rem;
+        border-radius: 16px;
+        background: rgba(10, 13, 42, 0.75);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .hero-ticker::before,
+      .hero-ticker::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        width: 48px;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .hero-ticker::before {
+        left: 0;
+        background: linear-gradient(90deg, rgba(10, 13, 42, 0.95), transparent);
+      }
+
+      .hero-ticker::after {
+        right: 0;
+        background: linear-gradient(270deg, rgba(10, 13, 42, 0.95), transparent);
+      }
+
+      .ticker-label {
+        font-size: 0.75rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(248, 249, 255, 0.6);
+        flex-shrink: 0;
+      }
+
+      .ticker-track {
+        display: flex;
+        gap: 2rem;
+        width: max-content;
+        animation: tickerMove 28s linear infinite;
+        will-change: transform;
+      }
+
+      .ticker-item {
+        white-space: nowrap;
+        font-size: 0.9rem;
+        color: rgba(248, 249, 255, 0.75);
+      }
+
+      .hero-widget {
+        display: grid;
+        gap: 1rem;
+        align-content: start;
+        padding: 1.5rem;
+      }
+
+      .hero-widget__badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.35rem;
+        padding: 0.35rem 0.9rem;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        background: rgba(123, 91, 255, 0.2);
+        border: 1px solid rgba(123, 91, 255, 0.4);
+      }
+
+      .hero-widget__text {
+        margin: 0;
+        font-size: 0.95rem;
+        color: rgba(248, 249, 255, 0.75);
+      }
+
+      .hero-widget__button {
+        border: none;
+        cursor: pointer;
+        padding: 0.75rem 1.35rem;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        letter-spacing: 0.02em;
+        background: linear-gradient(135deg, rgba(123, 91, 255, 0.95), rgba(86, 133, 255, 0.95));
+        color: #fff;
+        box-shadow: 0 18px 36px rgba(14, 18, 56, 0.55);
+        transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+      }
+
+      .hero-widget__button:hover,
+      .hero-widget__button:focus-visible {
+        transform: translateY(-2px);
+        box-shadow: 0 22px 44px rgba(14, 18, 56, 0.6);
+        filter: brightness(1.05);
+        outline: none;
+      }
+
+      .hero-widget__stats {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.75rem;
+        margin: 0;
+      }
+
+      .hero-widget__stats div {
+        display: grid;
+        gap: 0.35rem;
+        padding: 0.65rem 0.75rem;
+        border-radius: 12px;
+        background: rgba(12, 19, 67, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .hero-widget__stats dt {
+        font-size: 0.75rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(248, 249, 255, 0.6);
+      }
+
+      .hero-widget__stats dd {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      .hero-widget__status {
+        margin: 0;
+        font-size: 0.85rem;
+        color: rgba(248, 249, 255, 0.65);
       }
 
       .hero-heading {
@@ -88,6 +252,20 @@
         transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
       }
 
+      .card-chip {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        padding: 0.35rem 0.65rem;
+        border-radius: 999px;
+        font-size: 0.7rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        background: rgba(86, 220, 255, 0.2);
+        border: 1px solid rgba(86, 220, 255, 0.65);
+        color: rgba(200, 245, 255, 0.85);
+      }
+
       .game-card::after {
         content: '';
         position: absolute;
@@ -103,6 +281,17 @@
       .game-card:focus-visible {
         transform: translateY(-6px) scale(1.01);
         box-shadow: 0 26px 60px rgba(10, 14, 40, 0.55);
+      }
+
+      .game-card.is-highlighted {
+        transform: translateY(-8px) scale(1.015);
+        box-shadow: 0 32px 70px rgba(10, 18, 70, 0.65);
+      }
+
+      .game-card.is-highlighted::after {
+        opacity: 1;
+        border-color: rgba(86, 220, 255, 0.7);
+        box-shadow: 0 0 0 6px rgba(86, 220, 255, 0.15);
       }
 
       .game-card:hover::after,
@@ -162,6 +351,45 @@
 
         .hero {
           padding: 1.75rem;
+          grid-template-columns: minmax(0, 1fr);
+        }
+
+        .hero-widget__stats {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (min-width: 960px) {
+        .hero {
+          grid-template-columns: minmax(0, 1fr) minmax(260px, 0.7fr);
+          align-items: stretch;
+        }
+
+        .hero-main {
+          align-self: center;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .ticker-track {
+          animation-duration: 0.01ms;
+          animation-iteration-count: 1;
+        }
+
+        .hero-widget__button,
+        .game-card,
+        .game-card::after {
+          transition: none;
+        }
+      }
+
+      @keyframes tickerMove {
+        from {
+          transform: translateX(0);
+        }
+
+        to {
+          transform: translateX(-50%);
         }
       }
     </style>
@@ -169,19 +397,52 @@
   <body>
     <div class="arcade-shell">
       <header class="hero">
-        <div class="hero-heading">
-          <span class="brand-title">Pixel Playground</span>
-          <h1>Pick a challenge and press start</h1>
-          <p>
-            Six bite-sized games built with vanilla JavaScript. Swap between puzzle, reflex,
-            and action challenges without leaving the arcade cabinet theme.
+        <div class="hero-main">
+          <div class="hero-heading">
+            <span class="brand-title">Pixel Playground</span>
+            <h1>Pick a challenge and press start</h1>
+            <p>
+              Eight bite-sized games built with vanilla JavaScript. Swap between puzzle, reflex,
+              and action challenges without leaving the arcade cabinet theme.
+            </p>
+          </div>
+          <div class="badge-row">
+            <span class="hero-badge">Keyboard + Touch Friendly</span>
+            <span class="hero-badge">No installs required</span>
+            <span class="hero-badge">Built with vanilla JS</span>
+          </div>
+          <div class="hero-ticker card-surface" role="status" aria-live="polite">
+            <span class="ticker-label">Now featuring</span>
+            <div class="ticker-track">
+              <span class="ticker-item">Neon Memory Challenge · Ultra-fast rounds for puzzle lovers</span>
+              <span class="ticker-item">Online Hustle Simulator · Build your pixel empire, no sleep required</span>
+              <span class="ticker-item">Brick Breaker Combo Mode · Chase perfect clears with new pacing tips</span>
+              <span class="ticker-item">Neon Memory Challenge · Ultra-fast rounds for puzzle lovers</span>
+              <span class="ticker-item">Online Hustle Simulator · Build your pixel empire, no sleep required</span>
+              <span class="ticker-item">Brick Breaker Combo Mode · Chase perfect clears with new pacing tips</span>
+            </div>
+          </div>
+        </div>
+        <aside class="hero-widget card-surface" aria-label="Arcade shuffle">
+          <span class="hero-widget__badge">Arcade Shuffle</span>
+          <p class="hero-widget__text">Not sure what to play? Let the arcade pick a surprise challenge.</p>
+          <button class="hero-widget__button" type="button" data-action="shuffle">
+            Surprise me
+          </button>
+          <dl class="hero-widget__stats">
+            <div>
+              <dt>Total games</dt>
+              <dd><span data-total-games>0</span></dd>
+            </div>
+            <div>
+              <dt>Fresh drops</dt>
+              <dd><span data-new-games>0</span></dd>
+            </div>
+          </dl>
+          <p class="hero-widget__status" data-status-rotator>
+            Press the surprise button to highlight your next adventure.
           </p>
-        </div>
-        <div class="badge-row">
-          <span class="hero-badge">Keyboard + Touch Friendly</span>
-          <span class="hero-badge">No installs required</span>
-          <span class="hero-badge">Built with vanilla JS</span>
-        </div>
+        </aside>
       </header>
 
       <main>
@@ -260,6 +521,30 @@
               <span>Falling Blocks</span>
               <h2>Block Drop</h2>
               <p>Stack tetrominoes with precision timing to clear lines and climb the ranks.</p>
+            </div>
+          </a>
+
+          <a class="game-card card-surface" href="./online-hustle-simulator/" role="listitem" data-status="new">
+            <span class="card-chip">New</span>
+            <div class="card-thumb" aria-hidden="true">
+              <img src="./assets/thumbnails/online-hustle.svg" alt="" loading="lazy" />
+            </div>
+            <div class="card-meta">
+              <span>Idle Tycoon</span>
+              <h2>Online Hustle Simulator</h2>
+              <p>Upgrade your pixel side gigs, keep the energy meter full, and grow your neon empire.</p>
+            </div>
+          </a>
+
+          <a class="game-card card-surface" href="./neon-memory/" role="listitem" data-status="new">
+            <span class="card-chip">New</span>
+            <div class="card-thumb" aria-hidden="true">
+              <img src="./assets/thumbnails/neon-memory.svg" alt="" loading="lazy" />
+            </div>
+            <div class="card-meta">
+              <span>Memory Rush</span>
+              <h2>Neon Memory</h2>
+              <p>Flip neon tiles, lock in the pairs, and clear the board before the tempo maxes out.</p>
             </div>
           </a>
         </div>

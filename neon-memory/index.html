@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Neon Memory · Pixel Playground</title>
+    <link rel="stylesheet" href="../arcade.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="arcade-page">
+      <header class="arcade-header card-surface">
+        <div class="arcade-header__meta">
+          <span class="brand-title">Pixel Playground</span>
+          <h1>Neon Memory</h1>
+          <p>Flip glowing tiles, remember the icons, and lock in every pair before the beat fades.</p>
+        </div>
+        <a class="arcade-back" href="../index.html">
+          <span aria-hidden="true">⟵</span>
+          Back to Arcade
+        </a>
+      </header>
+
+      <main class="arcade-main">
+        <section class="memory card-surface">
+          <header class="memory__top">
+            <div class="memory__intro">
+              <h2>Flip &amp; Match</h2>
+              <p>
+                Reveal two tiles at a time to find the matching neon glyphs. Earn a perfect score by
+                clearing the deck with the fewest turns.
+              </p>
+            </div>
+            <div class="memory__controls" role="status" aria-live="polite">
+              <div class="memory__stat">
+                <span class="label">Matches</span>
+                <span class="value" data-stat="matches">0</span>
+              </div>
+              <div class="memory__stat">
+                <span class="label">Turns</span>
+                <span class="value" data-stat="turns">0</span>
+              </div>
+              <div class="memory__stat">
+                <span class="label">Timer</span>
+                <span class="value" data-stat="time">0:00</span>
+              </div>
+              <button class="memory__reset" type="button" data-action="reset">Reset run</button>
+            </div>
+          </header>
+          <p class="memory__status" data-memory-status>Flip two cards to get started.</p>
+          <div class="memory__board" role="grid" aria-label="Neon memory board"></div>
+        </section>
+
+        <section class="memory-help card-surface">
+          <h2>How to play</h2>
+          <ol>
+            <li>Tap or click any tile to reveal the neon icon beneath.</li>
+            <li>Select a second tile &mdash; if the icons match, the pair locks in.</li>
+            <li>
+              Keep matching pairs to clear the deck. Finish with fewer turns to top the leaderboard
+              vibes.
+            </li>
+          </ol>
+          <p class="memory-help__tip">
+            Pro tip: track icons by their position rhythm &mdash; corners, edges, and center tiles each
+            have their own beat.
+          </p>
+        </section>
+      </main>
+
+      <footer class="arcade-footer">
+        © <span class="js-year"></span> Pixel Playground · Sharpen your recall and chase a perfect run.
+      </footer>
+    </div>
+    <script src="./script.js" defer></script>
+    <script src="../assets/js/arcade.js" defer></script>
+  </body>
+</html>
