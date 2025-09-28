@@ -3,29 +3,51 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Endless Runner</title>
+    <title>Endless Runner · Pixel Playground</title>
+    <link rel="stylesheet" href="../arcade.css" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main class="game-shell">
-      <header class="hud">
-        <h1 class="game-title">Neon Runner</h1>
-        <div class="scoreboard">
-          <span class="label">Score:</span>
-          <span id="score">0</span>
+    <div class="arcade-page">
+      <header class="arcade-header card-surface">
+        <div class="arcade-header__meta">
+          <span class="brand-title">Pixel Playground</span>
+          <h1>Neon Endless Runner</h1>
+          <p>Leap, duck, and dash through synthwave streets while pushing your high score higher.</p>
         </div>
+        <a class="arcade-back" href="../index.html">
+          <span aria-hidden="true">⟵</span>
+          Back to Arcade
+        </a>
       </header>
-      <section class="canvas-wrapper">
-        <canvas id="game" width="960" height="540" role="img" aria-label="Endless runner game"></canvas>
-        <div class="controls-hint" aria-hidden="true">
-          <p>Press <strong>Space</strong> / <strong>Up</strong> to Jump &middot; <strong>Down</strong> to Duck</p>
-          <p>Tap left/right side to Jump/Duck on touch</p>
-        </div>
-      </section>
-      <footer class="hud">
-        <button id="restart" type="button" class="hidden">Restart</button>
+
+      <main class="arcade-main">
+        <section class="game-shell" aria-labelledby="runner-title">
+          <header class="hud">
+            <h2 id="runner-title" class="game-title">Neon Runner</h2>
+            <div class="scoreboard" role="status" aria-live="polite">
+              <span class="label">Score:</span>
+              <span id="score">0</span>
+            </div>
+          </header>
+          <section class="canvas-wrapper">
+            <canvas id="game" width="960" height="540" role="img" aria-label="Endless runner game"></canvas>
+            <div class="controls-hint" aria-hidden="true">
+              <p>Press <strong>Space</strong> / <strong>Up</strong> to Jump · <strong>Down</strong> to Duck</p>
+              <p>Tap left/right side to Jump/Duck on touch</p>
+            </div>
+          </section>
+          <footer class="hud">
+            <button id="restart" type="button" class="hidden">Restart</button>
+          </footer>
+        </section>
+      </main>
+
+      <footer class="arcade-footer">
+        © <span class="js-year"></span> Pixel Playground · Sync your reflexes with the beat.
       </footer>
-    </main>
+    </div>
     <script src="script.js" type="module"></script>
+    <script src="../assets/js/arcade.js" defer></script>
   </body>
 </html>

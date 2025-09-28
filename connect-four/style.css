@@ -21,6 +21,10 @@ body {
   color: #f4f7ff;
 }
 
+.arcade-main {
+  align-items: center;
+}
+
 .game-shell {
   width: min(90vw, 960px);
   display: flex;
@@ -41,7 +45,7 @@ body {
   text-align: center;
 }
 
-.game-header h1 {
+.game-header h2 {
   margin: 0 0 0.5rem;
   font-family: 'Press Start 2P', cursive;
   font-size: clamp(1.5rem, 3vw, 2.1rem);

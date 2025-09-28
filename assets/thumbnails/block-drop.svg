@@ -1,0 +1,31 @@
+<svg width="160" height="120" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradBlock" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a"/>
+      <stop offset="100%" stop-color="#9333ea"/>
+    </linearGradient>
+    <linearGradient id="piece" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38f9d7"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <linearGradient id="ghost" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#c084fc" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#f0abfc" stop-opacity="0.35"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="160" height="120" rx="16" fill="url(#gradBlock)"/>
+  <g transform="translate(44 20)">
+    <rect x="56" y="4" width="20" height="60" rx="4" fill="url(#ghost)"/>
+    <g fill="url(#piece)" stroke="#ecfeff" stroke-width="2">
+      <rect x="20" y="16" width="20" height="20" rx="3"/>
+      <rect x="40" y="16" width="20" height="20" rx="3"/>
+      <rect x="40" y="36" width="20" height="20" rx="3"/>
+      <rect x="60" y="36" width="20" height="20" rx="3"/>
+    </g>
+    <g fill="none" stroke="rgba(236, 254, 255, 0.35)" stroke-width="2">
+      <rect x="0" y="76" width="72" height="20" rx="4"/>
+      <rect x="24" y="96" width="72" height="20" rx="4"/>
+    </g>
+  </g>
+  <text x="24" y="104" font-family="'Poppins', sans-serif" font-weight="600" font-size="14" fill="#f8fafc">STACK &amp; CLEAR</text>
+</svg>
