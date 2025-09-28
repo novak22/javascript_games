@@ -21,6 +21,24 @@
         gap: clamp(2rem, 4vw, 3rem);
       }
 
+      .frame-stack {
+        display: flex;
+        flex-direction: column;
+        gap: var(--frame-stack-gap, 1rem);
+      }
+
+      .frame-cluster {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--frame-cluster-gap, 0.75rem);
+      }
+
+      .frame-grid {
+        display: grid;
+        gap: var(--frame-grid-gap, 1rem);
+      }
+
       .hero {
         position: relative;
         display: grid;
@@ -161,10 +179,9 @@
       }
 
       .hero-widget__stats {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 0.75rem;
+        --frame-grid-gap: 0.75rem;
         margin: 0;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       }
 
       .hero-widget__stats div {
@@ -187,6 +204,24 @@
         margin: 0;
         font-size: 1.5rem;
         font-weight: 600;
+        line-height: 1.1;
+      }
+
+      .hero-widget__stats dd span {
+        display: block;
+      }
+
+      .hero-widget__stats dd small {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(248, 249, 255, 0.6);
+      }
+
+      .stat-accent {
+        color: rgba(123, 209, 255, 0.95);
       }
 
       .hero-widget__status {
@@ -223,9 +258,7 @@
       }
 
       .badge-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
+        --frame-cluster-gap: 0.75rem;
       }
 
       .hero-badge {
@@ -266,6 +299,12 @@
         color: rgba(200, 245, 255, 0.85);
       }
 
+      .card-chip--upcoming {
+        background: rgba(255, 196, 86, 0.18);
+        border-color: rgba(255, 196, 86, 0.65);
+        color: rgba(255, 231, 175, 0.9);
+      }
+
       .game-card::after {
         content: '';
         position: absolute;
@@ -299,18 +338,109 @@
         opacity: 1;
       }
 
+      .game-card[aria-disabled='true'] {
+        cursor: not-allowed;
+        opacity: 0.85;
+      }
+
+      .game-card[aria-disabled='true'] .card-thumb::after {
+        opacity: 0.45;
+      }
+
+      .game-card[aria-disabled='true'] .card-meta p {
+        color: rgba(248, 249, 255, 0.6);
+      }
+
+      .game-card--upcoming .card-thumb {
+        justify-content: center;
+        padding: 2rem 1.5rem;
+      }
+
+      .game-card--upcoming .card-meta {
+        gap: 0.5rem;
+      }
+
+      .game-card[aria-disabled='true']:hover,
+      .game-card[aria-disabled='true']:focus-visible {
+        transform: none;
+        box-shadow: 0 26px 60px rgba(10, 14, 40, 0.45);
+      }
+
       .card-thumb {
+        --thumb-bg: rgba(255, 255, 255, 0.08);
         overflow: hidden;
         border-radius: 16px;
         position: relative;
-        background: rgba(255, 255, 255, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--thumb-bg);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+      }
+
+      .card-thumb::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.18), transparent 55%),
+          radial-gradient(circle at 80% 20%, rgba(123, 209, 255, 0.16), transparent 60%),
+          radial-gradient(circle at 50% 80%, rgba(255, 135, 219, 0.18), transparent 60%);
+        mix-blend-mode: screen;
+        opacity: 0.65;
+        pointer-events: none;
       }
 
       .card-thumb img {
-        width: 100%;
+        width: 72%;
+        max-width: 180px;
         display: block;
-        object-fit: cover;
-        mix-blend-mode: lighten;
+        object-fit: contain;
+        mix-blend-mode: screen;
+        filter: drop-shadow(0 12px 24px rgba(8, 12, 38, 0.5));
+      }
+
+      .card-thumb[data-thumb='2048'] {
+        --thumb-bg: linear-gradient(135deg, rgba(255, 173, 92, 0.35), rgba(128, 70, 255, 0.4));
+      }
+
+      .card-thumb[data-thumb='flappy'] {
+        --thumb-bg: linear-gradient(135deg, rgba(86, 220, 255, 0.35), rgba(28, 72, 240, 0.45));
+      }
+
+      .card-thumb[data-thumb='connect'] {
+        --thumb-bg: linear-gradient(135deg, rgba(255, 92, 164, 0.35), rgba(120, 64, 255, 0.45));
+      }
+
+      .card-thumb[data-thumb='runner'] {
+        --thumb-bg: linear-gradient(135deg, rgba(255, 126, 92, 0.35), rgba(72, 206, 255, 0.42));
+      }
+
+      .card-thumb[data-thumb='brick'] {
+        --thumb-bg: linear-gradient(135deg, rgba(86, 255, 196, 0.32), rgba(123, 91, 255, 0.45));
+      }
+
+      .card-thumb[data-thumb='mover'] {
+        --thumb-bg: linear-gradient(135deg, rgba(123, 209, 255, 0.35), rgba(12, 19, 67, 0.7));
+      }
+
+      .card-thumb[data-thumb='block'] {
+        --thumb-bg: linear-gradient(135deg, rgba(255, 135, 219, 0.32), rgba(75, 55, 200, 0.55));
+      }
+
+      .card-thumb[data-thumb='hustle'] {
+        --thumb-bg: linear-gradient(135deg, rgba(255, 196, 86, 0.35), rgba(255, 92, 164, 0.4));
+      }
+
+      .card-thumb[data-thumb='memory'] {
+        --thumb-bg: linear-gradient(135deg, rgba(92, 255, 233, 0.32), rgba(92, 123, 255, 0.42));
+      }
+
+      .card-thumb[data-thumb='drift'] {
+        --thumb-bg: linear-gradient(135deg, rgba(255, 235, 138, 0.35), rgba(123, 91, 255, 0.55));
+      }
+
+      .card-thumb[data-thumb='placeholder'] {
+        --thumb-bg: linear-gradient(135deg, rgba(86, 220, 255, 0.25), rgba(123, 91, 255, 0.25));
       }
 
       .card-meta {
@@ -398,155 +528,192 @@
     <div class="arcade-shell">
       <header class="hero">
         <div class="hero-main">
-          <div class="hero-heading">
+          <div class="hero-heading frame-stack">
             <span class="brand-title">Pixel Playground</span>
-            <h1>Pick a challenge and press start</h1>
+            <h1>Uniform cabinet UI, same neon energy</h1>
             <p>
-              Eight bite-sized games built with vanilla JavaScript. Swap between puzzle, reflex,
-              and action challenges without leaving the arcade cabinet theme.
+              Every retro challenge now ships with the shared arcade frame, synced badges, and refreshed thumbnails.
+              Queue up your next run while the new Photon Drift cabinet powers on in the background.
             </p>
           </div>
-          <div class="badge-row">
-            <span class="hero-badge">Keyboard + Touch Friendly</span>
-            <span class="hero-badge">No installs required</span>
-            <span class="hero-badge">Built with vanilla JS</span>
+          <div class="badge-row frame-cluster">
+            <span class="hero-badge">Shared HUD controls</span>
+            <span class="hero-badge">Cabinet theme v2.0</span>
+            <span class="hero-badge">Photon Drift in QA</span>
           </div>
           <div class="hero-ticker card-surface" role="status" aria-live="polite">
-            <span class="ticker-label">Now featuring</span>
+            <span class="ticker-label">Update log</span>
             <div class="ticker-track">
-              <span class="ticker-item">Neon Memory Challenge · Ultra-fast rounds for puzzle lovers</span>
-              <span class="ticker-item">Online Hustle Simulator · Build your pixel empire, no sleep required</span>
-              <span class="ticker-item">Brick Breaker Combo Mode · Chase perfect clears with new pacing tips</span>
-              <span class="ticker-item">Neon Memory Challenge · Ultra-fast rounds for puzzle lovers</span>
-              <span class="ticker-item">Online Hustle Simulator · Build your pixel empire, no sleep required</span>
-              <span class="ticker-item">Brick Breaker Combo Mode · Chase perfect clears with new pacing tips</span>
+              <span class="ticker-item">Uniform cabinet UI is live across the entire Pixel Playground roster.</span>
+              <span class="ticker-item">Photon Drift prototype enters final testing—wishlist the cabinet now.</span>
+              <span class="ticker-item">Shared stat badges mirror every in-game overlay for frictionless swaps.</span>
+              <span class="ticker-item">Uniform cabinet UI is live across the entire Pixel Playground roster.</span>
+              <span class="ticker-item">Photon Drift prototype enters final testing—wishlist the cabinet now.</span>
+              <span class="ticker-item">Shared stat badges mirror every in-game overlay for frictionless swaps.</span>
             </div>
           </div>
         </div>
         <aside class="hero-widget card-surface" aria-label="Arcade shuffle">
           <span class="hero-widget__badge">Arcade Shuffle</span>
-          <p class="hero-widget__text">Not sure what to play? Let the arcade pick a surprise challenge.</p>
+          <p class="hero-widget__text">
+            The unified cabinet layout syncs HUD controls across every title. Tap surprise to jump straight into a tuned build.
+          </p>
           <button class="hero-widget__button" type="button" data-action="shuffle">
             Surprise me
           </button>
-          <dl class="hero-widget__stats">
+          <dl class="hero-widget__stats frame-grid">
             <div>
-              <dt>Total games</dt>
+              <dt>Playable now</dt>
               <dd><span data-total-games>0</span></dd>
             </div>
             <div>
+              <dt>Uniform HUD rollout</dt>
+              <dd><span>100%</span><small>Cabinet parity</small></dd>
+            </div>
+            <div>
+              <dt>Next launch</dt>
+              <dd><span class="stat-accent">Photon Drift</span><small>In QA</small></dd>
+            </div>
+            <div>
               <dt>Fresh drops</dt>
-              <dd><span data-new-games>0</span></dd>
+              <dd><span data-new-games>0</span><small>Marked new</small></dd>
             </div>
           </dl>
           <p class="hero-widget__status" data-status-rotator>
-            Press the surprise button to highlight your next adventure.
+            Press surprise to sample the new cabinet frame in action.
           </p>
         </aside>
       </header>
 
       <main>
         <div class="game-grid" role="list">
-          <a class="game-card card-surface" href="./2048/" role="listitem">
-            <div class="card-thumb" aria-hidden="true">
+          <a class="game-card card-surface frame-stack" href="./2048/" role="listitem">
+            <div class="card-thumb" data-thumb="2048" aria-hidden="true">
               <img src="./assets/thumbnails/2048.svg" alt="" loading="lazy" />
             </div>
             <div class="card-meta">
               <span>Swipe Puzzle</span>
               <h2>2048</h2>
-              <p>Join the numbered tiles together until you hit the legendary 2048 block.</p>
+              <p>Swipe merges through the unified cabinet layout to chase the legendary 2048 tile.</p>
             </div>
           </a>
 
-          <a class="game-card card-surface" href="./flappy-bird/" role="listitem">
-            <div class="card-thumb" aria-hidden="true">
+          <a class="game-card card-surface frame-stack" href="./flappy-bird/" role="listitem">
+            <div class="card-thumb" data-thumb="flappy" aria-hidden="true">
               <img src="./assets/thumbnails/flappy-bird.svg" alt="" loading="lazy" />
             </div>
             <div class="card-meta">
               <span>Arcade Reflex</span>
               <h2>Flappy Bird</h2>
-              <p>Tap or press to keep your bird above the pipes in this endless sky gauntlet.</p>
+              <p>Glide through the gaps with synced HUD prompts and a countdown that mirrors in-game cues.</p>
             </div>
           </a>
 
-          <a class="game-card card-surface" href="./connect-four/" role="listitem">
-            <div class="card-thumb" aria-hidden="true">
+          <a class="game-card card-surface frame-stack" href="./connect-four/" role="listitem">
+            <div class="card-thumb" data-thumb="connect" aria-hidden="true">
               <img src="./assets/thumbnails/connect-four.svg" alt="" loading="lazy" />
             </div>
             <div class="card-meta">
               <span>Tabletop Duel</span>
               <h2>Connect Four</h2>
-              <p>Challenge a friend and stack your discs to outsmart the opponent in a row of four.</p>
+              <p>Challenge a friend under the new cabinet lighting and stack discs until the frame declares your win.</p>
             </div>
           </a>
 
-          <a class="game-card card-surface" href="./endless-runner/" role="listitem">
-            <div class="card-thumb" aria-hidden="true">
+          <a class="game-card card-surface frame-stack" href="./endless-runner/" role="listitem">
+            <div class="card-thumb" data-thumb="runner" aria-hidden="true">
               <img src="./assets/thumbnails/endless-runner.svg" alt="" loading="lazy" />
             </div>
             <div class="card-meta">
               <span>Speed Trial</span>
               <h2>Endless Runner</h2>
-              <p>Leap over hazards and keep momentum in this synthwave-inspired sprint.</p>
+              <p>Sprint across neon lanes while the unified overlay tracks your streak and boosts.</p>
             </div>
           </a>
 
-          <a class="game-card card-surface" href="./brick-breaker-clone/" role="listitem">
-            <div class="card-thumb" aria-hidden="true">
+          <a class="game-card card-surface frame-stack" href="./brick-breaker-clone/" role="listitem">
+            <div class="card-thumb" data-thumb="brick" aria-hidden="true">
               <img src="./assets/thumbnails/brick-breaker.svg" alt="" loading="lazy" />
             </div>
             <div class="card-meta">
               <span>Arcade Classic</span>
               <h2>Neon Brick Breaker</h2>
-              <p>Reflect the energy sphere, shatter neon bricks, and chain combos as levels intensify.</p>
+              <p>Reflect energy orbs and shred walls while combo counters sync with the refreshed frame.</p>
             </div>
           </a>
 
-          <a class="game-card card-surface" href="./simple_mover/" role="listitem">
-            <div class="card-thumb" aria-hidden="true">
+          <a class="game-card card-surface frame-stack" href="./simple_mover/" role="listitem">
+            <div class="card-thumb" data-thumb="mover" aria-hidden="true">
               <img src="./assets/thumbnails/simple-mover.svg" alt="" loading="lazy" />
             </div>
             <div class="card-meta">
               <span>Arcade Trainer</span>
               <h2>Simple Mover</h2>
-              <p>Dash around the neon arena, collect stars, and avoid the reactive walls.</p>
+              <p>Dash across the calibrated arena with touch and keyboard cues tuned to the shared layout.</p>
             </div>
           </a>
 
-          <a class="game-card card-surface" href="./tetris_knockoff/" role="listitem">
-            <div class="card-thumb" aria-hidden="true">
+          <a class="game-card card-surface frame-stack" href="./tetris_knockoff/" role="listitem">
+            <div class="card-thumb" data-thumb="block" aria-hidden="true">
               <img src="./assets/thumbnails/block-drop.svg" alt="" loading="lazy" />
             </div>
             <div class="card-meta">
               <span>Falling Blocks</span>
               <h2>Block Drop</h2>
-              <p>Stack tetrominoes with precision timing to clear lines and climb the ranks.</p>
+              <p>Stack falling pieces as the uniform HUD celebrates every line clear and combo ladder.</p>
             </div>
           </a>
 
-          <a class="game-card card-surface" href="./online-hustle-simulator/" role="listitem" data-status="new">
+          <a
+            class="game-card card-surface frame-stack"
+            href="./online-hustle-simulator/"
+            role="listitem"
+            data-status="new"
+          >
             <span class="card-chip">New</span>
-            <div class="card-thumb" aria-hidden="true">
+            <div class="card-thumb" data-thumb="hustle" aria-hidden="true">
               <img src="./assets/thumbnails/online-hustle.svg" alt="" loading="lazy" />
             </div>
             <div class="card-meta">
               <span>Idle Tycoon</span>
               <h2>Online Hustle Simulator</h2>
-              <p>Upgrade your pixel side gigs, keep the energy meter full, and grow your neon empire.</p>
+              <p>Scale your pixel empire with dashboards that now mirror the arcade cabinet HUD.</p>
             </div>
           </a>
 
-          <a class="game-card card-surface" href="./neon-memory/" role="listitem" data-status="new">
+          <a
+            class="game-card card-surface frame-stack"
+            href="./neon-memory/"
+            role="listitem"
+            data-status="new"
+          >
             <span class="card-chip">New</span>
-            <div class="card-thumb" aria-hidden="true">
+            <div class="card-thumb" data-thumb="memory" aria-hidden="true">
               <img src="./assets/thumbnails/neon-memory.svg" alt="" loading="lazy" />
             </div>
             <div class="card-meta">
               <span>Memory Rush</span>
               <h2>Neon Memory</h2>
-              <p>Flip neon tiles, lock in the pairs, and clear the board before the tempo maxes out.</p>
+              <p>Flip neon tiles with the uniform UI tracking streaks and bonus multipliers.</p>
             </div>
           </a>
+
+          <article
+            class="game-card card-surface frame-stack game-card--upcoming"
+            role="listitem"
+            aria-disabled="true"
+            data-status="upcoming"
+          >
+            <span class="card-chip card-chip--upcoming">Coming soon</span>
+            <div class="card-thumb" data-thumb="drift" aria-hidden="true">
+              <img src="./assets/thumbnails/photon-drift.svg" alt="" loading="lazy" />
+            </div>
+            <div class="card-meta">
+              <span>Hyperloop Racer</span>
+              <h2>Photon Drift</h2>
+              <p>Preview the next cabinet: a gravity-bending racer currently syncing with the new frame.</p>
+            </div>
+          </article>
         </div>
       </main>
 
