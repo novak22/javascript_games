@@ -22,50 +22,58 @@
       </header>
 
       <main class="arcade-main">
-        <section class="memory card-surface">
-          <header class="memory__top">
-            <div class="memory__intro">
+        <div class="arcade-game">
+          <section class="arcade-game__stage memory">
+            <header class="memory__intro">
               <h2>Flip &amp; Match</h2>
               <p>
                 Reveal two tiles at a time to find the matching neon glyphs. Earn a perfect score by
                 clearing the deck with the fewest turns.
               </p>
+            </header>
+            <p class="memory__status" data-memory-status>Flip two cards to get started.</p>
+            <div class="arcade-game__frame">
+              <div class="memory__board" role="grid" aria-label="Neon memory board"></div>
             </div>
-            <div class="memory__controls" role="status" aria-live="polite">
-              <div class="memory__stat">
-                <span class="label">Matches</span>
-                <span class="value" data-stat="matches">0</span>
-              </div>
-              <div class="memory__stat">
-                <span class="label">Turns</span>
-                <span class="value" data-stat="turns">0</span>
-              </div>
-              <div class="memory__stat">
-                <span class="label">Timer</span>
-                <span class="value" data-stat="time">0:00</span>
-              </div>
-              <button class="memory__reset" type="button" data-action="reset">Reset run</button>
-            </div>
-          </header>
-          <p class="memory__status" data-memory-status>Flip two cards to get started.</p>
-          <div class="memory__board" role="grid" aria-label="Neon memory board"></div>
-        </section>
+          </section>
 
-        <section class="memory-help card-surface">
-          <h2>How to play</h2>
-          <ol>
-            <li>Tap or click any tile to reveal the neon icon beneath.</li>
-            <li>Select a second tile &mdash; if the icons match, the pair locks in.</li>
-            <li>
-              Keep matching pairs to clear the deck. Finish with fewer turns to top the leaderboard
-              vibes.
-            </li>
-          </ol>
-          <p class="memory-help__tip">
-            Pro tip: track icons by their position rhythm &mdash; corners, edges, and center tiles each
-            have their own beat.
-          </p>
-        </section>
+          <aside class="arcade-game__sidebar">
+            <section class="arcade-panel memory-panel" aria-labelledby="memory-panel-stats">
+              <h2 class="memory-panel__title" id="memory-panel-stats">Run stats</h2>
+              <div class="memory__controls" role="status" aria-live="polite">
+                <div class="memory__stat">
+                  <span class="label">Matches</span>
+                  <span class="value" data-stat="matches">0</span>
+                </div>
+                <div class="memory__stat">
+                  <span class="label">Turns</span>
+                  <span class="value" data-stat="turns">0</span>
+                </div>
+                <div class="memory__stat">
+                  <span class="label">Timer</span>
+                  <span class="value" data-stat="time">0:00</span>
+                </div>
+                <button class="memory__reset" type="button" data-action="reset">Reset run</button>
+              </div>
+            </section>
+
+            <section class="arcade-panel memory-panel" aria-labelledby="memory-panel-help">
+              <h2 class="memory-panel__title" id="memory-panel-help">How to play</h2>
+              <ol class="memory-help__steps">
+                <li>Tap or click any tile to reveal the neon icon beneath.</li>
+                <li>Select a second tile &mdash; if the icons match, the pair locks in.</li>
+                <li>
+                  Keep matching pairs to clear the deck. Finish with fewer turns to top the
+                  leaderboard vibes.
+                </li>
+              </ol>
+              <p class="memory-help__tip">
+                Pro tip: track icons by their position rhythm &mdash; corners, edges, and center tiles
+                each have their own beat.
+              </p>
+            </section>
+          </aside>
+        </div>
       </main>
 
       <footer class="arcade-footer">
