@@ -17,10 +17,15 @@ class Game2048 {
     this.keepPlayingBtn = root.getElementById("keep-playing");
     this.resetBtn = root.getElementById("reset");
     this.boardEl = root.querySelector(".board");
+    this.gridEl = root.querySelector(".grid");
 
     this.keepPlaying = false;
     this.touchStart = null;
     this.messageState = null;
+    this.tileMetrics = null;
+    this.resizeRaf = null;
+
+    this.handleResize = this.handleResize.bind(this);
 
     this.bindEvents();
     this.updateScore();
@@ -41,6 +46,8 @@ class Game2048 {
   }
 
   bindEvents() {
+    window.addEventListener("resize", this.handleResize);
+
     window.addEventListener("keydown", (event) => {
       if (event.defaultPrevented) return;
       const direction = this.directionFromKey(event.key);
@@ -353,6 +360,10 @@ class Game2048 {
   }
 
   render(initial = false) {
+    this.updateTileMetrics();
+    if (!this.tileMetrics) {
+      return;
+    }
     const activeIds = new Set();
 
     for (let row = 0; row < this.size; row += 1) {
@@ -378,14 +389,20 @@ class Game2048 {
   }
 
   updateTileElement(tile, initial) {
+    const { step } = this.tileMetrics;
+    const previousX = tile.previousCol * step;
+    const previousY = tile.previousRow * step;
+    const currentX = tile.col * step;
+    const currentY = tile.row * step;
+
     let element = this.tileElements.get(tile.id);
     if (!element) {
       element = document.createElement("div");
       element.className = "tile";
       element.dataset.value = tile.value;
       element.textContent = tile.value;
-      element.style.setProperty("--x", tile.previousCol);
-      element.style.setProperty("--y", tile.previousRow);
+      element.style.setProperty("--tx", `${previousX}px`);
+      element.style.setProperty("--ty", `${previousY}px`);
       if (tile.new) {
         element.classList.add("tile-new");
         element.addEventListener(
@@ -397,27 +414,25 @@ class Game2048 {
       this.tileContainer.appendChild(element);
       this.tileElements.set(tile.id, element);
       requestAnimationFrame(() => {
-        element.style.setProperty("--x", tile.col);
-        element.style.setProperty("--y", tile.row);
+        element.style.setProperty("--tx", `${currentX}px`);
+        element.style.setProperty("--ty", `${currentY}px`);
       });
     } else {
       if (element.dataset.value !== String(tile.value)) {
         element.dataset.value = tile.value;
         element.textContent = tile.value;
       }
-      const startX = tile.previousCol;
-      const startY = tile.previousRow;
-      const needsMove = startX !== tile.col || startY !== tile.row;
+      const needsMove = previousX !== currentX || previousY !== currentY;
       if (needsMove && !initial) {
-        element.style.setProperty("--x", startX);
-        element.style.setProperty("--y", startY);
+        element.style.setProperty("--tx", `${previousX}px`);
+        element.style.setProperty("--ty", `${previousY}px`);
         requestAnimationFrame(() => {
-          element.style.setProperty("--x", tile.col);
-          element.style.setProperty("--y", tile.row);
+          element.style.setProperty("--tx", `${currentX}px`);
+          element.style.setProperty("--ty", `${currentY}px`);
         });
       } else {
-        element.style.setProperty("--x", tile.col);
-        element.style.setProperty("--y", tile.row);
+        element.style.setProperty("--tx", `${currentX}px`);
+        element.style.setProperty("--ty", `${currentY}px`);
       }
       if (tile.merged) {
         element.classList.add("tile-merged");
@@ -461,6 +476,42 @@ class Game2048 {
       }
     }
     return false;
+  }
+
+  handleResize() {
+    if (this.resizeRaf) {
+      cancelAnimationFrame(this.resizeRaf);
+    }
+    this.resizeRaf = requestAnimationFrame(() => {
+      this.resizeRaf = null;
+      this.updateTileMetrics();
+      this.render(true);
+    });
+  }
+
+  updateTileMetrics() {
+    if (!this.boardEl || !this.gridEl) return;
+    const boardStyles = window.getComputedStyle(this.boardEl);
+    const paddingLeft = Number.parseFloat(boardStyles.paddingLeft) || 0;
+    const paddingRight = Number.parseFloat(boardStyles.paddingRight) || 0;
+    const paddingTop = Number.parseFloat(boardStyles.paddingTop) || 0;
+    const paddingBottom = Number.parseFloat(boardStyles.paddingBottom) || 0;
+    const innerWidth = this.boardEl.clientWidth - paddingLeft - paddingRight;
+    const innerHeight = this.boardEl.clientHeight - paddingTop - paddingBottom;
+    if (innerWidth <= 0 || innerHeight <= 0) {
+      return;
+    }
+    const gridStyles = window.getComputedStyle(this.gridEl);
+    const columnGap = Number.parseFloat(gridStyles.columnGap) || 0;
+    const rowGap = Number.parseFloat(gridStyles.rowGap) || columnGap;
+    const gap = Math.max(columnGap, rowGap);
+    const tileSize = (Math.min(innerWidth, innerHeight) - (this.size - 1) * gap) / this.size;
+    if (!Number.isFinite(tileSize) || tileSize <= 0) {
+      return;
+    }
+    const step = tileSize + gap;
+    this.tileMetrics = { gap, tileSize, step };
+    this.boardEl.style.setProperty("--tile-size", `${tileSize}px`);
   }
 }
 
