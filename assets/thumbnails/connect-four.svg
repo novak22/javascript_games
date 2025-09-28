@@ -1,65 +1,55 @@
 <svg width="160" height="120" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="a" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#171e58" />
-      <stop offset="1" stop-color="#2e155c" />
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f183a" />
+      <stop offset="1" stop-color="#241c52" />
     </linearGradient>
-    <linearGradient id="b" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#8ce4ff" />
-      <stop offset="1" stop-color="#cf91ff" />
+    <linearGradient id="frame" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b2758" />
+      <stop offset="1" stop-color="#111633" />
     </linearGradient>
-    <linearGradient id="c" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#1c2d7c" />
-      <stop offset="1" stop-color="#090e27" />
+    <linearGradient id="discA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7be0ff" />
+      <stop offset="1" stop-color="#3a9dff" />
     </linearGradient>
-    <linearGradient id="d" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#ffd45f" />
-      <stop offset="1" stop-color="#ff8a66" />
-    </linearGradient>
-    <linearGradient id="e" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#7d8eff" />
-      <stop offset="1" stop-color="#67d0ff" />
-    </linearGradient>
-    <linearGradient id="f" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#ffefb5" />
-      <stop offset="1" stop-color="#ffb15d" />
+    <linearGradient id="discB" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffc86f" />
+      <stop offset="1" stop-color="#ff7a6f" />
     </linearGradient>
   </defs>
-  <rect width="160" height="120" rx="20" fill="url(#a)" />
-  <rect x="6" y="6" width="148" height="108" rx="16" fill="#090f28" />
-  <rect x="6" y="6" width="148" height="108" rx="16" fill="url(#c)" />
-  <rect x="6" y="6" width="148" height="108" rx="16" fill="none" stroke="url(#b)" stroke-width="1.4" />
-  <g transform="translate(32 24)">
-    <rect width="96" height="72" rx="12" fill="#10163d" />
-    <rect x="4" y="4" width="88" height="64" rx="10" fill="#18225a" />
-    <g fill="#070b22" opacity=".5">
-      <rect x="6" y="6" width="84" height="60" rx="8" />
-    </g>
-    <g transform="translate(14 12)" fill="none" stroke="#25348b" stroke-width="2" stroke-linecap="round">
-      <path d="M0 0h68" opacity=".45" />
-      <path d="M0 16h68" opacity=".45" />
-      <path d="M0 32h68" opacity=".45" />
-      <path d="M0 48h68" opacity=".45" />
-      <path d="M0 64h68" opacity=".45" />
-      <path d="M0 0v64" opacity=".45" />
-      <path d="M17 0v64" opacity=".45" />
-      <path d="M34 0v64" opacity=".45" />
-      <path d="M51 0v64" opacity=".45" />
-      <path d="M68 0v64" opacity=".45" />
-    </g>
-    <g transform="translate(14 12)">
-      <circle cx="17" cy="16" r="9" fill="url(#d)" />
-      <circle cx="34" cy="32" r="9" fill="url(#e)" />
-      <circle cx="51" cy="48" r="9" fill="url(#d)" />
-      <circle cx="68" cy="48" r="9" fill="url(#e)" />
-      <circle cx="34" cy="48" r="9" fill="#202f7a" opacity=".65" />
-      <circle cx="51" cy="16" r="9" fill="url(#e)" />
-      <circle cx="68" cy="16" r="9" fill="#1b265d" opacity=".45" />
-      <circle cx="17" cy="32" r="9" fill="#1b265d" opacity=".45" />
-    </g>
-    <path d="M14 55l20-20 20 20 20-20 12 12" fill="none" stroke="url(#f)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+  <rect width="160" height="120" rx="24" fill="url(#bg)" />
+  <rect x="8" y="8" width="144" height="104" rx="20" fill="url(#frame)" stroke="rgba(128, 189, 255, 0.22)" stroke-width="1.4" />
+  <g opacity="0.4" stroke="rgba(123, 209, 255, 0.3)" stroke-width="1" stroke-linecap="round">
+    <path d="M28 32h104" />
+    <path d="M28 56h104" />
+    <path d="M28 80h104" />
+    <path d="M28 104h104" />
   </g>
-  <path d="M28 94h104" stroke="#7bd4ff" stroke-width="3" stroke-linecap="round" opacity=".5" />
-  <circle cx="46" cy="92" r="6" fill="#ffd469" />
-  <circle cx="114" cy="92" r="6" fill="#7ba5ff" />
+  <g transform="translate(20 24)">
+    <rect x="0" y="0" width="120" height="72" rx="18" fill="rgba(10, 16, 38, 0.9)" stroke="rgba(128, 189, 255, 0.35)" stroke-width="2" />
+    <g fill="none" stroke="rgba(123, 209, 255, 0.2)" stroke-width="1.2">
+      <path d="M15 12h90" />
+      <path d="M15 36h90" />
+      <path d="M15 60h90" />
+      <path d="M30 0v72" />
+      <path d="M54 0v72" />
+      <path d="M78 0v72" />
+      <path d="M102 0v72" />
+    </g>
+    <g>
+      <circle cx="30" cy="48" r="12" fill="url(#discA)" />
+      <circle cx="54" cy="60" r="12" fill="url(#discB)" />
+      <circle cx="78" cy="48" r="12" fill="url(#discA)" />
+      <circle cx="102" cy="36" r="12" fill="url(#discB)" />
+      <circle cx="30" cy="24" r="12" fill="rgba(123, 209, 255, 0.14)" />
+      <circle cx="54" cy="24" r="12" fill="rgba(255, 206, 143, 0.16)" />
+      <circle cx="78" cy="24" r="12" fill="rgba(123, 209, 255, 0.14)" />
+      <circle cx="102" cy="24" r="12" fill="rgba(255, 206, 143, 0.16)" />
+      <circle cx="54" cy="36" r="12" fill="url(#discA)" opacity="0.6" />
+      <circle cx="78" cy="60" r="12" fill="url(#discB)" opacity="0.8" />
+    </g>
+  </g>
+  <g stroke="rgba(123, 209, 255, 0.45)" stroke-width="2" stroke-linecap="round" opacity="0.7">
+    <path d="M22 108c28-8 90-8 116 0" />
+  </g>
 </svg>

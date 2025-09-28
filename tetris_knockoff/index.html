@@ -26,7 +26,7 @@
           <div class="arcade-game__frame">
             <header class="arcade-game__intro">
               <h2 id="block-drop-title">Block Drop</h2>
-              <p>Use the arrow keys or WASD to move, rotate, and drop pieces.</p>
+              <p>Use the arrow keys or WASD—or tap controls on touch screens—to move, rotate, and drop pieces.</p>
             </header>
             <canvas
               id="board"
@@ -50,6 +50,45 @@
               </div>
             </div>
             <button id="restart" type="button" class="button">Restart</button>
+            <div class="touch-controls" data-touch-controls aria-label="Touch controls">
+              <div class="touch-controls__pad" role="group" aria-label="Move piece">
+                <button
+                  type="button"
+                  class="touch-control touch-control--left"
+                  data-touch-control="left"
+                  data-repeat="true"
+                  aria-label="Move left"
+                >
+                  <span aria-hidden="true">◀</span>
+                </button>
+                <button
+                  type="button"
+                  class="touch-control touch-control--down"
+                  data-touch-control="down"
+                  data-repeat="true"
+                  aria-label="Soft drop"
+                >
+                  <span aria-hidden="true">▼</span>
+                </button>
+                <button
+                  type="button"
+                  class="touch-control touch-control--right"
+                  data-touch-control="right"
+                  data-repeat="true"
+                  aria-label="Move right"
+                >
+                  <span aria-hidden="true">▶</span>
+                </button>
+              </div>
+              <div class="touch-controls__actions">
+                <button type="button" class="touch-control touch-control--rotate" data-touch-control="rotate" aria-label="Rotate piece">
+                  Rotate
+                </button>
+                <button type="button" class="touch-control touch-control--hard" data-touch-control="hard" aria-label="Hard drop">
+                  Drop
+                </button>
+              </div>
+            </div>
           </div>
           <aside class="arcade-game__sidebar">
             <div class="arcade-panel">
@@ -68,6 +107,7 @@
                 <li><strong>Rotate</strong>: Up arrow or W</li>
                 <li><strong>Soft Drop</strong>: Down arrow or S</li>
                 <li><strong>Hard Drop</strong>: Space</li>
+                <li><strong>Tap controls</strong>: Use the on-screen buttons on touch devices</li>
               </ul>
             </div>
           </aside>

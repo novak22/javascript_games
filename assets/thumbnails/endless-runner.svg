@@ -1,56 +1,39 @@
 <svg width="160" height="120" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="a" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#131a4e" />
-      <stop offset="1" stop-color="#2a145a" />
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071932" />
+      <stop offset="1" stop-color="#1f0f43" />
     </linearGradient>
-    <linearGradient id="b" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#88dbff" />
-      <stop offset="1" stop-color="#c88bff" />
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#061126" />
+      <stop offset="1" stop-color="#0b1430" />
     </linearGradient>
-    <linearGradient id="c" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#1b2c77" />
-      <stop offset="1" stop-color="#090e29" />
+    <linearGradient id="runner" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7be0ff" />
+      <stop offset="1" stop-color="#7b5bff" />
     </linearGradient>
-    <linearGradient id="d" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#7bffdf" />
-      <stop offset="1" stop-color="#5f9fff" />
+    <linearGradient id="trail" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ff9ad5" />
+      <stop offset="1" stop-color="#ffb86f" />
     </linearGradient>
-    <linearGradient id="e" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#ffedb3" />
-      <stop offset="1" stop-color="#ffa35d" />
-    </linearGradient>
-    <radialGradient id="f" cx="0" cy="0" r="1" gradientTransform="translate(118 32) scale(32)">
-      <stop offset="0" stop-color="#ffeab0" />
-      <stop offset="1" stop-color="#ffaf66" stop-opacity="0" />
-    </radialGradient>
   </defs>
-  <rect width="160" height="120" rx="20" fill="url(#a)" />
-  <rect x="6" y="6" width="148" height="108" rx="16" fill="#080f28" />
-  <rect x="6" y="6" width="148" height="108" rx="16" fill="url(#c)" />
-  <rect x="6" y="6" width="148" height="108" rx="16" fill="none" stroke="url(#b)" stroke-width="1.4" />
-  <circle cx="118" cy="32" r="32" fill="url(#f)" />
-  <g fill="#11183d" opacity=".55">
-    <path d="M18 86h30v16H18z" />
-    <path d="M116 90h28v12h-28z" />
-    <path d="M64 88h22v14H64z" />
+  <rect width="160" height="120" rx="24" fill="url(#bg)" />
+  <rect x="8" y="8" width="144" height="104" rx="20" fill="url(#panel)" stroke="rgba(132, 197, 255, 0.22)" stroke-width="1.4" />
+  <g opacity="0.4" stroke="rgba(123, 209, 255, 0.35)" stroke-width="2" stroke-linecap="round">
+    <path d="M20 90c28-12 92-12 120 0" />
+    <path d="M20 70c32-10 92-10 120 0" opacity="0.6" />
+    <path d="M20 50c36-8 92-8 120 0" opacity="0.4" />
   </g>
-  <g fill="#1b255f" opacity=".65">
-    <path d="M34 54h12v20H34z" />
-    <path d="M52 50h10v24H52z" />
-    <path d="M68 46h14v28H68z" />
-    <path d="M90 52h12v22H90z" />
-    <path d="M110 48h10v26h-10z" />
+  <g opacity="0.35" fill="url(#trail)">
+    <path d="M20 94c30-14 80-18 120-8v12c-38-10-82-8-120 0z" />
   </g>
-  <path d="M34 78h88" stroke="#283690" stroke-width="3" stroke-linecap="round" opacity=".65" />
-  <g transform="translate(52 40)">
-    <path d="M38 12c4.4 0 8 3.6 8 8v10c0 2.2-1.8 4-4 4h-8l-8 12H4l-4-12 8-6V22c0-5.5 4.5-10 10-10z" fill="#121942" />
-    <path d="M16 34l-6 4 3.5 10H8l-3.3-9.8A6 6 0 0 1 10 30z" fill="#7d8eff" />
-    <path d="M30 10c5.5 0 10 4.5 10 10v4c0 3.3-2.7 6-6 6h-8c-3.3 0-6-2.7-6-6v-4c0-5.5 4.5-10 10-10z" fill="url(#e)" />
-    <path d="M34 28l6 10-6 10h-8l4-8-4-12z" fill="#7bffdf" opacity=".8" />
-    <circle cx="36" cy="20" r="2.5" fill="#2a1458" />
-    <path d="M24 46l6 18h-8l-6-18z" fill="#5f9fff" />
+  <g transform="translate(0 -6)">
+    <circle cx="68" cy="56" r="9" fill="url(#runner)" />
+    <path d="M76 62c16-14 34-22 56-18-12 8-20 18-24 28 10 4 18 8 24 14-22 2-44 0-70-12z" fill="url(#trail)" opacity="0.8" />
+    <path d="M54 90c20-26 32-46 32-46 8-4 16-4 24 0l-20 34 20 14c-20 6-40 6-56-2z" fill="url(#runner)" />
+    <path d="M60 94c-6 6-4 14 4 18 10-6 12-14-4-18z" fill="#7b5bff" opacity="0.75" />
   </g>
-  <path d="M26 98h108" stroke="url(#d)" stroke-width="4" stroke-linecap="round" />
-  <path d="M26 100c28-12 80-12 108 0" stroke="#ffb165" stroke-width="2" stroke-linecap="round" opacity=".65" />
+  <g stroke="rgba(123, 209, 255, 0.4)" stroke-linecap="round" stroke-width="2" opacity="0.7">
+    <path d="M22 108c30-6 88-6 116 0" />
+  </g>
 </svg>

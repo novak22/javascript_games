@@ -3,735 +3,546 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pixel Playground · Retro Arcade Collection</title>
+    <title>Pixel Playground · Neon Cabinet Collection</title>
     <link rel="stylesheet" href="./arcade.css" />
     <style>
+      :root {
+        color-scheme: dark;
+      }
+
       body {
-        background: var(--brand-bg);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: clamp(2rem, 5vw, 4rem);
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at 12% 14%, rgba(123, 91, 255, 0.32), transparent 58%),
+          radial-gradient(circle at 82% 12%, rgba(78, 205, 255, 0.24), transparent 60%),
+          radial-gradient(circle at 50% 90%, rgba(255, 118, 210, 0.18), transparent 65%),
+          #050814;
+        color: #f5f7ff;
+        font-family: 'Poppins', 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        padding: clamp(1.8rem, 5vw, 3rem);
       }
 
-      .arcade-shell {
-        width: min(1080px, 100%);
+      .landing-shell {
+        width: min(1120px, 100%);
+        margin: 0 auto;
         display: flex;
         flex-direction: column;
-        gap: clamp(2rem, 4vw, 3rem);
-      }
-
-      .frame-stack {
-        display: flex;
-        flex-direction: column;
-        gap: var(--frame-stack-gap, 1rem);
-      }
-
-      .frame-cluster {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: var(--frame-cluster-gap, 0.75rem);
-      }
-
-      .frame-grid {
-        display: grid;
-        gap: var(--frame-grid-gap, 1rem);
+        gap: clamp(2rem, 4vw, 3.5rem);
       }
 
       .hero {
         position: relative;
-        display: grid;
-        gap: clamp(1.75rem, 3vw, 2.4rem);
-        padding: clamp(1.8rem, 4vw, 3rem);
-        background: linear-gradient(135deg, rgba(123, 91, 255, 0.3), rgba(12, 19, 67, 0.92));
-        border-radius: 28px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        box-shadow: 0 32px 60px rgba(5, 8, 31, 0.45);
         overflow: hidden;
+        display: grid;
+        gap: clamp(1.75rem, 3vw, 2.6rem);
+        padding: clamp(2rem, 4.5vw, 3.5rem);
+        border-radius: 32px;
+        background: linear-gradient(135deg, rgba(18, 25, 60, 0.92), rgba(9, 13, 32, 0.95));
+        border: 1px solid rgba(126, 200, 255, 0.18);
+        box-shadow: 0 34px 60px rgba(4, 6, 18, 0.52);
       }
 
       .hero::before {
         content: '';
         position: absolute;
-        inset: 0;
-        background: radial-gradient(circle at 20% 20%, rgba(123, 209, 255, 0.14), transparent 45%),
-          radial-gradient(circle at 80% 30%, rgba(255, 135, 219, 0.18), transparent 50%),
-          radial-gradient(circle at 50% 80%, rgba(123, 91, 255, 0.18), transparent 50%);
-        filter: blur(0px);
-        opacity: 0.8;
+        inset: -20%;
+        background:
+          radial-gradient(circle at 20% 25%, rgba(123, 209, 255, 0.32), transparent 55%),
+          radial-gradient(circle at 78% 18%, rgba(255, 138, 222, 0.28), transparent 60%),
+          radial-gradient(circle at 50% 110%, rgba(123, 91, 255, 0.22), transparent 70%);
+        filter: blur(0.5px);
+        opacity: 0.75;
         pointer-events: none;
       }
 
-      .hero-main,
-      .hero-widget {
+      .hero__intro {
         position: relative;
         z-index: 1;
-      }
-
-      .hero-main {
         display: grid;
-        gap: clamp(1.5rem, 3vw, 2rem);
+        gap: 1.2rem;
+        max-width: 540px;
       }
 
-      .hero-ticker {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        padding: 0.85rem 1.1rem;
-        border-radius: 16px;
-        background: rgba(10, 13, 42, 0.75);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        overflow: hidden;
-        position: relative;
-      }
-
-      .hero-ticker::before,
-      .hero-ticker::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        width: 48px;
-        height: 100%;
-        pointer-events: none;
-        z-index: 1;
-      }
-
-      .hero-ticker::before {
-        left: 0;
-        background: linear-gradient(90deg, rgba(10, 13, 42, 0.95), transparent);
-      }
-
-      .hero-ticker::after {
-        right: 0;
-        background: linear-gradient(270deg, rgba(10, 13, 42, 0.95), transparent);
-      }
-
-      .ticker-label {
-        font-size: 0.75rem;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: rgba(248, 249, 255, 0.6);
-        flex-shrink: 0;
-      }
-
-      .ticker-track {
-        display: flex;
-        gap: 2rem;
-        width: max-content;
-        animation: tickerMove 28s linear infinite;
-        will-change: transform;
-      }
-
-      .ticker-item {
-        white-space: nowrap;
-        font-size: 0.9rem;
-        color: rgba(248, 249, 255, 0.75);
-      }
-
-      .hero-widget {
-        display: grid;
-        gap: 1rem;
-        align-content: start;
-        padding: 1.5rem;
-      }
-
-      .hero-widget__badge {
+      .hero__chip {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 0.35rem;
-        padding: 0.35rem 0.9rem;
+        gap: 0.4rem;
+        padding: 0.4rem 1.1rem;
         border-radius: 999px;
-        font-size: 0.8rem;
-        letter-spacing: 0.16em;
+        background: rgba(123, 91, 255, 0.22);
+        border: 1px solid rgba(123, 91, 255, 0.45);
+        font-size: 0.78rem;
+        letter-spacing: 0.18em;
         text-transform: uppercase;
-        background: rgba(123, 91, 255, 0.2);
-        border: 1px solid rgba(123, 91, 255, 0.4);
+        color: rgba(226, 232, 255, 0.9);
       }
 
-      .hero-widget__text {
+      .hero__intro h1 {
         margin: 0;
-        font-size: 0.95rem;
-        color: rgba(248, 249, 255, 0.75);
-      }
-
-      .hero-widget__button {
-        border: none;
-        cursor: pointer;
-        padding: 0.75rem 1.35rem;
-        border-radius: 999px;
-        font-weight: 600;
-        font-size: 0.95rem;
+        font-size: clamp(2.4rem, 5vw, 3.2rem);
         letter-spacing: 0.02em;
-        background: linear-gradient(135deg, rgba(123, 91, 255, 0.95), rgba(86, 133, 255, 0.95));
-        color: #fff;
-        box-shadow: 0 18px 36px rgba(14, 18, 56, 0.55);
-        transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
       }
 
-      .hero-widget__button:hover,
-      .hero-widget__button:focus-visible {
-        transform: translateY(-2px);
-        box-shadow: 0 22px 44px rgba(14, 18, 56, 0.6);
-        filter: brightness(1.05);
+      .hero__intro p {
+        margin: 0;
+        font-size: clamp(1rem, 2.6vw, 1.2rem);
+        color: rgba(224, 233, 255, 0.78);
+      }
+
+      .hero__cta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1.1rem;
+      }
+
+      .hero__shuffle {
+        border: none;
+        border-radius: 999px;
+        padding: 0.95rem 1.9rem;
+        background: linear-gradient(125deg, #7be0ff, #7b5bff);
+        color: #051021;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        box-shadow: 0 20px 36px rgba(7, 14, 36, 0.55);
+      }
+
+      .hero__shuffle:hover,
+      .hero__shuffle:focus-visible {
+        transform: translateY(-3px);
+        box-shadow: 0 26px 52px rgba(8, 18, 44, 0.6);
         outline: none;
       }
 
-      .hero-widget__stats {
-        --frame-grid-gap: 0.75rem;
-        margin: 0;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      .hero__status {
+        font-size: 0.95rem;
+        color: rgba(214, 224, 255, 0.78);
       }
 
-      .hero-widget__stats div {
+      .hero__grid {
+        position: relative;
+        z-index: 1;
         display: grid;
-        gap: 0.35rem;
-        padding: 0.65rem 0.75rem;
-        border-radius: 12px;
-        background: rgba(12, 19, 67, 0.6);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        gap: clamp(1.5rem, 3vw, 2rem);
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       }
 
-      .hero-widget__stats dt {
+      .hero__stats {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .hero__stat {
+        padding: 1.1rem 1.35rem;
+        border-radius: 22px;
+        background: rgba(11, 17, 44, 0.72);
+        border: 1px solid rgba(123, 209, 255, 0.2);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+        display: grid;
+        gap: 0.45rem;
+      }
+
+      .hero__stat dt {
+        margin: 0;
         font-size: 0.75rem;
-        letter-spacing: 0.14em;
+        letter-spacing: 0.18em;
         text-transform: uppercase;
-        color: rgba(248, 249, 255, 0.6);
+        color: rgba(201, 220, 255, 0.68);
       }
 
-      .hero-widget__stats dd {
+      .hero__stat dd {
         margin: 0;
-        font-size: 1.5rem;
-        font-weight: 600;
-        line-height: 1.1;
-      }
-
-      .hero-widget__stats dd span {
-        display: block;
-      }
-
-      .hero-widget__stats dd small {
-        display: block;
-        font-size: 0.75rem;
-        font-weight: 500;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: rgba(248, 249, 255, 0.6);
-      }
-
-      .stat-accent {
-        color: rgba(123, 209, 255, 0.95);
-      }
-
-      .hero-widget__status {
-        margin: 0;
-        font-size: 0.85rem;
-        color: rgba(248, 249, 255, 0.65);
-      }
-
-      .hero-heading {
-        display: flex;
-        flex-direction: column;
-        gap: 0.35rem;
-      }
-
-      .hero-heading span {
-        color: rgba(248, 249, 255, 0.65);
-        font-size: 0.85rem;
-        letter-spacing: 0.28em;
-        text-transform: uppercase;
-      }
-
-      .hero-heading h1 {
-        margin: 0;
-        font-size: clamp(2.4rem, 6vw, 3.6rem);
-        line-height: 1.05;
+        font-size: clamp(1.8rem, 4vw, 2.5rem);
         font-weight: 700;
       }
 
-      .hero-heading p {
+      .hero__notes {
+        padding: 1.35rem 1.6rem;
+        border-radius: 22px;
+        background: rgba(9, 14, 38, 0.78);
+        border: 1px solid rgba(123, 91, 255, 0.3);
+        box-shadow: 0 24px 46px rgba(6, 10, 28, 0.52);
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      .hero__notes h2 {
         margin: 0;
-        max-width: 44ch;
-        font-size: clamp(1rem, 2.4vw, 1.125rem);
-        color: rgba(248, 249, 255, 0.78);
+        font-size: 1rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(219, 228, 255, 0.85);
       }
 
-      .badge-row {
-        --frame-cluster-gap: 0.75rem;
+      .hero__notes ul {
+        margin: 0;
+        padding-left: 1.1rem;
+        color: rgba(207, 222, 255, 0.75);
+        display: grid;
+        gap: 0.45rem;
       }
 
-      .hero-badge {
-        padding: 0.4rem 0.95rem;
+      .hero__tags {
+        position: relative;
+        z-index: 1;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+
+      .hero__tags li {
+        padding: 0.45rem 1rem;
         border-radius: 999px;
-        background: rgba(12, 19, 67, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        font-size: 0.85rem;
-        color: rgba(248, 249, 255, 0.8);
+        border: 1px solid rgba(123, 209, 255, 0.22);
+        background: rgba(123, 91, 255, 0.22);
+        font-size: 0.78rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(229, 236, 255, 0.85);
+      }
+
+      .section-heading {
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      .section-heading h2 {
+        margin: 0;
+        font-size: clamp(2rem, 4vw, 2.6rem);
+      }
+
+      .section-heading p {
+        margin: 0;
+        max-width: 520px;
+        color: rgba(210, 222, 255, 0.72);
+        font-size: 1rem;
       }
 
       .game-grid {
         display: grid;
-        gap: clamp(1.5rem, 3vw, 2.4rem);
+        gap: clamp(1.4rem, 3vw, 1.9rem);
         grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       }
 
       .game-card {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        padding: clamp(1.25rem, 2.2vw, 1.75rem);
         position: relative;
-        transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
-      }
-
-      .card-chip {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        padding: 0.35rem 0.65rem;
-        border-radius: 999px;
-        font-size: 0.7rem;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        background: rgba(86, 220, 255, 0.2);
-        border: 1px solid rgba(86, 220, 255, 0.65);
-        color: rgba(200, 245, 255, 0.85);
-      }
-
-      .card-chip--upcoming {
-        background: rgba(255, 196, 86, 0.18);
-        border-color: rgba(255, 196, 86, 0.65);
-        color: rgba(255, 231, 175, 0.9);
-      }
-
-      .game-card::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        border: 1px solid rgba(123, 91, 255, 0.24);
-        opacity: 0;
-        transition: opacity 220ms ease;
-        pointer-events: none;
+        display: grid;
+        gap: 1.1rem;
+        padding: 1.45rem;
+        border-radius: 24px;
+        text-decoration: none;
+        color: inherit;
+        background: linear-gradient(145deg, rgba(11, 17, 42, 0.9), rgba(9, 13, 32, 0.96));
+        border: 1px solid rgba(123, 91, 255, 0.2);
+        box-shadow: 0 24px 48px rgba(5, 9, 26, 0.5);
+        transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+        backdrop-filter: blur(16px);
+        min-height: 100%;
       }
 
       .game-card:hover,
       .game-card:focus-visible {
-        transform: translateY(-6px) scale(1.01);
-        box-shadow: 0 26px 60px rgba(10, 14, 40, 0.55);
+        transform: translateY(-6px);
+        border-color: rgba(123, 209, 255, 0.42);
+        box-shadow: 0 32px 62px rgba(6, 12, 34, 0.62);
+        outline: none;
       }
 
       .game-card.is-highlighted {
-        transform: translateY(-8px) scale(1.015);
-        box-shadow: 0 32px 70px rgba(10, 18, 70, 0.65);
+        border-color: rgba(123, 209, 255, 0.65);
+        box-shadow: 0 36px 70px rgba(8, 14, 36, 0.68);
+        transform: translateY(-8px);
       }
 
-      .game-card.is-highlighted::after {
-        opacity: 1;
-        border-color: rgba(86, 220, 255, 0.7);
-        box-shadow: 0 0 0 6px rgba(86, 220, 255, 0.15);
-      }
-
-      .game-card:hover::after,
-      .game-card:focus-visible::after {
-        opacity: 1;
-      }
-
-      .game-card[aria-disabled='true'] {
-        cursor: not-allowed;
-        opacity: 0.85;
-      }
-
-      .game-card[aria-disabled='true'] .card-thumb::after {
-        opacity: 0.45;
-      }
-
-      .game-card[aria-disabled='true'] .card-meta p {
-        color: rgba(248, 249, 255, 0.6);
-      }
-
-      .game-card--upcoming .card-thumb {
-        justify-content: center;
-        padding: 2rem 1.5rem;
-      }
-
-      .game-card--upcoming .card-meta {
-        gap: 0.5rem;
-      }
-
-      .game-card[aria-disabled='true']:hover,
-      .game-card[aria-disabled='true']:focus-visible {
-        transform: none;
-        box-shadow: 0 26px 60px rgba(10, 14, 40, 0.45);
+      .card-chip {
+        position: absolute;
+        top: 1.15rem;
+        right: 1.15rem;
+        padding: 0.35rem 0.9rem;
+        border-radius: 999px;
+        background: linear-gradient(135deg, #7be0ff, #ff7bff);
+        color: #040a1a;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
       }
 
       .card-thumb {
-        --thumb-bg: rgba(255, 255, 255, 0.08);
-        overflow: hidden;
-        border-radius: 16px;
         position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--thumb-bg);
-        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
-      }
-
-      .card-thumb::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.18), transparent 55%),
-          radial-gradient(circle at 80% 20%, rgba(123, 209, 255, 0.16), transparent 60%),
-          radial-gradient(circle at 50% 80%, rgba(255, 135, 219, 0.18), transparent 60%);
-        mix-blend-mode: screen;
-        opacity: 0.65;
-        pointer-events: none;
+        border-radius: 20px;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 18% 22%, rgba(123, 209, 255, 0.25), transparent 60%),
+          radial-gradient(circle at 82% 80%, rgba(255, 142, 214, 0.22), transparent 62%),
+          rgba(10, 16, 36, 0.92);
+        padding: 0.85rem;
+        display: grid;
+        place-items: center;
+        aspect-ratio: 16 / 12;
       }
 
       .card-thumb img {
-        width: 72%;
-        max-width: 180px;
-        display: block;
-        object-fit: contain;
-        mix-blend-mode: screen;
-        filter: drop-shadow(0 12px 24px rgba(8, 12, 38, 0.5));
-      }
-
-      .card-thumb[data-thumb='2048'] {
-        --thumb-bg: linear-gradient(135deg, rgba(255, 173, 92, 0.35), rgba(128, 70, 255, 0.4));
-      }
-
-      .card-thumb[data-thumb='flappy'] {
-        --thumb-bg: linear-gradient(135deg, rgba(86, 220, 255, 0.35), rgba(28, 72, 240, 0.45));
-      }
-
-      .card-thumb[data-thumb='connect'] {
-        --thumb-bg: linear-gradient(135deg, rgba(255, 92, 164, 0.35), rgba(120, 64, 255, 0.45));
-      }
-
-      .card-thumb[data-thumb='runner'] {
-        --thumb-bg: linear-gradient(135deg, rgba(255, 126, 92, 0.35), rgba(72, 206, 255, 0.42));
-      }
-
-      .card-thumb[data-thumb='brick'] {
-        --thumb-bg: linear-gradient(135deg, rgba(86, 255, 196, 0.32), rgba(123, 91, 255, 0.45));
-      }
-
-      .card-thumb[data-thumb='mover'] {
-        --thumb-bg: linear-gradient(135deg, rgba(123, 209, 255, 0.35), rgba(12, 19, 67, 0.7));
-      }
-
-      .card-thumb[data-thumb='block'] {
-        --thumb-bg: linear-gradient(135deg, rgba(255, 135, 219, 0.32), rgba(75, 55, 200, 0.55));
-      }
-
-      .card-thumb[data-thumb='hustle'] {
-        --thumb-bg: linear-gradient(135deg, rgba(255, 196, 86, 0.35), rgba(255, 92, 164, 0.4));
-      }
-
-      .card-thumb[data-thumb='memory'] {
-        --thumb-bg: linear-gradient(135deg, rgba(92, 255, 233, 0.32), rgba(92, 123, 255, 0.42));
-      }
-
-      .card-thumb[data-thumb='drift'] {
-        --thumb-bg: linear-gradient(135deg, rgba(255, 235, 138, 0.35), rgba(123, 91, 255, 0.55));
-      }
-
-      .card-thumb[data-thumb='placeholder'] {
-        --thumb-bg: linear-gradient(135deg, rgba(86, 220, 255, 0.25), rgba(123, 91, 255, 0.25));
+        width: min(120px, 70%);
+        height: auto;
+        filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.45));
       }
 
       .card-meta {
-        display: flex;
-        flex-direction: column;
-        gap: 0.35rem;
+        display: grid;
+        gap: 0.6rem;
+      }
+
+      .card-meta span {
+        font-size: 0.78rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgba(199, 215, 255, 0.6);
       }
 
       .card-meta h2 {
-        font-size: 1.35rem;
-        font-weight: 600;
         margin: 0;
+        font-size: clamp(1.25rem, 3vw, 1.6rem);
       }
 
       .card-meta p {
         margin: 0;
-        font-size: 0.95rem;
-        color: rgba(248, 249, 255, 0.7);
+        color: rgba(214, 224, 255, 0.78);
+        line-height: 1.5;
       }
 
-      .card-meta span {
-        font-size: 0.8rem;
-        color: rgba(123, 209, 255, 0.85);
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-      }
-
-      footer {
+      .landing-footer {
         text-align: center;
-        color: rgba(248, 249, 255, 0.5);
-        font-size: 0.85rem;
+        font-size: 0.95rem;
+        color: rgba(205, 216, 245, 0.72);
+      }
+
+      @media (max-width: 860px) {
+        .hero {
+          padding: clamp(1.8rem, 6vw, 3rem);
+        }
+
+        .hero__cta {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .hero__status {
+          max-width: 24ch;
+        }
       }
 
       @media (max-width: 640px) {
         body {
-          padding: 1.5rem;
+          padding: clamp(1.25rem, 5vw, 2rem);
         }
 
-        .hero {
-          padding: 1.75rem;
-          grid-template-columns: minmax(0, 1fr);
+        .landing-shell {
+          gap: 2rem;
         }
 
-        .hero-widget__stats {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-      }
-
-      @media (min-width: 960px) {
-        .hero {
-          grid-template-columns: minmax(0, 1fr) minmax(260px, 0.7fr);
-          align-items: stretch;
+        .hero__intro h1 {
+          font-size: clamp(2.1rem, 8vw, 2.6rem);
         }
 
-        .hero-main {
-          align-self: center;
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .ticker-track {
-          animation-duration: 0.01ms;
-          animation-iteration-count: 1;
+        .hero__grid {
+          grid-template-columns: 1fr;
         }
 
-        .hero-widget__button,
-        .game-card,
-        .game-card::after {
-          transition: none;
-        }
-      }
-
-      @keyframes tickerMove {
-        from {
-          transform: translateX(0);
+        .hero__status {
+          max-width: none;
         }
 
-        to {
-          transform: translateX(-50%);
+        .game-card {
+          padding: 1.25rem;
         }
       }
     </style>
   </head>
   <body>
-    <div class="arcade-shell">
+    <div class="landing-shell">
       <header class="hero">
-        <div class="hero-main">
-          <div class="hero-heading frame-stack">
-            <span class="brand-title">Pixel Playground</span>
-            <h1>Uniform cabinet UI, same neon energy</h1>
-            <p>
-              Every retro challenge now ships with the shared arcade frame, synced badges, and refreshed thumbnails.
-              Queue up your next run while the curated cabinet playlist rotates in the background.
-            </p>
-          </div>
-          <div class="badge-row frame-cluster">
-            <span class="hero-badge">Shared HUD controls</span>
-            <span class="hero-badge">Cabinet theme v2.0</span>
-            <span class="hero-badge">Daily playlist refresh</span>
-          </div>
-          <div class="hero-ticker card-surface" role="status" aria-live="polite">
-            <span class="ticker-label">Update log</span>
-            <div class="ticker-track">
-              <span class="ticker-item">Uniform cabinet UI is live across the entire Pixel Playground roster.</span>
-              <span class="ticker-item">Shared stat badges mirror every in-game overlay for frictionless swaps.</span>
-              <span class="ticker-item">Arcade shuffle now rotates fresh challenges into the spotlight each day.</span>
-              <span class="ticker-item">Uniform cabinet UI is live across the entire Pixel Playground roster.</span>
-              <span class="ticker-item">Shared stat badges mirror every in-game overlay for frictionless swaps.</span>
-              <span class="ticker-item">Arcade shuffle now rotates fresh challenges into the spotlight each day.</span>
-            </div>
+        <div class="hero__intro">
+          <span class="hero__chip">Pixel Playground</span>
+          <h1>Neon Cabinet Rotation</h1>
+          <p>Arcade experiments tuned for quick sessions on desktop or touch devices. Pick a cabinet and you are playing instantly.</p>
+          <div class="hero__cta">
+            <button class="hero__shuffle" type="button" data-action="shuffle">Shuffle the lineup</button>
+            <span class="hero__status" data-status-rotator>Calibrating cabinet glow...</span>
           </div>
         </div>
-        <aside class="hero-widget card-surface" aria-label="Arcade shuffle">
-          <span class="hero-widget__badge">Arcade Shuffle</span>
-          <p class="hero-widget__text">
-            The unified cabinet layout syncs HUD controls across every title. Tap surprise to jump straight into a tuned build.
-          </p>
-          <button class="hero-widget__button" type="button" data-action="shuffle">
-            Surprise me
-          </button>
-          <dl class="hero-widget__stats frame-grid">
-            <div>
+        <div class="hero__grid">
+          <dl class="hero__stats">
+            <div class="hero__stat">
               <dt>Playable now</dt>
               <dd><span data-total-games>0</span></dd>
             </div>
-            <div>
-              <dt>Uniform HUD rollout</dt>
-              <dd><span>100%</span><small>Cabinet parity</small></dd>
-            </div>
-            <div>
-              <dt>Next launch</dt>
-              <dd><span class="stat-accent">Cabinet Rotation</span><small>Live updates</small></dd>
-            </div>
-            <div>
+            <div class="hero__stat">
               <dt>Fresh drops</dt>
-              <dd><span data-new-games>0</span><small>Marked new</small></dd>
+              <dd><span data-new-games>0</span></dd>
+            </div>
+            <div class="hero__stat">
+              <dt>Touch ready</dt>
+              <dd><span>100%</span></dd>
             </div>
           </dl>
-          <p class="hero-widget__status" data-status-rotator>
-            Press surprise to sample the new cabinet frame in action.
-          </p>
-        </aside>
+          <div class="hero__notes">
+            <h2>What's inside</h2>
+            <ul>
+              <li>Responsive cabinet shell that adapts to phones, tablets, and desktop screens.</li>
+              <li>Zero-install experiences spanning puzzles, reflex tests, strategy, and chill idle play.</li>
+              <li>Unified HUD styling so every cabinet feels part of the same neon lineup.</li>
+            </ul>
+          </div>
+        </div>
+        <ul class="hero__tags">
+          <li>Touch-friendly</li>
+          <li>Keyboard optional</li>
+          <li>Instant play</li>
+        </ul>
       </header>
 
       <main>
+        <div class="section-heading">
+          <h2>Arcade lineup</h2>
+          <p>Choose a cabinet to dive into bite-sized challenges with luminous retro flair.</p>
+        </div>
         <div class="game-grid" role="list">
-          <a class="game-card card-surface frame-stack" href="./2048/" role="listitem">
-            <div class="card-thumb" data-thumb="2048" aria-hidden="true">
+          <a class="game-card" href="./2048/" role="listitem">
+            <div class="card-thumb" data-thumb="nebula-merge" aria-hidden="true">
               <img src="./assets/thumbnails/2048.svg" alt="" loading="lazy" />
             </div>
             <div class="card-meta">
-              <span>Swipe Puzzle</span>
-              <h2>2048</h2>
-              <p>Swipe merges through the unified cabinet layout to chase the legendary 2048 tile.</p>
+              <span>Merge Puzzle</span>
+              <h2>Nebula Merge</h2>
+              <p>Swipe shimmering tiles to fuse the numbers and awaken the 2048 core at the heart of the nebula.</p>
             </div>
           </a>
 
-          <a class="game-card card-surface frame-stack" href="./flappy-bird/" role="listitem">
-            <div class="card-thumb" data-thumb="flappy" aria-hidden="true">
+          <a class="game-card" href="./flappy-bird/" role="listitem">
+            <div class="card-thumb" data-thumb="sky-pulse" aria-hidden="true">
               <img src="./assets/thumbnails/flappy-bird.svg" alt="" loading="lazy" />
             </div>
             <div class="card-meta">
-              <span>Arcade Reflex</span>
-              <h2>Flappy Bird</h2>
-              <p>Glide through the gaps with synced HUD prompts and a countdown that mirrors in-game cues.</p>
+              <span>Reflex Flight</span>
+              <h2>Sky Pulse</h2>
+              <p>Tap through neon gates, ride the thermal currents, and keep the beat alive above the city glow.</p>
             </div>
           </a>
 
-          <a class="game-card card-surface frame-stack" href="./connect-four/" role="listitem">
-            <div class="card-thumb" data-thumb="connect" aria-hidden="true">
+          <a class="game-card" href="./connect-four/" role="listitem">
+            <div class="card-thumb" data-thumb="column-clash" aria-hidden="true">
               <img src="./assets/thumbnails/connect-four.svg" alt="" loading="lazy" />
             </div>
             <div class="card-meta">
               <span>Tabletop Duel</span>
-              <h2>Connect Four</h2>
-              <p>Challenge a friend under the new cabinet lighting and stack discs until the frame declares your win.</p>
+              <h2>Column Clash</h2>
+              <p>Outsmart the AI by stacking discs into a perfect four-in-a-row before the grid fills with rival colors.</p>
             </div>
           </a>
 
-          <a class="game-card card-surface frame-stack" href="./endless-runner/" role="listitem">
-            <div class="card-thumb" data-thumb="runner" aria-hidden="true">
+          <a class="game-card" href="./endless-runner/" role="listitem">
+            <div class="card-thumb" data-thumb="hyper-sprint" aria-hidden="true">
               <img src="./assets/thumbnails/endless-runner.svg" alt="" loading="lazy" />
             </div>
             <div class="card-meta">
-              <span>Speed Trial</span>
-              <h2>Endless Runner</h2>
-              <p>Sprint across neon lanes while the unified overlay tracks your streak and boosts.</p>
+              <span>Endless Run</span>
+              <h2>Hyper Sprint</h2>
+              <p>Dash across shifting lanes, vault hazards, and ride energy rails as the city blurs into streaks of light.</p>
             </div>
           </a>
 
-          <a class="game-card card-surface frame-stack" href="./brick-breaker-clone/" role="listitem">
-            <div class="card-thumb" data-thumb="brick" aria-hidden="true">
+          <a class="game-card" href="./brick-breaker-clone/" role="listitem">
+            <div class="card-thumb" data-thumb="prism-smash" aria-hidden="true">
               <img src="./assets/thumbnails/brick-breaker.svg" alt="" loading="lazy" />
             </div>
             <div class="card-meta">
               <span>Arcade Classic</span>
-              <h2>Neon Brick Breaker</h2>
-              <p>Reflect energy orbs and shred walls while combo counters sync with the refreshed frame.</p>
+              <h2>Prism Smash</h2>
+              <p>Fire luminous orbs, slice through glassy bricks, and chain ricochets to light up the scoreboard.</p>
             </div>
           </a>
 
-          <a class="game-card card-surface frame-stack" href="./simple_mover/" role="listitem">
-            <div class="card-thumb" data-thumb="mover" aria-hidden="true">
+          <a class="game-card" href="./simple_mover/" role="listitem">
+            <div class="card-thumb" data-thumb="glide-lab" aria-hidden="true">
               <img src="./assets/thumbnails/simple-mover.svg" alt="" loading="lazy" />
             </div>
             <div class="card-meta">
-              <span>Arcade Trainer</span>
-              <h2>Simple Mover</h2>
-              <p>Dash across the calibrated arena with touch and keyboard cues tuned to the shared layout.</p>
+              <span>Arena Trainer</span>
+              <h2>Glide Lab</h2>
+              <p>Thread tight corridors, collect starlit shards, and dash past reactive walls in this precision training bay.</p>
             </div>
           </a>
 
-          <a class="game-card card-surface frame-stack" href="./tetris_knockoff/" role="listitem">
-            <div class="card-thumb" data-thumb="block" aria-hidden="true">
+          <a class="game-card" href="./tetris_knockoff/" role="listitem">
+            <div class="card-thumb" data-thumb="stack-rift" aria-hidden="true">
               <img src="./assets/thumbnails/block-drop.svg" alt="" loading="lazy" />
             </div>
             <div class="card-meta">
               <span>Falling Blocks</span>
-              <h2>Block Drop</h2>
-              <p>Stack falling pieces as the uniform HUD celebrates every line clear and combo ladder.</p>
+              <h2>Stack Rift</h2>
+              <p>Guide drifting tetrominoes through a dimensional rift, slotting them into perfect lines before the stack erupts.</p>
             </div>
           </a>
 
-          <a
-            class="game-card card-surface frame-stack"
-            href="./online-hustle-simulator/"
-            role="listitem"
-            data-status="new"
-          >
+          <a class="game-card" href="./online-hustle-simulator/" role="listitem" data-status="new">
             <span class="card-chip">New</span>
-            <div class="card-thumb" data-thumb="hustle" aria-hidden="true">
+            <div class="card-thumb" data-thumb="pixel-mogul" aria-hidden="true">
               <img src="./assets/thumbnails/online-hustle.svg" alt="" loading="lazy" />
             </div>
             <div class="card-meta">
               <span>Idle Tycoon</span>
-              <h2>Online Hustle Simulator</h2>
-              <p>Scale your pixel empire with dashboards that now mirror the arcade cabinet HUD.</p>
+              <h2>Pixel Mogul</h2>
+              <p>Spin up quirky side gigs, automate your crew, and watch dashboards overflow with cosmic credits.</p>
             </div>
           </a>
 
-          <a
-            class="game-card card-surface frame-stack"
-            href="./phase-pulse/"
-            role="listitem"
-            data-status="new"
-          >
+          <a class="game-card" href="./phase-pulse/" role="listitem" data-status="new">
             <span class="card-chip">New</span>
-            <div class="card-thumb" aria-hidden="true">
+            <div class="card-thumb" data-thumb="flux-lines" aria-hidden="true">
               <img src="./assets/thumbnails/phase-pulse.svg" alt="" loading="lazy" />
             </div>
             <div class="card-meta">
-              <span>Lane Flux Duel</span>
-              <h2>Phase Pulse</h2>
-              <p>Phase between neon lanes, thread the gates, and build a limitless streak in the flux stream.</p>
+              <span>Lane Flux</span>
+              <h2>Flux Lines</h2>
+              <p>Phase between laser lanes, zip through apertures, and chain pulses before the corridor collapses.</p>
             </div>
           </a>
 
-          <a
-            class="game-card card-surface frame-stack"
-            href="./neon-memory/"
-            role="listitem"
-            data-status="new"
-          >
+          <a class="game-card" href="./neon-memory/" role="listitem" data-status="new">
             <span class="card-chip">New</span>
-            <div class="card-thumb" data-thumb="memory" aria-hidden="true">
+            <div class="card-thumb" data-thumb="glyph-echo" aria-hidden="true">
               <img src="./assets/thumbnails/neon-memory.svg" alt="" loading="lazy" />
             </div>
             <div class="card-meta">
               <span>Memory Rush</span>
-              <h2>Neon Memory</h2>
-              <p>Flip neon tiles with the uniform UI tracking streaks and bonus multipliers.</p>
+              <h2>Glyph Echo</h2>
+              <p>Flip radiant tiles, chase combo streaks, and clear the grid before the echo fades.</p>
             </div>
           </a>
 
-          <a class="game-card card-surface" href="./photon-trails/" role="listitem" data-status="new">
+          <a class="game-card" href="./photon-trails/" role="listitem" data-status="new">
             <span class="card-chip">New</span>
-            <div class="card-thumb" aria-hidden="true">
+            <div class="card-thumb" data-thumb="beam-weave" aria-hidden="true">
               <img src="./assets/thumbnails/photon-trails.svg" alt="" loading="lazy" />
             </div>
             <div class="card-meta">
-              <span>Photon Labyrinth</span>
-              <h2>Photon Trails</h2>
-              <p>Rotate mirrors and splitters to weave a beam through drifting crystals and light them all.</p>
+              <span>Photon Puzzle</span>
+              <h2>Beam Weave</h2>
+              <p>Redirect beams with mirrors and splitters until every crystal sings with luminescent energy.</p>
             </div>
           </a>
         </div>
       </main>
 
-      <footer>
-        © <span class="js-year"></span> Pixel Playground Arcade · Crafted with vanilla HTML, CSS, and
-        JavaScript.
+      <footer class="landing-footer">
+        © <span class="js-year"></span> Pixel Playground Arcade · Crafted with vanilla HTML, CSS, and JavaScript.
       </footer>
     </div>
     <script src="./assets/js/arcade.js" defer></script>

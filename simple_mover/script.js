@@ -35,6 +35,14 @@ const state = {
   layoutIndex: 0,
 };
 
+const VIRTUAL_CONTROL_MAP = {
+  up: ['ArrowUp', 'w'],
+  down: ['ArrowDown', 's'],
+  left: ['ArrowLeft', 'a'],
+  right: ['ArrowRight', 'd'],
+  dash: [' '],
+};
+
 function randInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -623,6 +631,81 @@ function endGame() {
   state.keys.clear();
 }
 
+function applyVirtualKeys(keys, isActive) {
+  keys.forEach((key) => {
+    if (isActive) {
+      state.keys.add(key);
+    } else {
+      state.keys.delete(key);
+    }
+  });
+}
+
+function setupTouchControls() {
+  const buttons = document.querySelectorAll('[data-control]');
+  if (!buttons.length) {
+    return;
+  }
+
+  const activePointers = new Map();
+
+  const releasePointer = (pointerId) => {
+    const entry = activePointers.get(pointerId);
+    if (!entry) {
+      return;
+    }
+    applyVirtualKeys(entry.keys, false);
+    entry.button.classList.remove('is-active');
+    activePointers.delete(pointerId);
+  };
+
+  buttons.forEach((button) => {
+    button.addEventListener(
+      'pointerdown',
+      (event) => {
+        if (event.pointerType === 'mouse' && event.button !== 0) {
+          return;
+        }
+        const action = button.dataset.control;
+        const keys = VIRTUAL_CONTROL_MAP[action];
+        if (!keys) {
+          return;
+        }
+        event.preventDefault();
+        applyVirtualKeys(keys, true);
+        const pointerId = event.pointerId ?? 'mouse';
+        activePointers.set(pointerId, { keys, button });
+        button.classList.add('is-active');
+        if (typeof button.setPointerCapture === 'function' && event.pointerId !== undefined) {
+          button.setPointerCapture(event.pointerId);
+        }
+      },
+      { passive: false }
+    );
+
+    const endHandler = (event) => {
+      const pointerId = event.pointerId ?? 'mouse';
+      releasePointer(pointerId);
+    };
+
+    button.addEventListener('pointerup', endHandler);
+    button.addEventListener('pointercancel', endHandler);
+    button.addEventListener('lostpointercapture', endHandler);
+    button.addEventListener('pointerleave', (event) => {
+      const pointerId = event.pointerId ?? 'mouse';
+      releasePointer(pointerId);
+    });
+  });
+
+  window.addEventListener('blur', () => {
+    activePointers.forEach(({ keys, button }) => {
+      applyVirtualKeys(keys, false);
+      button.classList.remove('is-active');
+    });
+    activePointers.clear();
+  });
+}
+
 function init() {
   resetGame();
   requestAnimationFrame(loop);
@@ -659,4 +742,5 @@ window.addEventListener("keyup", (event) => {
   state.keys.delete(event.key);
 });
 
+setupTouchControls();
 init();
