@@ -1,0 +1,167 @@
+:root {
+  color-scheme: dark;
+  --bg: radial-gradient(circle at 15% 20%, rgba(86, 158, 255, 0.3) 0%, rgba(16, 14, 39, 0.92) 55%, rgba(8, 8, 18, 1) 100%);
+  --panel: rgba(24, 28, 62, 0.82);
+  --panel-border: rgba(120, 160, 255, 0.25);
+  --accent: #6cf7ff;
+  --accent-2: #ff8cf9;
+  --text-dim: rgba(230, 238, 255, 0.7);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: #f7fbff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+.game-shell {
+  width: min(1024px, 100%);
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.6rem);
+}
+
+.hud {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 24px;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  box-shadow: 0 24px 64px rgba(6, 10, 35, 0.4);
+  display: grid;
+  gap: 1rem;
+}
+
+.hud h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3rem);
+  letter-spacing: 0.04em;
+}
+
+.tagline {
+  margin: 0;
+  font-size: clamp(1rem, 2.4vw, 1.2rem);
+  color: var(--text-dim);
+}
+
+.scoreboard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.score-tile {
+  flex: 1 1 140px;
+  background: rgba(16, 21, 50, 0.8);
+  border: 1px solid rgba(132, 196, 255, 0.2);
+  border-radius: 18px;
+  padding: 0.85rem 1.1rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.score-tile .label {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.28em;
+  color: rgba(188, 209, 255, 0.6);
+}
+
+.score-tile .value {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.canvas-stage {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(132, 196, 255, 0.22);
+  background: linear-gradient(160deg, rgba(16, 26, 66, 0.85), rgba(13, 12, 30, 0.95));
+  box-shadow: 0 26px 70px rgba(10, 13, 42, 0.65);
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 8, 22, 0.78);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+.overlay-card {
+  background: rgba(26, 32, 75, 0.94);
+  border: 1px solid rgba(132, 196, 255, 0.25);
+  border-radius: 20px;
+  padding: clamp(1.75rem, 4vw, 2.5rem);
+  display: grid;
+  gap: 1rem;
+  text-align: center;
+  max-width: 400px;
+}
+
+.overlay-card h2 {
+  margin: 0;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+}
+
+.overlay-card p {
+  margin: 0;
+  color: rgba(210, 226, 255, 0.78);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.overlay-tip {
+  font-size: 0.85rem;
+  color: rgba(210, 226, 255, 0.6);
+}
+
+.overlay button {
+  border: none;
+  border-radius: 999px;
+  padding: 0.75rem 1.8rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #0c102a;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.overlay button:hover,
+.overlay button:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 34px rgba(136, 226, 255, 0.4);
+}
+
+@media (max-width: 720px) {
+  body {
+    padding: 1rem;
+  }
+
+  .game-shell {
+    gap: 1.5rem;
+  }
+
+  canvas {
+    height: 70vh;
+  }
+}
