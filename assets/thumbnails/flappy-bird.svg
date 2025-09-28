@@ -1,16 +1,57 @@
 <svg width="160" height="120" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="gradFlappy" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#4facfe"/>
-      <stop offset="100%" stop-color="#00f2fe"/>
+    <linearGradient id="a" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#151b52" />
+      <stop offset="1" stop-color="#2a1458" />
+    </linearGradient>
+    <linearGradient id="b" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8be2ff" />
+      <stop offset="1" stop-color="#c990ff" />
+    </linearGradient>
+    <radialGradient id="c" cx="0" cy="0" r="1" gradientTransform="translate(118 34) scale(28)">
+      <stop offset="0" stop-color="#ffe6ad" />
+      <stop offset="1" stop-color="#ffab63" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="d" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1c2b76" />
+      <stop offset="1" stop-color="#0b0f29" />
+    </linearGradient>
+    <linearGradient id="e" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7bffdf" />
+      <stop offset="1" stop-color="#5f9fff" />
+    </linearGradient>
+    <linearGradient id="f" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffeab2" />
+      <stop offset="1" stop-color="#ffaf6b" />
     </linearGradient>
   </defs>
-  <rect x="0" y="0" width="160" height="120" rx="16" fill="url(#gradFlappy)"/>
-  <g stroke="#fff" stroke-width="4" stroke-linecap="round" fill="none">
-    <path d="M40 70 Q60 40 80 60 T120 50"/>
-    <circle cx="70" cy="55" r="12" fill="#ffd166" stroke="none"/>
-    <circle cx="74" cy="52" r="4" fill="#1d3557" stroke="none"/>
-    <polyline points="62,55 56,60 60,66" stroke="#ef476f" fill="none" stroke-width="3"/>
+  <rect width="160" height="120" rx="20" fill="url(#a)" />
+  <rect x="6" y="6" width="148" height="108" rx="16" fill="#091029" />
+  <rect x="6" y="6" width="148" height="108" rx="16" fill="url(#d)" />
+  <rect x="6" y="6" width="148" height="108" rx="16" fill="none" stroke="url(#b)" stroke-width="1.4" />
+  <circle cx="118" cy="34" r="28" fill="url(#c)" />
+  <g fill="#111a45" opacity=".65">
+    <path d="M26 86h24v18H26z" />
+    <path d="M120 90h20v14h-20z" />
+    <path d="M58 92h22v12H58z" />
   </g>
-  <text x="80" y="100" font-size="16" fill="#fff" font-family="'Poppins', sans-serif" font-weight="600" text-anchor="middle">Tap to fly</text>
+  <g transform="translate(36 28)">
+    <path d="M3 0h18c3 0 5 2 5 5v46c0 3-2 5-5 5H3c-1.7 0-3-1.3-3-3V3c0-1.7 1.3-3 3-3z" fill="#10163d" />
+    <rect x="3" y="6" width="18" height="40" rx="4" fill="#1f2f7c" />
+    <rect x="5" y="8" width="14" height="12" rx="3" fill="url(#e)" />
+    <rect x="5" y="30" width="14" height="12" rx="3" fill="url(#e)" transform="scale(1 -1) translate(0 -72)" />
+    <rect x="5" y="20" width="14" height="8" rx="3" fill="#9c7bff" opacity=".55" />
+  </g>
+  <g transform="translate(78 38)">
+    <path d="M18 0c9.9 0 18 8.1 18 18s-8.1 18-18 18c-2.2 0-4.3-.4-6.3-1.2L4 38c-2.2-.9-3.5-3.3-3-5.7l1.6-7.5C1.5 22.6 0 21 0 19c0-2.2 2.1-4 4.7-4h4.2c1.4-5.9 6.8-10 13.1-10z" fill="url(#f)" />
+    <path d="M32 24c-2.2 5.1-6.7 8.6-12 9.4l3.4 6c.5.8-.1 1.8-1.1 1.8H19l-3-4.8" fill="#ffcc7a" opacity=".65" />
+    <circle cx="23.5" cy="17.5" r="2.8" fill="#2a1458" />
+    <path d="M31 16c1.8 0 3.5 1.4 3.7 3.2.3 2.6-2 4.6-4.5 4.1l-6.2-1.3c-.7-.2-.9-1.1-.4-1.6 1.6-1.9 3.8-4.4 5-4.4z" fill="#ff8d5b" />
+    <path d="M13 17c2.2 0 4 1.8 4 4 0 2.9-2.2 5.4-5.1 5.9l-5.6.9c-1.1.2-2.1-.8-1.9-1.9l.8-4.1C6.8 19.1 9.8 17 13 17z" fill="#fff" opacity=".35" />
+  </g>
+  <path d="M108 44h20c1.7 0 3 1.3 3 3v26c0 1.7-1.3 3-3 3h-20c-1.7 0-3-1.3-3-3V47c0-1.7 1.3-3 3-3z" fill="#10163d" />
+  <rect x="110" y="48" width="16" height="18" rx="3" fill="#1f2f7c" />
+  <rect x="112" y="51" width="12" height="6" rx="2" fill="url(#e)" />
+  <rect x="112" y="58" width="12" height="6" rx="2" fill="url(#e)" transform="scale(1 -1) translate(0 -118)" />
+  <path d="M34 94c16-6 35-6 52 0" stroke="#7bd1ff" stroke-width="3" stroke-linecap="round" opacity=".6" />
 </svg>

@@ -12,6 +12,7 @@ A collection of bite-sized JavaScript arcade games wrapped in a unified retro ae
 | [Endless Runner](./endless-runner/) | Action | Dash through synthwave streets, avoiding obstacles to extend your run. |
 | [Simple Mover](./simple_mover/) | Arcade trainer | Collect stars, dash through gaps, and dodge reactive walls. |
 | [Block Drop](./tetris_knockoff/) | Falling blocks | Rotate and stack tetrominoes to clear lines and level up. |
+| [Petak](./petak/) | Word puzzle | Guess the hidden Serbian five-letter word with adaptive neon hints. |
 
 ## Running locally
 
