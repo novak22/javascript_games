@@ -22,33 +22,33 @@
     </header>
 
     <main class="arcade-main">
-      <div class="layout">
-        <section class="game-panel">
-          <div class="game-container">
-            <canvas
-              id="game"
-              width="1200"
-              height="720"
-              aria-label="Simple mover game"
-              role="img"
-            ></canvas>
-          </div>
+      <div class="arcade-game">
+        <section class="arcade-game__frame">
+          <canvas
+            id="game"
+            width="1200"
+            height="720"
+            aria-label="Simple mover game"
+            role="img"
+          ></canvas>
         </section>
-        <section class="info-panel">
-          <h2>Quick controls</h2>
-          <p>
-            Use the arrow keys or WASD to move the blue square. Collect stars to gain points and avoid the red walls!
-          </p>
-          <ul>
-            <li><strong>Arrow Keys / WASD</strong>: Move</li>
-            <li><strong>Space</strong>: Dash (short burst of speed)</li>
-            <li><strong>R</strong>: Restart instantly after a crash</li>
-          </ul>
-          <p>
-            Colliding with a wall pauses the action briefly before you respawn in a now-larger arena—press
-            <strong>R</strong> if you want to restart immediately.
-          </p>
-        </section>
+        <aside class="arcade-game__sidebar">
+          <article class="arcade-panel card-surface">
+            <h2>Quick controls</h2>
+            <p>
+              Use the arrow keys or WASD to move the blue square. Collect stars to gain points and avoid the red walls!
+            </p>
+            <ul>
+              <li><strong>Arrow Keys / WASD</strong>: Move</li>
+              <li><strong>Space</strong>: Dash (short burst of speed)</li>
+              <li><strong>R</strong>: Restart instantly after a crash</li>
+            </ul>
+            <p>
+              Colliding with a wall pauses the action briefly before you respawn in a now-larger arena—press
+              <strong>R</strong> if you want to restart immediately.
+            </p>
+          </article>
+        </aside>
       </div>
     </main>
 
