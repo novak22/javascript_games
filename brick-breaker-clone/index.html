@@ -4,44 +4,73 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Neon Brick Breaker</title>
+    <link rel="stylesheet" href="../arcade.css" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main class="game-shell">
-      <header class="hud">
-        <h1>Neon Brick Breaker</h1>
-        <p class="tagline">Break every block, keep the ball alive, and climb the levels.</p>
-        <div class="scoreboard">
-          <div class="score-tile">
-            <span class="label">Score</span>
-            <span class="value" id="score">0</span>
-          </div>
-          <div class="score-tile">
-            <span class="label">Level</span>
-            <span class="value" id="level">1</span>
-          </div>
-          <div class="score-tile">
-            <span class="label">Lives</span>
-            <span class="value" id="lives">3</span>
-          </div>
+    <div class="arcade-page">
+      <header class="arcade-header card-surface">
+        <div class="arcade-header__meta">
+          <span class="brand-title">Pixel Playground</span>
+          <h1>Neon Brick Breaker</h1>
+          <p>Break every block, keep the ball alive, and climb the neon-soaked levels.</p>
         </div>
+        <a class="arcade-back" href="../index.html">
+          <span aria-hidden="true">⟵</span>
+          Back to Arcade
+        </a>
       </header>
 
-      <section class="canvas-stage">
-        <canvas id="gameCanvas" width="900" height="600" aria-label="Brick breaker play field"></canvas>
-        <div class="overlay" id="overlay" hidden>
-          <div class="overlay-card">
-            <h2 id="overlay-title">Ready?</h2>
-            <p id="overlay-message">
-              Use the arrow keys or move your mouse to slide the paddle. Smash every brick without losing all lives.
-            </p>
-            <button type="button" id="overlay-action">Start game</button>
-            <p class="overlay-tip">Press space to pause or resume mid game.</p>
+      <main class="arcade-main">
+        <section class="arcade-game">
+          <div class="arcade-game__frame">
+            <canvas
+              id="gameCanvas"
+              width="960"
+              height="540"
+              aria-label="Brick breaker play field"
+            ></canvas>
+            <div class="overlay" id="overlay" hidden>
+              <div class="overlay-card">
+                <h2 id="overlay-title">Ready?</h2>
+                <p id="overlay-message">
+                  Use the arrow keys or move your mouse to slide the paddle. Smash every brick without losing all lives.
+                </p>
+                <button class="btn overlay-action" type="button" id="overlay-action">Start game</button>
+                <p class="overlay-tip">Press space to pause or resume mid game.</p>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
-    </main>
+
+          <aside class="arcade-panel hud-panel card-surface">
+            <header class="hud-panel__header">
+              <h2>Cabinet Status</h2>
+              <p class="hud-panel__subtitle">Keep the combo alive to chase the leaderboard.</p>
+            </header>
+            <div class="scoreboard">
+              <div class="score-tile">
+                <span class="label">Score</span>
+                <span class="value" id="score">0</span>
+              </div>
+              <div class="score-tile">
+                <span class="label">Level</span>
+                <span class="value" id="level">1</span>
+              </div>
+              <div class="score-tile">
+                <span class="label">Lives</span>
+                <span class="value" id="lives">3</span>
+              </div>
+            </div>
+          </aside>
+        </section>
+      </main>
+
+      <footer class="arcade-footer">
+        © <span class="js-year"></span> Pixel Playground · The cabinet resets between each run—go earn the glow.
+      </footer>
+    </div>
 
     <script src="script.js"></script>
+    <script src="../assets/js/arcade.js" defer></script>
   </body>
 </html>
