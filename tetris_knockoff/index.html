@@ -22,13 +22,19 @@
       </header>
 
       <main class="arcade-main">
-        <section class="wrapper" aria-labelledby="block-drop-title">
-          <section class="game-panel">
-            <header>
+        <section class="arcade-game" aria-labelledby="block-drop-title">
+          <div class="arcade-game__frame">
+            <header class="arcade-game__intro">
               <h2 id="block-drop-title">Block Drop</h2>
               <p>Use the arrow keys or WASD to move, rotate, and drop pieces.</p>
             </header>
-            <canvas id="board" width="300" height="600" aria-label="Tetris playfield" role="img"></canvas>
+            <canvas
+              id="board"
+              width="300"
+              height="600"
+              aria-label="Tetris playfield"
+              role="img"
+            ></canvas>
             <div class="hud" role="status" aria-live="polite">
               <div class="stat">
                 <span class="label">Score</span>
@@ -44,19 +50,26 @@
               </div>
             </div>
             <button id="restart" type="button" class="button">Restart</button>
-          </section>
-          <aside class="next-panel">
-            <h2>Next</h2>
-            <canvas id="next" width="120" height="120" aria-label="Next tetromino preview"></canvas>
-            <section class="instructions">
+          </div>
+          <aside class="arcade-game__sidebar">
+            <div class="arcade-panel">
+              <h2>Next</h2>
+              <canvas
+                id="next"
+                width="120"
+                height="120"
+                aria-label="Next tetromino preview"
+              ></canvas>
+            </div>
+            <div class="arcade-panel">
               <h3>Controls</h3>
-              <ul>
+              <ul class="controls-list">
                 <li><strong>Move</strong>: Left / Right arrows or A / D</li>
                 <li><strong>Rotate</strong>: Up arrow or W</li>
                 <li><strong>Soft Drop</strong>: Down arrow or S</li>
                 <li><strong>Hard Drop</strong>: Space</li>
               </ul>
-            </section>
+            </div>
           </aside>
         </section>
       </main>
