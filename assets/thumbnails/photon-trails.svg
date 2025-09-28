@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title desc">
+  <title id="title">Photon Trails thumbnail</title>
+  <desc id="desc">A glowing beam weaving through mirrors toward crystals.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1030" />
+      <stop offset="100%" stop-color="#050716" />
+    </linearGradient>
+    <linearGradient id="beam" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#74f1ff" />
+      <stop offset="100%" stop-color="#ff8efc" />
+    </linearGradient>
+    <radialGradient id="crystal" cx="50%" cy="50%" r="0.6">
+      <stop offset="0%" stop-color="#8ff7ff" />
+      <stop offset="65%" stop-color="#8ff7ff" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#8ff7ff" stop-opacity="0" />
+    </radialGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="160" height="160" rx="28" fill="url(#bg)" />
+  <g stroke="#17204c" stroke-width="6" stroke-linejoin="round">
+    <rect x="26" y="26" width="108" height="108" rx="18" fill="rgba(28,37,84,0.75)" />
+  </g>
+  <g fill="none" stroke="url(#beam)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)">
+    <path d="M46 80 H80 V40" />
+    <path d="M80 80 V114 H120" />
+  </g>
+  <g>
+    <circle cx="40" cy="80" r="10" fill="#8cfbff" opacity="0.8" />
+    <circle cx="120" cy="40" r="12" fill="url(#crystal)" />
+    <circle cx="120" cy="120" r="12" fill="url(#crystal)" />
+  </g>
+  <g stroke="#7fa6ff" stroke-width="4" stroke-linecap="round">
+    <line x1="80" y1="40" x2="94" y2="26" />
+    <line x1="80" y1="80" x2="66" y2="94" />
+    <line x1="80" y1="114" x2="94" y2="128" />
+  </g>
+</svg>

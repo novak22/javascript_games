@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Photon Trails · Pixel Playground</title>
+    <link rel="stylesheet" href="../arcade.css" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="arcade-page">
+      <header class="arcade-header card-surface">
+        <div class="arcade-header__meta">
+          <span class="brand-title">Pixel Playground</span>
+          <h1>Photon Trails</h1>
+          <p>Rotate mirrors and splitters to guide charged light through the nebula and awaken every crystal.</p>
+        </div>
+        <a class="arcade-back" href="../index.html">
+          <span aria-hidden="true">⟵</span>
+          Back to Arcade
+        </a>
+      </header>
+
+      <main class="arcade-main">
+        <section class="trails card-surface">
+          <header class="trails__top">
+            <div class="trails__intro">
+              <h2>Route the beam</h2>
+              <p>Click or tap the reactive tiles to rotate them. Split the photon stream and connect it to every crystal node.</p>
+            </div>
+            <div class="trails__panel" role="status" aria-live="polite">
+              <dl class="trails__stats">
+                <div>
+                  <dt>Crystals aligned</dt>
+                  <dd><span data-stat="crystals">0</span> / <span data-stat="total">0</span></dd>
+                </div>
+                <div>
+                  <dt>Moves used</dt>
+                  <dd><span data-stat="moves">0</span></dd>
+                </div>
+              </dl>
+              <button class="trails__reset" type="button" data-action="reset">Reset puzzle</button>
+            </div>
+          </header>
+
+          <div class="trails__board" role="grid" aria-label="Photon Trails puzzle board" data-board></div>
+          <p class="trails__status" data-status>Calibrate the emitters and chart a path for the beam.</p>
+        </section>
+
+        <section class="trails__guide card-surface">
+          <h2>How to navigate the trails</h2>
+          <ol>
+            <li>Select any glowing tile to rotate it 90° and change how it bends or splits the beam.</li>
+            <li>Chain emitters, mirrors, and splitters so the photon flow touches every crystal.</li>
+            <li>Watch the board update in real time&mdash;when all crystals are lit the run is complete.</li>
+          </ol>
+          <p class="trails__accessibility">
+            Photon Trails supports mouse, touch, and keyboard play. Use <kbd>Tab</kbd> to focus a tile and press <kbd>Enter</kbd>
+            or <kbd>Space</kbd> to rotate it. Status updates announce crystal progress for assistive tech.
+          </p>
+        </section>
+      </main>
+
+      <footer class="arcade-footer">
+        © <span class="js-year"></span> Pixel Playground · Bring the light back to the drifting crystals.
+      </footer>
+    </div>
+    <script src="./script.js" defer></script>
+    <script src="../assets/js/arcade.js" defer></script>
+  </body>
+</html>

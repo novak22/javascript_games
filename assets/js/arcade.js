@@ -27,6 +27,7 @@
     'Listening for high-score whispers in the cabinet.',
     'Syncing the uniform cabinet shell for your run.',
     'Spinning the arcade wheel for your next run.',
+    'Calibrating photon emitters for a trail run.',
   ];
 
   if (statusEl) {
