@@ -1,0 +1,39 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bb-bg" x1="200" y1="0" x2="200" y2="300" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#070B2D" />
+      <stop offset="0.5" stop-color="#101B4C" />
+      <stop offset="1" stop-color="#08091E" />
+    </linearGradient>
+    <linearGradient id="bb-paddle" x1="140" y1="228" x2="260" y2="228" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7DFBFF" />
+      <stop offset="1" stop-color="#F98BFF" />
+    </linearGradient>
+    <linearGradient id="bb-brick" x1="0" y1="0" x2="0" y2="28" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity="0.9" />
+      <stop offset="0.4" stop-color="#7DFBFF" />
+      <stop offset="1" stop-color="#19245D" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" rx="28" fill="url(#bb-bg)" />
+  <g opacity="0.3" stroke="#6E82F7" stroke-width="1">
+    <path d="M40 80H360" />
+    <path d="M40 120H360" />
+    <path d="M40 160H360" />
+    <path d="M40 200H360" />
+  </g>
+  <g transform="translate(80 60)" stroke="#D9E2FF" stroke-opacity="0.6" stroke-width="1.4">
+    <rect width="60" height="26" rx="10" fill="url(#bb-brick)" />
+    <rect x="70" width="60" height="26" rx="10" fill="url(#bb-brick)" />
+    <rect x="140" width="60" height="26" rx="10" fill="url(#bb-brick)" />
+    <rect x="210" width="60" height="26" rx="10" fill="url(#bb-brick)" />
+    <rect x="0" y="36" width="60" height="26" rx="10" fill="url(#bb-brick)" />
+    <rect x="70" y="36" width="60" height="26" rx="10" fill="url(#bb-brick)" />
+    <rect x="140" y="36" width="60" height="26" rx="10" fill="url(#bb-brick)" />
+    <rect x="210" y="36" width="60" height="26" rx="10" fill="url(#bb-brick)" />
+  </g>
+  <rect x="140" y="228" width="120" height="18" rx="10" fill="url(#bb-paddle)" stroke="rgba(255,255,255,0.4)" stroke-width="2" />
+  <circle cx="210" cy="210" r="12" fill="#E9FCFF" stroke="#A6C8FF" stroke-width="2" />
+  <circle cx="210" cy="210" r="6" fill="#7AD8FF" />
+  <circle cx="210" cy="210" r="3" fill="#FFFFFF" />
+</svg>
