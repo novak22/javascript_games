@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chrono Echo Protocol · Pixel Playground</title>
+    <link rel="stylesheet" href="../arcade.css" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="arcade-page chrono">
+      <header class="arcade-header">
+        <div class="arcade-header__meta">
+          <a class="arcade-back" href="../">
+            <span aria-hidden="true">⟵</span>
+            Cabinet Select
+          </a>
+          <h1>Chrono Echo Protocol</h1>
+          <p>
+            Lead a strike team of time-loop echoes through the Prism Vault. Each loop records your
+            movements, allowing past selves to hold switches, siphon shards, and open sealed gates
+            for the present run.
+          </p>
+        </div>
+        <dl class="chrono__readout">
+          <div>
+            <dt>Current Sector</dt>
+            <dd data-level-name>—</dd>
+          </div>
+          <div>
+            <dt>Loop</dt>
+            <dd><span data-loop>1</span>/<span data-total-loops>1</span></dd>
+          </div>
+          <div>
+            <dt>Steps</dt>
+            <dd><span data-steps>0</span>/<span data-step-limit>0</span></dd>
+          </div>
+          <div>
+            <dt>Shards</dt>
+            <dd><span data-shards>0</span>/<span data-total-shards>0</span></dd>
+          </div>
+        </dl>
+      </header>
+
+      <main class="arcade-game">
+        <section class="arcade-game__stage">
+          <div class="arcade-game__frame chrono__frame">
+            <canvas
+              id="stage"
+              width="640"
+              height="640"
+              aria-label="Chrono Echo Protocol field"
+            ></canvas>
+            <div class="chrono__overlay" data-overlay hidden>
+              <div class="chrono__overlay-inner">
+                <h2 data-overlay-title>Mission Ready</h2>
+                <p data-overlay-subtitle>Press any direction to deploy.</p>
+                <div class="chrono__overlay-actions">
+                  <button type="button" data-action="resume">Resume Loop</button>
+                  <button type="button" data-action="reset">Restart Sector</button>
+                </div>
+              </div>
+            </div>
+            <div class="chrono__touch" aria-hidden="true">
+              <button type="button" data-move="up" aria-label="Move up">▲</button>
+              <div class="chrono__touch-middle">
+                <button type="button" data-move="left" aria-label="Move left">◀</button>
+                <button type="button" data-move="wait" aria-label="Wait">◎</button>
+                <button type="button" data-move="right" aria-label="Move right">▶</button>
+              </div>
+              <button type="button" data-move="down" aria-label="Move down">▼</button>
+            </div>
+          </div>
+        </section>
+
+        <aside class="arcade-game__sidebar">
+          <article class="arcade-panel chrono__log">
+            <h2>Mission Log</h2>
+            <p data-level-story>—</p>
+            <button type="button" data-action="next" class="chrono__next" hidden>
+              Advance to Next Sector
+            </button>
+          </article>
+          <article class="arcade-panel chrono__intel">
+            <h2>Temporal Intel</h2>
+            <ul>
+              <li>Each loop records your route. Past echoes replay perfectly on subsequent loops.</li>
+              <li>Pressure glyphs (<span class="glyph">▲</span>) open matching force gates while occupied.</li>
+              <li>Collect all chronon shards before reaching the exit portal.</li>
+              <li>Tap <kbd>R</kbd> to restart the current sector and <kbd>Backspace</kbd> to rewind the loop.</li>
+              <li>Runs are turn-based—touch controls and keyboard share the same tactical grid.</li>
+            </ul>
+          </article>
+        </aside>
+      </main>
+    </div>
+
+    <script src="./game.js" type="module"></script>
+  </body>
+</html>
