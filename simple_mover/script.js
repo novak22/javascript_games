@@ -4,6 +4,9 @@ const gameOverOverlay = document.getElementById("game-over");
 const retryButton = document.getElementById("retry-btn");
 const finalScoreEl = document.getElementById("final-score");
 
+const WALL_MARGIN = 90;
+const WALL_THICKNESS = 30;
+
 const state = {
   player: {
     x: 0,
@@ -26,36 +29,44 @@ function randInt(min, max) {
 }
 
 function createWalls() {
-  const margin = 90;
-  const thickness = 30;
-  const innerSpan = canvas.width - margin * 2 - thickness * 2;
+  const innerSpan = canvas.width - WALL_MARGIN * 2 - WALL_THICKNESS * 2;
 
   state.walls = [
-    { x: margin, y: margin, width: canvas.width - margin * 2, height: thickness },
     {
-      x: margin,
-      y: canvas.height - margin - thickness,
-      width: canvas.width - margin * 2,
-      height: thickness,
-    },
-    { x: margin, y: margin, width: thickness, height: canvas.height - margin * 2 },
-    {
-      x: canvas.width - margin - thickness,
-      y: margin,
-      width: thickness,
-      height: canvas.height - margin * 2,
+      x: WALL_MARGIN,
+      y: WALL_MARGIN,
+      width: canvas.width - WALL_MARGIN * 2,
+      height: WALL_THICKNESS,
     },
     {
-      x: margin + thickness + innerSpan * 0.1,
-      y: canvas.height / 2 - thickness * 1.5,
+      x: WALL_MARGIN,
+      y: canvas.height - WALL_MARGIN - WALL_THICKNESS,
+      width: canvas.width - WALL_MARGIN * 2,
+      height: WALL_THICKNESS,
+    },
+    {
+      x: WALL_MARGIN,
+      y: WALL_MARGIN,
+      width: WALL_THICKNESS,
+      height: canvas.height - WALL_MARGIN * 2,
+    },
+    {
+      x: canvas.width - WALL_MARGIN - WALL_THICKNESS,
+      y: WALL_MARGIN,
+      width: WALL_THICKNESS,
+      height: canvas.height - WALL_MARGIN * 2,
+    },
+    {
+      x: WALL_MARGIN + WALL_THICKNESS + innerSpan * 0.1,
+      y: canvas.height / 2 - WALL_THICKNESS * 1.5,
       width: innerSpan * 0.8,
-      height: thickness,
+      height: WALL_THICKNESS,
     },
     {
-      x: margin + thickness + innerSpan * 0.1,
-      y: canvas.height / 2 + thickness * 0.5,
+      x: WALL_MARGIN + WALL_THICKNESS + innerSpan * 0.1,
+      y: canvas.height / 2 + WALL_THICKNESS * 0.5,
       width: innerSpan * 0.8,
-      height: thickness,
+      height: WALL_THICKNESS,
     },
   ];
 }
@@ -204,8 +215,18 @@ function loop(now) {
 }
 
 function resetPlayerPosition() {
-  state.player.x = canvas.width / 2 - state.player.size / 2;
-  state.player.y = canvas.height / 2 - state.player.size / 2;
+  const p = state.player;
+
+  p.x = canvas.width / 2 - p.size / 2;
+
+  const upperSafeY = WALL_MARGIN + WALL_THICKNESS + 20;
+  const lowerSafeY =
+    canvas.height / 2 - WALL_THICKNESS * 1.5 - p.size - 20;
+
+  const preferredY = canvas.height / 2 - p.size / 2;
+  const clampedY = Math.min(lowerSafeY, preferredY);
+
+  p.y = Math.max(upperSafeY, clampedY);
 }
 
 function resetGame() {
