@@ -9,21 +9,33 @@
 <body>
   <main class="game-container">
     <header class="game-header">
-      <h1>Petak</h1>
-      <div class="language-picker">
-        <label for="language-select">Jezik:</label>
-        <select id="language-select"></select>
+      <div class="title-group">
+        <h1>Petak</h1>
+        <p class="subtitle">Srpski Wordle, uz malo sjaja ✨</p>
+      </div>
+      <div class="controls">
+        <div class="language-picker">
+          <label for="language-select">Jezik:</label>
+          <select id="language-select"></select>
+        </div>
+        <button class="reset-button" id="reset-button" type="button">Nova reč</button>
       </div>
     </header>
 
-    <section class="board" id="board" aria-live="polite"></section>
+    <section class="status-bar" id="status-bar" role="status" aria-live="polite"></section>
+
+    <section class="board" id="board" aria-live="polite" aria-label="Tabla za pogađanje"></section>
 
     <section class="keyboard" id="keyboard" aria-label="Virtuelna tastatura"></section>
 
-    <p class="instructions">
-      Pogodi skrivenu reč od pet slova za šest pokušaja. Zelena slova su na pravom mestu,
-      žuta su u reči, ali na pogrešnom mestu, dok siva nisu deo reči. Odaberi drugo pismo i listu reči preko menija iznad.
-    </p>
+    <details class="instructions">
+      <summary>Kako se igra?</summary>
+      <p>
+        Pogodi skrivenu reč od pet slova za šest pokušaja. Zelena slova su na pravom mestu,
+        žuta su u reči, ali na pogrešnom mestu, dok siva nisu deo reči. Odaberi drugo pismo
+        i listu reči preko menija iznad. Klikni na „Nova reč" za novi izazov.
+      </p>
+    </details>
   </main>
 
   <template id="board-row-template">
