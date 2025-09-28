@@ -64,8 +64,7 @@
 }
 
 .board {
-  --playfield-size: calc(100% - 2 * var(--board-padding));
-  --tile-size: calc((var(--playfield-size) - 3 * var(--tile-gap)) / 4);
+  --tile-size: 0px;
   position: relative;
   width: 100%;
   max-width: var(--arcade-stage-width);
@@ -76,6 +75,9 @@
   border: 1px solid var(--panel-border);
   box-shadow: 0 2.5rem 4.5rem rgba(78, 61, 158, 0.18);
   overflow: hidden;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1 / 1;
 }
 
 .grid {
@@ -83,9 +85,8 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--tile-gap);
   position: relative;
-  width: var(--playfield-size);
-  height: var(--playfield-size);
-  margin: 0 auto;
+  width: 100%;
+  height: 100%;
 }
 
 .grid-row {
@@ -101,18 +102,15 @@
 
 .tile-container {
   position: absolute;
-  top: var(--board-padding);
-  left: var(--board-padding);
-  width: var(--playfield-size);
-  height: var(--playfield-size);
+  inset: var(--board-padding);
   pointer-events: none;
   overflow: visible;
 }
 
 .tile {
   position: absolute;
-  width: var(--tile-size);
-  height: var(--tile-size);
+  width: var(--tile-size, 0px);
+  height: var(--tile-size, 0px);
   border-radius: 1rem;
   display: flex;
   align-items: center;
@@ -122,10 +120,8 @@
   color: #453867;
   background: white;
   box-shadow: 0 1.1rem 2.5rem rgba(78, 61, 158, 0.18);
-  --x: 0;
-  --y: 0;
-  --tx: calc(var(--x) * (var(--tile-size) + var(--tile-gap)));
-  --ty: calc(var(--y) * (var(--tile-size) + var(--tile-gap)));
+  --tx: 0px;
+  --ty: 0px;
   transform: translate3d(var(--tx), var(--ty), 0);
   transition: transform 160ms ease-in-out;
   will-change: transform;
