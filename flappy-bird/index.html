@@ -22,43 +22,52 @@
       </header>
 
       <main class="arcade-main">
-        <div class="layout">
-          <section class="info-panel">
-            <h2>Flappy Bird - Neon Skies</h2>
-            <p>
-              Glide through a corridor of neon pipes and keep the bird afloat. Tap or
-              press space to flap, dodge obstacles, and chase your high score in this
-              retro-inspired remake.
-            </p>
-            <ul>
-              <li><strong>Flap:</strong> Spacebar, click, or tap</li>
-              <li><strong>Stay alive:</strong> Avoid pipes and the ground</li>
-              <li><strong>Restart:</strong> Hit the play again button or press R</li>
-            </ul>
-            <p class="tip">Pro tip: rhythmic taps keep you steady through tight gaps!</p>
-          </section>
-          <section class="game-panel">
+        <div class="arcade-game">
+          <section class="arcade-game__stage">
             <div class="game-container">
-              <div class="hud">
-                <div class="score" id="scoreDisplay">0</div>
-              </div>
-              <canvas
-                id="gameCanvas"
-                width="480"
-                height="640"
-                role="img"
-                aria-label="Flappy Bird arcade canvas"
-              ></canvas>
-              <div class="game-over hidden" id="gameOver">
-                <h2 class="game-over__title">Game Over</h2>
-                <p class="game-over__score">
-                  Final Score: <span id="finalScore">0</span>
-                </p>
-                <button class="retry-button" id="retryButton">Play Again</button>
-                <p class="game-over__hint">Press Space, Tap, or R to restart</p>
+              <div class="arcade-game__frame">
+                <canvas
+                  id="gameCanvas"
+                  width="480"
+                  height="640"
+                  role="img"
+                  aria-label="Flappy Bird arcade canvas"
+                ></canvas>
+                <div class="hud">
+                  <div class="score" id="scoreDisplay">0</div>
+                </div>
+                <div class="game-over hidden" id="gameOver">
+                  <h2 class="game-over__title">Game Over</h2>
+                  <p class="game-over__score">
+                    Final Score: <span id="finalScore">0</span>
+                  </p>
+                  <button class="retry-button" id="retryButton">Play Again</button>
+                  <p class="game-over__hint">Press Space, Tap, or R to restart</p>
+                </div>
               </div>
             </div>
           </section>
+          <aside class="arcade-game__sidebar">
+            <article class="arcade-panel">
+              <h2>Flappy Bird - Neon Skies</h2>
+              <p>
+                Glide through a corridor of neon pipes and keep the bird afloat. Tap or
+                press space to flap, dodge obstacles, and chase your high score in this
+                retro-inspired remake.
+              </p>
+            </article>
+            <article class="arcade-panel">
+              <h3>How to Play</h3>
+              <ul>
+                <li><strong>Flap:</strong> Spacebar, click, or tap</li>
+                <li><strong>Stay alive:</strong> Avoid pipes and the ground</li>
+                <li><strong>Restart:</strong> Hit the play again button or press R</li>
+              </ul>
+            </article>
+            <article class="arcade-panel arcade-panel--highlight">
+              <p class="tip">Pro tip: rhythmic taps keep you steady through tight gaps!</p>
+            </article>
+          </aside>
         </div>
       </main>
 
