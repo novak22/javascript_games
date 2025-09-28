@@ -1,0 +1,19 @@
+<svg width="160" height="120" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradConnect" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6a11cb"/>
+      <stop offset="100%" stop-color="#2575fc"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="160" height="120" rx="16" fill="url(#gradConnect)"/>
+  <g fill="#fff">
+    <rect x="32" y="24" width="96" height="72" rx="12" opacity="0.3"/>
+    <circle cx="56" cy="42" r="10" opacity="0.9"/>
+    <circle cx="82" cy="42" r="10" opacity="0.6"/>
+    <circle cx="108" cy="42" r="10" opacity="0.9"/>
+    <circle cx="56" cy="66" r="10" opacity="0.6"/>
+    <circle cx="82" cy="66" r="10" opacity="0.9"/>
+    <circle cx="108" cy="66" r="10" opacity="0.6"/>
+  </g>
+  <text x="80" y="104" font-size="16" fill="#fff" font-family="'Poppins', sans-serif" font-weight="600" text-anchor="middle">Line up four</text>
+</svg>
