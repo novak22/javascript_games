@@ -32,6 +32,28 @@
                 role="img"
                 aria-label="Endless runner game"
               ></canvas>
+              <div
+                id="game-overlay"
+                class="game-overlay hidden"
+                role="status"
+                aria-live="assertive"
+              >
+                <div class="game-overlay__panel">
+                  <h2 class="game-overlay__title">Game Over</h2>
+                  <p class="game-overlay__text">Tap restart to chase a new high score.</p>
+                  <button id="overlay-restart" type="button" class="hud-button">
+                    Restart
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="touch-controls" aria-label="Touch controls">
+              <button type="button" class="touch-button touch-button--jump" data-action="jump">
+                Jump
+              </button>
+              <button type="button" class="touch-button touch-button--duck" data-action="duck">
+                Duck
+              </button>
             </div>
           </div>
 
