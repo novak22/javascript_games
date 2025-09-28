@@ -3,68 +3,91 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Online Hustle Simulator</title>
+  <title>Online Hustle Simulator · Pixel Playground</title>
+  <link rel="stylesheet" href="../arcade.css" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="app">
-    <header class="top-bar">
-      <div class="stat">
-        <span class="label">Money</span>
-        <span id="money" class="value">$0</span>
+  <div class="arcade-page">
+    <header class="arcade-header card-surface">
+      <div class="arcade-header__meta">
+        <span class="brand-title">Pixel Playground</span>
+        <h1>Online Hustle Simulator</h1>
+        <p>Flip, freelance, and automate your way from broke to balling before the day ends.</p>
       </div>
-      <div class="stat time">
-        <span class="label">Time Left</span>
-        <div class="time-wrapper">
-          <span id="time" class="value">14h</span>
-          <div class="time-bar">
-            <div id="time-progress" class="time-progress"></div>
-          </div>
-        </div>
-      </div>
-      <div class="stat">
-        <span class="label">Day</span>
-        <span id="day" class="value">1</span>
-      </div>
-      <button id="end-day" class="end-day">End Day</button>
+      <a class="arcade-back" href="../index.html">
+        <span aria-hidden="true">⟵</span>
+        Back to Arcade
+      </a>
     </header>
 
-    <main>
-      <section class="panel hustles">
-        <div class="panel-header">
-          <h2>Daily Hustles</h2>
-          <p>Spend your time wisely. When the clock hits zero, the grind resets.</p>
-        </div>
-        <div class="card-grid" id="hustle-grid"></div>
-      </section>
+    <main class="arcade-main">
+      <div class="arcade-game hustle-sim">
+        <section class="arcade-game__stage">
+          <header class="stage-status">
+            <div class="stat">
+              <span class="label">Money</span>
+              <span id="money" class="value">$0</span>
+            </div>
+            <div class="stat time">
+              <span class="label">Time Left</span>
+              <div class="time-wrapper">
+                <span id="time" class="value">14h</span>
+                <div class="time-bar">
+                  <div id="time-progress" class="time-progress"></div>
+                </div>
+              </div>
+            </div>
+            <div class="stat">
+              <span class="label">Day</span>
+              <span id="day" class="value">1</span>
+            </div>
+            <button id="end-day" class="end-day">End Day</button>
+          </header>
 
-      <section class="panel assets">
-        <div class="panel-header">
-          <h2>Passive Assets</h2>
-          <p>Build long-term plays that keep the cash flowing even when you log off.</p>
-        </div>
-        <div class="card-grid" id="asset-grid"></div>
-      </section>
+          <div class="stage-panel">
+            <div class="stage-panel__header">
+              <h2>Daily Hustles</h2>
+              <p>Spend your time wisely. When the clock hits zero, the grind resets.</p>
+            </div>
+            <div class="card-grid" id="hustle-grid"></div>
+          </div>
+        </section>
 
-      <section class="panel upgrades">
-        <div class="panel-header">
-          <h2>Upgrades & Boosts</h2>
-          <p>Invest in yourself to push the grind further.</p>
-        </div>
-        <div class="card-grid" id="upgrade-grid"></div>
-      </section>
+        <aside class="arcade-game__sidebar">
+          <section class="arcade-panel">
+            <div class="arcade-panel__header">
+              <h2>Passive Assets</h2>
+              <p>Build long-term plays that keep the cash flowing even when you log off.</p>
+            </div>
+            <div class="card-grid" id="asset-grid"></div>
+          </section>
 
-      <section class="panel log">
-        <div class="panel-header">
-          <h2>Event Log</h2>
-          <p id="log-tip">Welcome! Start hustling to fill your feed.</p>
-        </div>
-        <div id="log-feed" class="log-feed"></div>
-      </section>
+          <section class="arcade-panel">
+            <div class="arcade-panel__header">
+              <h2>Upgrades &amp; Boosts</h2>
+              <p>Invest in yourself to push the grind further.</p>
+            </div>
+            <div class="card-grid" id="upgrade-grid"></div>
+          </section>
+
+          <section class="arcade-panel">
+            <div class="arcade-panel__header">
+              <h2>Event Log</h2>
+              <p id="log-tip">Welcome! Start hustling to fill your feed.</p>
+            </div>
+            <div id="log-feed" class="log-feed"></div>
+          </section>
+        </aside>
+      </div>
     </main>
+
+    <footer class="arcade-footer">
+      © <span class="js-year"></span> Pixel Playground · Keep hustling until the inbox is empty.
+    </footer>
   </div>
 
   <template id="log-template">
@@ -75,5 +98,6 @@
   </template>
 
   <script src="script.js"></script>
+  <script src="../assets/js/arcade.js" defer></script>
 </body>
 </html>
