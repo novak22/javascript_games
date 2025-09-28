@@ -8,41 +8,64 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="layout">
-    <section class="game-panel">
-      <div class="game-container">
-        <canvas
-          id="game"
-          width="960"
-          height="600"
-          aria-label="Simple mover game"
-          role="img"
-        ></canvas>
-        <div
-          id="game-over"
-          class="game-over"
-          role="alertdialog"
-          aria-modal="true"
-          aria-labelledby="game-over-title"
-          hidden
-        >
-          <h2 id="game-over-title">Game Over</h2>
-          <p>You bumped into a wall, but you can try again!</p>
-          <p class="game-over__score">Your score: <span id="final-score">0</span></p>
-          <button id="retry-btn" type="button" class="retry-button">Play again</button>
-        </div>
+  <div class="arcade-page">
+    <header class="arcade-header card-surface">
+      <div class="arcade-header__meta">
+        <span class="brand-title">Pixel Playground</span>
+        <h1>Simple Mover</h1>
+        <p>Collect stars, dash through tight spots, and avoid the reactive walls.</p>
       </div>
-    </section>
-    <section class="info-panel">
-      <h1>Simple Mover</h1>
-      <p>Use the arrow keys or WASD to move the blue square. Collect stars to gain points and avoid the red walls!</p>
-      <ul>
-        <li><strong>Arrow Keys / WASD</strong>: Move</li>
-        <li><strong>Space</strong>: Dash (short burst of speed)</li>
-      </ul>
-      <p>The game ends if you hit a wall, but you can instantly restart from the retry popup.</p>
-    </section>
-  </main>
+      <a class="arcade-back" href="../index.html">
+        <span aria-hidden="true">⟵</span>
+        Back to Arcade
+      </a>
+    </header>
+
+    <main class="arcade-main">
+      <div class="layout">
+        <section class="game-panel">
+          <div class="game-container">
+            <canvas
+              id="game"
+              width="960"
+              height="600"
+              aria-label="Simple mover game"
+              role="img"
+            ></canvas>
+            <div
+              id="game-over"
+              class="game-over"
+              role="alertdialog"
+              aria-modal="true"
+              aria-labelledby="game-over-title"
+              hidden
+            >
+              <h2 id="game-over-title">Game Over</h2>
+              <p>You bumped into a wall, but you can try again!</p>
+              <p class="game-over__score">Your score: <span id="final-score">0</span></p>
+              <button id="retry-btn" type="button" class="retry-button">Play again</button>
+            </div>
+          </div>
+        </section>
+        <section class="info-panel">
+          <h2>Quick controls</h2>
+          <p>
+            Use the arrow keys or WASD to move the blue square. Collect stars to gain points and avoid the red walls!
+          </p>
+          <ul>
+            <li><strong>Arrow Keys / WASD</strong>: Move</li>
+            <li><strong>Space</strong>: Dash (short burst of speed)</li>
+          </ul>
+          <p>The game ends if you hit a wall, but you can instantly restart from the retry popup.</p>
+        </section>
+      </div>
+    </main>
+
+    <footer class="arcade-footer">
+      © <span class="js-year"></span> Pixel Playground · Practice precise movement and control.
+    </footer>
+  </div>
   <script src="script.js"></script>
+  <script src="../assets/js/arcade.js" defer></script>
 </body>
 </html>

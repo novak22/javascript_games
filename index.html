@@ -173,8 +173,8 @@
           <span class="brand-title">Pixel Playground</span>
           <h1>Pick a challenge and press start</h1>
           <p>
-            A curated collection of fast, joyful arcade experiments. Each title is crafted
-            with the same visual language so hopping between games feels effortless.
+            Six bite-sized games built with vanilla JavaScript. Swap between puzzle, reflex,
+            and action challenges without leaving the arcade cabinet theme.
           </p>
         </div>
         <div class="badge-row">
@@ -229,20 +229,36 @@
               <p>Leap over hazards and keep momentum in this synthwave-inspired sprint.</p>
             </div>
           </a>
+
+          <a class="game-card card-surface" href="./simple_mover/" role="listitem">
+            <div class="card-thumb" aria-hidden="true">
+              <img src="./assets/thumbnails/simple-mover.svg" alt="" loading="lazy" />
+            </div>
+            <div class="card-meta">
+              <span>Arcade Trainer</span>
+              <h2>Simple Mover</h2>
+              <p>Dash around the neon arena, collect stars, and avoid the reactive walls.</p>
+            </div>
+          </a>
+
+          <a class="game-card card-surface" href="./tetris_knockoff/" role="listitem">
+            <div class="card-thumb" aria-hidden="true">
+              <img src="./assets/thumbnails/block-drop.svg" alt="" loading="lazy" />
+            </div>
+            <div class="card-meta">
+              <span>Falling Blocks</span>
+              <h2>Block Drop</h2>
+              <p>Stack tetrominoes with precision timing to clear lines and climb the ranks.</p>
+            </div>
+          </a>
         </div>
       </main>
 
       <footer>
-        © <span id="year"></span> Pixel Playground Arcade · Built for browsers big and small.
+        © <span class="js-year"></span> Pixel Playground Arcade · Crafted with vanilla HTML, CSS, and
+        JavaScript.
       </footer>
     </div>
-
-    <script>
-      const yearEl = document.getElementById('year');
-      const currentYear = new Date().getFullYear();
-      if (yearEl) {
-        yearEl.textContent = currentYear;
-      }
-    </script>
+    <script src="./assets/js/arcade.js" defer></script>
   </body>
 </html>

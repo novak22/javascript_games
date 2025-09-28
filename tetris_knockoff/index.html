@@ -8,46 +8,64 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="wrapper">
-      <section class="game-panel">
-        <header>
+    <div class="arcade-page">
+      <header class="arcade-header card-surface">
+        <div class="arcade-header__meta">
+          <span class="brand-title">Pixel Playground</span>
           <h1>Block Drop</h1>
-          <p>Use the arrow keys or WASD to move, rotate, and drop pieces.</p>
-        </header>
-        <canvas id="board" width="300" height="600" aria-label="Tetris playfield" role="img"></canvas>
-        <div class="hud">
-          <div class="stat">
-            <span class="label">Score</span>
-            <span id="score" class="value">0</span>
-          </div>
-          <div class="stat">
-            <span class="label">Lines</span>
-            <span id="lines" class="value">0</span>
-          </div>
-          <div class="stat">
-            <span class="label">Level</span>
-            <span id="level" class="value">1</span>
-          </div>
+          <p>Slide, rotate, and drop tetrominoes to clear lines and level up.</p>
         </div>
-        <button id="restart" type="button" class="button">Restart</button>
-      </section>
-      <aside class="next-panel">
-        <h2>Next</h2>
-        <canvas id="next" width="120" height="120" aria-label="Next tetromino preview"></canvas>
-        <section class="instructions">
-          <h3>Controls</h3>
-          <ul>
-            <li><strong>Move</strong>: Left / Right arrows or A / D</li>
-            <li><strong>Rotate</strong>: Up arrow or W</li>
-            <li><strong>Soft Drop</strong>: Down arrow or S</li>
-            <li><strong>Hard Drop</strong>: Space</li>
-          </ul>
+        <a class="arcade-back" href="../index.html">
+          <span aria-hidden="true">⟵</span>
+          Back to Arcade
+        </a>
+      </header>
+
+      <main class="arcade-main">
+        <section class="wrapper" aria-labelledby="block-drop-title">
+          <section class="game-panel">
+            <header>
+              <h2 id="block-drop-title">Block Drop</h2>
+              <p>Use the arrow keys or WASD to move, rotate, and drop pieces.</p>
+            </header>
+            <canvas id="board" width="300" height="600" aria-label="Tetris playfield" role="img"></canvas>
+            <div class="hud" role="status" aria-live="polite">
+              <div class="stat">
+                <span class="label">Score</span>
+                <span id="score" class="value">0</span>
+              </div>
+              <div class="stat">
+                <span class="label">Lines</span>
+                <span id="lines" class="value">0</span>
+              </div>
+              <div class="stat">
+                <span class="label">Level</span>
+                <span id="level" class="value">1</span>
+              </div>
+            </div>
+            <button id="restart" type="button" class="button">Restart</button>
+          </section>
+          <aside class="next-panel">
+            <h2>Next</h2>
+            <canvas id="next" width="120" height="120" aria-label="Next tetromino preview"></canvas>
+            <section class="instructions">
+              <h3>Controls</h3>
+              <ul>
+                <li><strong>Move</strong>: Left / Right arrows or A / D</li>
+                <li><strong>Rotate</strong>: Up arrow or W</li>
+                <li><strong>Soft Drop</strong>: Down arrow or S</li>
+                <li><strong>Hard Drop</strong>: Space</li>
+              </ul>
+            </section>
+          </aside>
         </section>
-      </aside>
-    </main>
-    <footer>
-      <p>Built with vanilla JavaScript &amp; canvas.</p>
-    </footer>
+      </main>
+
+      <footer class="arcade-footer">
+        © <span class="js-year"></span> Pixel Playground · Master the stack to climb the leaderboard.
+      </footer>
+    </div>
     <script src="script.js" defer></script>
+    <script src="../assets/js/arcade.js" defer></script>
   </body>
 </html>

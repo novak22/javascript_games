@@ -18,13 +18,16 @@ body {
   background: var(--brand-bg, radial-gradient(circle at top, #1e293b, #0f172a));
   color: var(--text);
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
-  padding: 2rem 1rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
 }
 
-main.wrapper {
+.arcade-main {
+  align-items: stretch;
+}
+
+.wrapper {
   display: grid;
   gap: 2rem;
   grid-template-columns: minmax(280px, 1fr) minmax(180px, 240px);
@@ -124,17 +127,12 @@ canvas {
   font-size: 0.9rem;
 }
 
-footer {
-  color: rgba(226, 232, 240, 0.6);
-  font-size: 0.8rem;
-}
-
 @media (max-width: 768px) {
   body {
     padding: 1.5rem 1rem;
   }
 
-  main.wrapper {
+  .wrapper {
     grid-template-columns: 1fr;
   }
 }

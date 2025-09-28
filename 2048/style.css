@@ -19,8 +19,14 @@ body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
   background: radial-gradient(circle at top, #f5efff 0%, #f0f4ff 45%, #f9f5ff 100%);
   color: var(--text);
+}
+
+.arcade-main {
+  align-items: center;
 }
 
 .app {
@@ -43,7 +49,7 @@ body {
   box-shadow: 0 1.25rem 3rem rgba(78, 61, 158, 0.12);
 }
 
-.branding h1 {
+.branding h2 {
   margin: 0;
   font-size: clamp(2.5rem, 6vw, 3.5rem);
   letter-spacing: 0.08em;

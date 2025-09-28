@@ -1,0 +1,22 @@
+<svg width="160" height="120" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradMover" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <linearGradient id="sparkMover" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#e0f2fe" stop-opacity="0.2"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="160" height="120" rx="16" fill="url(#gradMover)"/>
+  <g fill="none" stroke="url(#sparkMover)" stroke-width="6" stroke-linecap="round">
+    <path d="M30 86 L70 46"/>
+    <path d="M70 46 L94 70"/>
+    <path d="M94 70 L130 34"/>
+  </g>
+  <circle cx="70" cy="46" r="12" fill="#f8fafc" opacity="0.85"/>
+  <circle cx="94" cy="70" r="10" fill="#e0f2fe" opacity="0.9"/>
+  <circle cx="130" cy="34" r="8" fill="#c4b5fd" opacity="0.9"/>
+  <text x="32" y="36" font-family="'Poppins', sans-serif" font-weight="600" font-size="14" fill="#e0f2fe">DASH!</text>
+</svg>

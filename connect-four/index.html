@@ -3,35 +3,57 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Arcade Connect Four</title>
+    <title>Connect Four · Pixel Playground</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="../arcade.css" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="game-shell">
-      <header class="game-header">
-        <h1>Arcade Connect Four</h1>
-        <p class="subtitle">Drop the discs, line up four, and outsmart the arcade AI.</p>
+    <div class="arcade-page">
+      <header class="arcade-header card-surface">
+        <div class="arcade-header__meta">
+          <span class="brand-title">Pixel Playground</span>
+          <h1>Connect Four</h1>
+          <p>Drop discs into the neon grid and be the first to align four in a row.</p>
+        </div>
+        <a class="arcade-back" href="../index.html">
+          <span aria-hidden="true">⟵</span>
+          Back to Arcade
+        </a>
       </header>
-      <main class="game-area">
-        <section class="status-panel">
-          <p id="status" class="status-text">Your turn! Tap or click a column to drop a disc.</p>
-        </section>
-        <section class="board-wrapper">
-          <div id="board" class="board" aria-label="Connect Four board" role="grid"></div>
-        </section>
-        <section class="controls">
-          <button id="resetBtn" class="reset-btn" type="button" aria-label="Reset game">
-            Reset Game
-          </button>
-        </section>
+
+      <main class="arcade-main">
+        <div class="game-shell">
+          <header class="game-header">
+            <h2>Arcade Connect Four</h2>
+            <p class="subtitle">Drop the discs, line up four, and outsmart the arcade AI.</p>
+          </header>
+          <section class="game-area">
+            <section class="status-panel">
+              <p id="status" class="status-text">Your turn! Tap or click a column to drop a disc.</p>
+            </section>
+            <section class="board-wrapper">
+              <div id="board" class="board" aria-label="Connect Four board" role="grid"></div>
+            </section>
+            <section class="controls">
+              <button id="resetBtn" class="reset-btn" type="button" aria-label="Reset game">
+                Reset Game
+              </button>
+            </section>
+          </section>
+        </div>
       </main>
+
+      <footer class="arcade-footer">
+        © <span class="js-year"></span> Pixel Playground · Challenge a friend or warm up against the AI.
+      </footer>
     </div>
     <script src="script.js"></script>
+    <script src="../assets/js/arcade.js" defer></script>
   </body>
 </html>

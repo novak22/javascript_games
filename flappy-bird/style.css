@@ -21,6 +21,10 @@ body {
   padding: 2rem 1.5rem;
 }
 
+.arcade-main {
+  align-items: stretch;
+}
+
 .layout {
   display: grid;
   grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
@@ -35,7 +39,7 @@ body {
   gap: 1.25rem;
 }
 
-h1 {
+.info-panel h2 {
   margin: 0;
   font-size: clamp(2.25rem, 4vw, 3rem);
   line-height: 1.1;
