@@ -76,24 +76,35 @@ body {
   color: #fff;
 }
 
-.trails__reset {
+.trails__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.trails__button {
   border: none;
   border-radius: 999px;
   padding: 0.65rem 1.2rem;
   font-weight: 600;
   font-size: 0.95rem;
-  background: linear-gradient(135deg, rgba(97, 127, 255, 0.95), rgba(197, 103, 255, 0.95));
+  background: linear-gradient(135deg, rgba(255, 209, 102, 0.95), rgba(255, 107, 211, 0.95));
   color: #fff;
   cursor: pointer;
   transition: transform 160ms ease, box-shadow 160ms ease;
   box-shadow: 0 18px 32px rgba(7, 12, 38, 0.5);
 }
 
-.trails__reset:hover,
-.trails__reset:focus-visible {
+.trails__button:hover,
+.trails__button:focus-visible {
   transform: translateY(-2px);
   box-shadow: 0 22px 40px rgba(7, 12, 38, 0.55);
-  outline: none;
+  outline: 2px solid rgba(255, 255, 255, 0.55);
+  outline-offset: 2px;
+}
+
+.trails__button--reset {
+  background: linear-gradient(135deg, rgba(97, 127, 255, 0.95), rgba(197, 103, 255, 0.95));
 }
 
 .trails__board {
