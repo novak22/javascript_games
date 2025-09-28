@@ -1,53 +1,85 @@
 <!DOCTYPE html>
 <html lang="sr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Petak - Srpski Wordle</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <main class="game-container">
-    <header class="game-header">
-      <div class="title-group">
-        <h1>Petak</h1>
-        <p class="subtitle">Srpski Wordle, uz malo sjaja ✨</p>
-      </div>
-      <div class="controls">
-        <div class="language-picker">
-          <label for="language-select">Jezik:</label>
-          <select id="language-select"></select>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Petak · Pixel Playground</title>
+    <link rel="stylesheet" href="../arcade.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="arcade-page">
+      <header class="arcade-header card-surface">
+        <div class="arcade-header__meta">
+          <span class="brand-title">Pixel Playground</span>
+          <h1>Petak</h1>
+          <p class="subtitle">Srpski Wordle, uz malo sjaja ✨</p>
         </div>
-        <button class="reset-button" id="reset-button" type="button">Nova reč</button>
-      </div>
-    </header>
+        <a class="arcade-back" href="../index.html">
+          <span aria-hidden="true">⟵</span>
+          Povratak u kolekciju
+        </a>
+      </header>
 
-    <section class="status-bar" id="status-bar" role="status" aria-live="polite"></section>
+      <main class="arcade-main">
+        <div class="petak-layout">
+          <section class="arcade-game__frame petak-surface" aria-labelledby="petak-board-title">
+            <div class="petak-frame__body">
+              <h2 id="petak-board-title" class="visually-hidden">Tabla za pogađanje</h2>
+              <div class="board" id="board" aria-live="polite" aria-label="Tabla za pogađanje"></div>
+              <section class="keyboard" id="keyboard" aria-label="Virtuelna tastatura"></section>
+            </div>
+          </section>
 
-    <section class="board" id="board" aria-live="polite" aria-label="Tabla za pogađanje"></section>
+          <div class="arcade-panels">
+            <section class="arcade-panel petak-surface" aria-labelledby="petak-controls-title">
+              <h2 id="petak-controls-title">Kontrole</h2>
+              <div class="controls">
+                <div class="language-picker">
+                  <label for="language-select">Jezik</label>
+                  <select id="language-select"></select>
+                </div>
+                <button class="reset-button" id="reset-button" type="button">Nova reč</button>
+              </div>
+            </section>
 
-    <section class="keyboard" id="keyboard" aria-label="Virtuelna tastatura"></section>
+            <section class="arcade-panel petak-surface" aria-labelledby="petak-status-title">
+              <h2 id="petak-status-title">Status</h2>
+              <p class="status-hint">Poruke igre se pojavljuju ovde tokom svake partije.</p>
+              <div class="status-bar" id="status-bar" role="status" aria-live="polite"></div>
+            </section>
 
-    <details class="instructions">
-      <summary>Kako se igra?</summary>
-      <p>
-        Pogodi skrivenu reč od pet slova za šest pokušaja. Zelena slova su na pravom mestu,
-        žuta su u reči, ali na pogrešnom mestu, dok siva nisu deo reči. Odaberi drugo pismo
-        i listu reči preko menija iznad. Klikni na „Nova reč" za novi izazov.
-      </p>
-    </details>
-  </main>
+            <section class="arcade-panel petak-surface instructions" aria-labelledby="petak-instructions-title">
+              <h2 id="petak-instructions-title">Kako se igra?</h2>
+              <p>
+                Pogodi skrivenu reč od pet slova za šest pokušaja. Zelena slova su na pravom mestu,
+                žuta su u reči, ali na pogrešnom mestu, dok siva nisu deo reči.
+              </p>
+              <p>
+                Odaberi drugo pismo i listu reči preko menija iznad. Klikni na „Nova reč" za novi
+                izazov.
+              </p>
+            </section>
+          </div>
+        </div>
+      </main>
 
-  <template id="board-row-template">
-    <div class="board-row" role="row">
-      <div class="tile" role="gridcell" aria-label="prazno polje"></div>
-      <div class="tile" role="gridcell" aria-label="prazno polje"></div>
-      <div class="tile" role="gridcell" aria-label="prazno polje"></div>
-      <div class="tile" role="gridcell" aria-label="prazno polje"></div>
-      <div class="tile" role="gridcell" aria-label="prazno polje"></div>
+      <footer class="arcade-footer">
+        © <span class="js-year"></span> Pixel Playground · Osvaji pet slova pre nego što pokušaji isteknu.
+      </footer>
     </div>
-  </template>
 
-  <script src="script.js"></script>
-</body>
+    <template id="board-row-template">
+      <div class="board-row" role="row">
+        <div class="tile" role="gridcell" aria-label="prazno polje"></div>
+        <div class="tile" role="gridcell" aria-label="prazno polje"></div>
+        <div class="tile" role="gridcell" aria-label="prazno polje"></div>
+        <div class="tile" role="gridcell" aria-label="prazno polje"></div>
+        <div class="tile" role="gridcell" aria-label="prazno polje"></div>
+      </div>
+    </template>
+
+    <script src="script.js" defer></script>
+    <script src="../assets/js/arcade.js" defer></script>
+  </body>
 </html>
