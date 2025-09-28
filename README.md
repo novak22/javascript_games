@@ -12,6 +12,7 @@ A collection of bite-sized JavaScript arcade games wrapped in a unified retro ae
 | [Endless Runner](./endless-runner/) | Action | Dash through synthwave streets, avoiding obstacles to extend your run. |
 | [Simple Mover](./simple_mover/) | Arcade trainer | Collect stars, dash through gaps, and dodge reactive walls. |
 | [Block Drop](./tetris_knockoff/) | Falling blocks | Rotate and stack tetrominoes to clear lines and level up. |
+| [Photon Trails](./photon-trails/) | Light puzzle | Rotate mirrors and splitters to connect every drifting crystal. |
 
 ## Running locally
 
@@ -39,6 +40,12 @@ javascript_games/
 ```
 
 Each game remains self-contained so you can modify or extend them independently while retaining the cohesive shell provided by `arcade.css`.
+
+### Photon Trails
+
+- **Objective:** Redirect a continuous beam from the emitter so that it touches every crystal node on the board.
+- **Controls:** Click/tap or focus a tile and press <kbd>Enter</kbd>/<kbd>Space</kbd> to rotate mirrors, splitters, and conduits. Use the reset button to restart the puzzle.
+- **Accessibility notes:** The puzzle board is keyboard operable, status updates announce progress via an aria-live region, and targets visibly glow once energised to provide clear feedback for low-vision players.
 
 ## Contributing
 

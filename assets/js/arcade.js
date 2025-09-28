@@ -25,6 +25,7 @@
     'Cycling neon lights for optimal vibes.',
     'Listening for high-score whispers in the cabinet.',
     'Spinning the arcade wheel for your next run.',
+    'Calibrating photon emitters for a trail run.',
   ];
 
   if (statusEl) {

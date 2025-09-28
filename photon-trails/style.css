@@ -1,0 +1,417 @@
+:root {
+  --trails-bg: radial-gradient(circle at 20% 20%, rgba(62, 101, 255, 0.2), transparent 55%),
+    radial-gradient(circle at 80% 30%, rgba(255, 115, 177, 0.15), transparent 60%),
+    linear-gradient(135deg, rgba(7, 14, 35, 0.92), rgba(9, 9, 24, 0.98));
+  --trail-panel: rgba(16, 22, 52, 0.88);
+  --tile-bg: rgba(10, 14, 38, 0.88);
+  --tile-border: rgba(144, 183, 255, 0.25);
+  --tile-border-strong: rgba(144, 183, 255, 0.55);
+  --tile-hover: rgba(108, 178, 255, 0.24);
+  --tile-fixed: rgba(15, 18, 36, 0.85);
+  --crystal: #63f1ff;
+  --crystal-dim: rgba(99, 241, 255, 0.2);
+  --beam: rgba(148, 221, 255, 0.85);
+  --beam-strong: rgba(148, 221, 255, 1);
+  --wall: rgba(30, 36, 62, 0.95);
+  --accent-hot: #ff6bd3;
+  --accent-gold: #ffd166;
+}
+
+body {
+  background: var(--trails-bg);
+}
+
+.trails {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 2rem);
+}
+
+.trails__top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1rem, 3vw, 1.5rem);
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.trails__intro {
+  max-width: 32ch;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.trails__panel {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem 1.2rem;
+  background: var(--trail-panel);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  min-width: min(260px, 100%);
+}
+
+.trails__stats {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.trails__stats div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.trails__stats dt {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(237, 240, 255, 0.7);
+}
+
+.trails__stats dd {
+  margin: 0;
+  font-weight: 600;
+  color: #fff;
+}
+
+.trails__reset {
+  border: none;
+  border-radius: 999px;
+  padding: 0.65rem 1.2rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  background: linear-gradient(135deg, rgba(97, 127, 255, 0.95), rgba(197, 103, 255, 0.95));
+  color: #fff;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+  box-shadow: 0 18px 32px rgba(7, 12, 38, 0.5);
+}
+
+.trails__reset:hover,
+.trails__reset:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 40px rgba(7, 12, 38, 0.55);
+  outline: none;
+}
+
+.trails__board {
+  --cell-size: min(90px, 14vw);
+  display: grid;
+  grid-template-columns: repeat(6, var(--cell-size));
+  gap: clamp(0.55rem, 1.8vw, 0.9rem);
+  justify-content: center;
+  padding: clamp(1rem, 3vw, 1.8rem);
+  background: rgba(7, 9, 24, 0.82);
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(129, 187, 255, 0.08), 0 28px 64px rgba(4, 7, 24, 0.55);
+}
+
+.trail-cell {
+  position: relative;
+  width: var(--cell-size);
+  aspect-ratio: 1;
+  border-radius: 18px;
+  border: 1px solid var(--tile-border);
+  background: var(--tile-bg);
+  color: inherit;
+  padding: 0;
+  cursor: pointer;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.trail-cell.is-fixed,
+.trail-cell:disabled {
+  cursor: default;
+  border-color: rgba(120, 150, 220, 0.2);
+  background: var(--tile-fixed);
+}
+
+.trail-cell:hover:not(:disabled),
+.trail-cell:focus-visible:not(:disabled) {
+  border-color: var(--tile-border-strong);
+  box-shadow: 0 12px 24px rgba(41, 76, 140, 0.45);
+  background: var(--tile-hover);
+  outline: none;
+}
+
+.trail-cell:focus-visible:not(:disabled)::after {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.85), 0 0 0 5px rgba(120, 180, 255, 0.5);
+}
+
+.trail-cell::before,
+.trail-cell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Tile glyphs */
+.trail-cell[data-type='source']::before {
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.05) 55%, transparent 70%);
+  box-shadow: 0 0 35px rgba(100, 209, 255, 0.8);
+}
+
+.trail-cell[data-type='source']::after {
+  content: '';
+  position: absolute;
+  width: 55%;
+  height: 6px;
+  top: 50%;
+  left: 50%;
+  transform-origin: center left;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(99, 241, 255, 0.7), rgba(255, 255, 255, 0));
+}
+
+.trail-cell[data-type='source'][data-direction='0']::after {
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+.trail-cell[data-type='source'][data-direction='1']::after {
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.trail-cell[data-type='source'][data-direction='2']::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.trail-cell[data-type='source'][data-direction='3']::after {
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.trail-cell[data-type='wall'] {
+  background: var(--wall);
+  border-color: rgba(65, 74, 105, 0.7);
+}
+
+.trail-cell[data-type='target']::before {
+  background: radial-gradient(circle, var(--crystal-dim) 0%, transparent 70%);
+  border-radius: inherit;
+}
+
+.trail-cell[data-type='target']::after {
+  inset: 28%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(79, 255, 255, 0.8), rgba(79, 255, 255, 0));
+  opacity: 0.7;
+  transform: scale(0.9);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.trail-cell[data-type='target'].is-lit::after {
+  opacity: 1;
+  transform: scale(1);
+  box-shadow: 0 0 25px rgba(79, 255, 255, 0.8);
+}
+
+.trail-cell[data-type='straight'][data-rotation='0']::before {
+  background: linear-gradient(0deg, transparent 38%, rgba(152, 199, 255, 0.45) 50%, transparent 62%);
+}
+
+.trail-cell[data-type='straight'][data-rotation='1']::before {
+  background: linear-gradient(90deg, transparent 38%, rgba(152, 199, 255, 0.45) 50%, transparent 62%);
+}
+
+.trail-cell[data-type='mirror'][data-rotation='0']::before {
+  background: linear-gradient(135deg, transparent 46%, rgba(180, 213, 255, 0.75) 50%, transparent 54%);
+}
+
+.trail-cell[data-type='mirror'][data-rotation='1']::before {
+  background: linear-gradient(45deg, transparent 46%, rgba(180, 213, 255, 0.75) 50%, transparent 54%);
+}
+
+.trail-cell[data-type='splitter']::before {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.35), transparent 65%),
+    linear-gradient(90deg, transparent 46%, rgba(185, 219, 255, 0.65) 50%, transparent 54%),
+    linear-gradient(0deg, transparent 46%, rgba(185, 219, 255, 0.65) 50%, transparent 54%);
+  opacity: 0.85;
+}
+
+.trail-cell[data-type='splitter'][data-rotation='0']::before {
+  transform: rotate(0deg);
+}
+
+.trail-cell[data-type='splitter'][data-rotation='1']::before {
+  transform: rotate(90deg);
+}
+
+/* Beam trails */
+.trail-cell[data-beam] {
+  box-shadow: 0 0 22px rgba(96, 197, 255, 0.35);
+}
+
+.trail-cell[data-beam]::after {
+  content: '';
+  position: absolute;
+  background: linear-gradient(90deg, transparent, var(--beam-strong), transparent);
+  border-radius: 999px;
+  filter: drop-shadow(0 0 12px rgba(120, 225, 255, 0.65));
+}
+
+.trail-cell[data-beam='0'],
+.trail-cell[data-beam='2'] {
+  --segment-size: 55%;
+}
+
+.trail-cell[data-beam='0']::after,
+.trail-cell[data-beam='2']::after {
+  width: 22%;
+  height: var(--segment-size);
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, transparent, var(--beam), transparent);
+  top: 0;
+}
+
+.trail-cell[data-beam='2']::after {
+  top: auto;
+  bottom: 0;
+}
+
+.trail-cell[data-beam='1']::after,
+.trail-cell[data-beam='3']::after {
+  height: 22%;
+  width: 55%;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+}
+
+.trail-cell[data-beam='3']::after {
+  left: auto;
+  right: 0;
+}
+
+.trail-cell[data-beam='0-2']::after {
+  width: 24%;
+  height: 80%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(180deg, transparent, var(--beam-strong), transparent);
+}
+
+.trail-cell[data-beam='1-3']::after {
+  height: 24%;
+  width: 80%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.trail-cell[data-beam='0-1']::after,
+.trail-cell[data-beam='1-2']::after,
+.trail-cell[data-beam='2-3']::after,
+.trail-cell[data-beam='0-3']::after {
+  width: 70%;
+  height: 70%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: conic-gradient(from 0deg, rgba(0, 0, 0, 0) 0deg 90deg, rgba(148, 221, 255, 0.9) 90deg 180deg, rgba(0, 0, 0, 0) 180deg 360deg);
+  border-radius: 18px;
+}
+
+.trail-cell[data-beam='0-3']::after {
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+.trail-cell[data-beam='1-2']::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.trail-cell[data-beam='2-3']::after {
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.trail-cell[data-beam*='-']::after {
+  filter: drop-shadow(0 0 18px rgba(120, 225, 255, 0.8));
+}
+
+.trail-cell[data-beam='0-1-2'],
+.trail-cell[data-beam='0-1-3'],
+.trail-cell[data-beam='0-2-3'],
+.trail-cell[data-beam='1-2-3'],
+.trail-cell[data-beam='0-1-2-3'] {
+  box-shadow: 0 0 28px rgba(120, 225, 255, 0.55);
+}
+
+.trail-cell[data-beam='0-1-2']::after,
+.trail-cell[data-beam='0-1-3']::after,
+.trail-cell[data-beam='0-2-3']::after,
+.trail-cell[data-beam='1-2-3']::after,
+.trail-cell[data-beam='0-1-2-3']::after {
+  width: 78%;
+  height: 78%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background:
+    linear-gradient(0deg, transparent 46%, var(--beam-strong) 50%, transparent 54%),
+    linear-gradient(90deg, transparent 46%, var(--beam-strong) 50%, transparent 54%);
+  border-radius: 18px;
+}
+
+.trails__status {
+  margin: 0;
+  padding: 0.8rem 1rem;
+  border-radius: 18px;
+  background: rgba(15, 22, 48, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(222, 235, 255, 0.9);
+}
+
+.trails__guide {
+  display: grid;
+  gap: 1rem;
+}
+
+.trails__guide ol {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding-left: 1.4rem;
+}
+
+.trails__guide li {
+  line-height: 1.6;
+}
+
+.trails__accessibility {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  background: rgba(18, 28, 66, 0.8);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(220, 234, 255, 0.8);
+}
+
+.trails__accessibility kbd {
+  display: inline-block;
+  padding: 0.15rem 0.45rem;
+  border-radius: 6px;
+  background: rgba(15, 24, 62, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+@media (max-width: 720px) {
+  .trails__board {
+    --cell-size: min(74px, 20vw);
+  }
+
+  .trails__panel {
+    width: 100%;
+  }
+
+  .trails__top {
+    flex-direction: column;
+  }
+}
