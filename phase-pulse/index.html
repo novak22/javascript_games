@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phase Pulse · Pixel Playground</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="layout">
+      <section class="hud">
+        <header class="hud__intro">
+          <a class="hud__back" href="../">← Cabinet Select</a>
+          <h1>Phase Pulse</h1>
+          <p>
+            Lane shift through a neon flux stream. Tap <kbd>W</kbd>/<kbd>S</kbd> or the arrow keys to
+            phase between lanes, snag the energy pulses, and dodge the static mines. Fill the surge
+            meter for a scoring frenzy—miss once and the run implodes.
+          </p>
+        </header>
+        <div class="hud__stats">
+          <div>
+            <span>Score</span>
+            <strong data-score>0</strong>
+          </div>
+          <div>
+            <span>Streak</span>
+            <strong data-streak>0</strong>
+          </div>
+          <div>
+            <span>Best</span>
+            <strong data-best>0</strong>
+          </div>
+          <div class="surge">
+            <span>Surge</span>
+            <div class="surge__bar" aria-hidden="true">
+              <div class="surge__fill" data-surge></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="playfield">
+        <canvas id="game" width="720" height="480" aria-label="Phase Pulse arena"></canvas>
+        <div class="overlay" data-overlay>
+          <h2>Tap to Phase In</h2>
+          <p>Press <kbd>Space</kbd> to hop lanes. Thread the pulses. Chase the infinite combo.</p>
+          <button type="button" data-start>Start Run</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="./game.js" type="module"></script>
+  </body>
+</html>
