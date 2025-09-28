@@ -14,6 +14,7 @@ let gameActive = true;
 let allowInput = true;
 let currentPlayer = HUMAN;
 let previewDisc;
+let columnTargets = [];
 
 function init() {
   buildBoard();
@@ -44,6 +45,23 @@ function buildBoard() {
   previewDisc = document.createElement('div');
   previewDisc.className = 'preview-disc';
   boardEl.appendChild(previewDisc);
+
+  columnTargets = [];
+
+  for (let col = 0; col < COLS; col += 1) {
+    const target = document.createElement('button');
+    target.type = 'button';
+    target.className = 'column-target';
+    target.dataset.col = String(col);
+    target.setAttribute('aria-label', `Drop disc in column ${col + 1}`);
+    boardEl.appendChild(target);
+    columnTargets.push(target);
+  }
+
+  requestAnimationFrame(() => {
+    updateColumnTargets();
+    updateColumnAvailability();
+  });
 }
 
 function attachListeners() {
@@ -51,6 +69,13 @@ function attachListeners() {
   boardEl.addEventListener('pointerleave', hidePreview);
   boardEl.addEventListener('pointerdown', handlePointerDown);
   resetBtn.addEventListener('click', resetGame);
+  window.addEventListener('resize', updateColumnTargets);
+
+  columnTargets.forEach((target) => {
+    target.addEventListener('focus', handleColumnFocus);
+    target.addEventListener('blur', hidePreview);
+    target.addEventListener('keydown', handleColumnKeyDown);
+  });
 }
 
 function resetGame() {
@@ -62,6 +87,9 @@ function resetGame() {
   boardEl.classList.remove('disabled');
   hidePreview();
   previewDisc?.classList.remove('ai-turn');
+  setActiveColumn(-1);
+  updateColumnAvailability();
+  requestAnimationFrame(updateColumnTargets);
 
   for (let row = 0; row < ROWS; row += 1) {
     for (let col = 0; col < COLS; col += 1) {
@@ -80,13 +108,18 @@ function handlePointerMove(event) {
     hidePreview();
     return;
   }
-  const cell = event.target.closest('.cell');
-  if (!cell) {
+  const target = event.target.closest('.column-target, .cell');
+  if (!target) {
     hidePreview();
     return;
   }
 
-  const col = Number(cell.dataset.col);
+  if (target.classList.contains('column-target') && target.disabled) {
+    hidePreview();
+    return;
+  }
+
+  const col = Number(target.dataset.col);
   if (Number.isNaN(col) || getAvailableRow(boardState, col) === -1) {
     hidePreview();
     return;
@@ -99,9 +132,10 @@ function handlePointerDown(event) {
   if (event.button !== undefined && event.button !== 0) {
     return;
   }
-  const cell = event.target.closest('.cell');
-  if (!cell) return;
-  const col = Number(cell.dataset.col);
+  const target = event.target.closest('.column-target, .cell');
+  if (!target) return;
+  if (target.classList.contains('column-target') && target.disabled) return;
+  const col = Number(target.dataset.col);
   if (Number.isNaN(col)) return;
   handlePlayerMove(col);
 }
@@ -115,9 +149,11 @@ async function handlePlayerMove(col) {
   }
 
   allowInput = false;
+  updateColumnAvailability();
   hidePreview();
   const { disc } = dropDisc(availableRow, col, HUMAN);
   await waitForAnimation(disc);
+  updateColumnAvailability();
 
   if (checkWin(boardState, HUMAN)) {
     finishGame('You connected four! Victory!');
@@ -151,6 +187,7 @@ async function performAiMove() {
 
   const { disc } = dropDisc(row, aiColumn, AI);
   await waitForAnimation(disc);
+  updateColumnAvailability();
 
   if (checkWin(boardState, AI)) {
     finishGame('Arcade AI lines up four. Better luck next time!');
@@ -165,6 +202,7 @@ async function performAiMove() {
   currentPlayer = HUMAN;
   previewDisc.classList.remove('ai-turn');
   allowInput = true;
+  updateColumnAvailability();
   updateStatus('Your turn! Drop another disc.');
 }
 
@@ -204,6 +242,7 @@ function finishGame(message) {
   updateStatus(message);
   boardEl.classList.add('disabled');
   hidePreview();
+  updateColumnAvailability();
 }
 
 function showPreview(col) {
@@ -216,14 +255,81 @@ function showPreview(col) {
   previewDisc.style.setProperty('--preview-x', `${offsetX}px`);
   previewDisc.classList.toggle('ai-turn', currentPlayer === AI);
   previewDisc.classList.add('visible');
+  setActiveColumn(col);
 }
 
 function hidePreview() {
   previewDisc?.classList.remove('visible');
+  setActiveColumn(-1);
 }
 
 function updateStatus(message) {
   statusEl.textContent = message;
+}
+
+function setActiveColumn(col) {
+  columnTargets.forEach((target, index) => {
+    if (!target) return;
+    const isActive = index === col;
+    target.classList.toggle('is-active', isActive);
+  });
+}
+
+function handleColumnFocus(event) {
+  if (!gameActive || !allowInput) {
+    hidePreview();
+    return;
+  }
+  const col = Number(event.currentTarget.dataset.col);
+  if (Number.isNaN(col) || getAvailableRow(boardState, col) === -1) {
+    hidePreview();
+    return;
+  }
+  showPreview(col);
+}
+
+function handleColumnKeyDown(event) {
+  if (event.key !== 'Enter' && event.key !== ' ' && event.key !== 'Spacebar') {
+    return;
+  }
+  event.preventDefault();
+  const col = Number(event.currentTarget.dataset.col);
+  if (Number.isNaN(col)) {
+    return;
+  }
+  handlePlayerMove(col);
+}
+
+function updateColumnTargets() {
+  if (!columnTargets.length) {
+    return;
+  }
+  const boardRect = boardEl.getBoundingClientRect();
+
+  columnTargets.forEach((target, col) => {
+    const topCell = cellMatrix[0]?.[col];
+    if (!target || !topCell) {
+      return;
+    }
+    const cellRect = topCell.getBoundingClientRect();
+    const width = cellRect.width;
+    const left = cellRect.left - boardRect.left;
+    target.style.left = `${left}px`;
+    target.style.width = `${width}px`;
+  });
+}
+
+function updateColumnAvailability() {
+  const interactive = gameActive && allowInput;
+
+  columnTargets.forEach((target, col) => {
+    if (!target) return;
+    const availableRow = getAvailableRow(boardState, col);
+    const disabled = !interactive || availableRow === -1;
+    target.disabled = disabled;
+    target.setAttribute('aria-disabled', disabled ? 'true' : 'false');
+    target.classList.toggle('is-disabled', disabled);
+  });
 }
 
 function getAvailableRow(state, col) {

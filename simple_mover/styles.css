@@ -3,7 +3,7 @@
   font-family: 'Poppins', 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background-color: #080820;
   color: #f0f6ff;
-  --arcade-stage-width: min(100%, 75rem);
+  --arcade-stage-width: min(100%, 85rem);
 }
 
 body {

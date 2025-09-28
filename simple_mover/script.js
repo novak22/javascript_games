@@ -1,10 +1,18 @@
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
-const WALL_MARGIN = 60;
-const WALL_THICKNESS = 24;
+const WALL_MARGIN = 56;
+const WALL_THICKNESS = 22;
 const RESPAWN_DELAY = 1.1;
 const MESSAGE_DURATION = 1.6;
+const SHAPE_CHANGE_INTERVAL = 5;
+
+const OBSTACLE_SHAPES = [
+  createSplitCorridor,
+  createSpiralLoop,
+  createStaggeredGates,
+  createCornerArches,
+];
 
 const state = {
   player: {
@@ -24,6 +32,7 @@ const state = {
   respawnTimer: 0,
   message: "",
   messageTimer: 0,
+  layoutIndex: 0,
 };
 
 function randInt(min, max) {
@@ -34,62 +43,240 @@ function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
 }
 
-function createWalls() {
-  const innerSpan = canvas.width - WALL_MARGIN * 2 - WALL_THICKNESS * 2;
-  const horizontalWidth = Math.round(innerSpan * 0.72);
-  const horizontalOffset = Math.round((innerSpan - horizontalWidth) / 2);
+function getArenaBounds() {
+  const left = WALL_MARGIN + WALL_THICKNESS;
+  const top = WALL_MARGIN + WALL_THICKNESS;
+  const right = canvas.width - WALL_MARGIN - WALL_THICKNESS;
+  const bottom = canvas.height - WALL_MARGIN - WALL_THICKNESS;
 
-  const topMidY = Math.round(canvas.height / 2 - WALL_THICKNESS * 2.2);
-  const bottomMidY = Math.round(canvas.height / 2 + WALL_THICKNESS * 0.9);
-  const pillarHeight = Math.max(
-    80,
-    Math.round(
-      canvas.height / 2 - WALL_MARGIN - WALL_THICKNESS * 3.2 - 40
-    )
-  );
+  return {
+    left,
+    top,
+    right,
+    bottom,
+    width: right - left,
+    height: bottom - top,
+  };
+}
 
-  state.walls = [
+function roundRect(rect) {
+  return {
+    x: Math.round(rect.x),
+    y: Math.round(rect.y),
+    width: Math.round(rect.width),
+    height: Math.round(rect.height),
+  };
+}
+
+function createBorderWalls() {
+  const width = canvas.width - WALL_MARGIN * 2;
+  const height = canvas.height - WALL_MARGIN * 2;
+
+  return [
     {
       x: WALL_MARGIN,
       y: WALL_MARGIN,
-      width: canvas.width - WALL_MARGIN * 2,
+      width,
       height: WALL_THICKNESS,
     },
     {
       x: WALL_MARGIN,
       y: canvas.height - WALL_MARGIN - WALL_THICKNESS,
-      width: canvas.width - WALL_MARGIN * 2,
+      width,
       height: WALL_THICKNESS,
     },
     {
       x: WALL_MARGIN,
       y: WALL_MARGIN,
       width: WALL_THICKNESS,
-      height: canvas.height - WALL_MARGIN * 2,
+      height,
     },
     {
       x: canvas.width - WALL_MARGIN - WALL_THICKNESS,
       y: WALL_MARGIN,
       width: WALL_THICKNESS,
-      height: canvas.height - WALL_MARGIN * 2,
+      height,
+    },
+  ];
+}
+
+function selectObstacleLayout(preferredIndex, playerRect) {
+  const bounds = getArenaBounds();
+  const total = OBSTACLE_SHAPES.length;
+
+  for (let offset = 0; offset < total; offset += 1) {
+    const index = (preferredIndex + offset) % total;
+    const candidate = OBSTACLE_SHAPES[index](bounds).map(roundRect);
+    const intersectsPlayer =
+      playerRect &&
+      candidate.some((rect) => rectIntersect(rect, playerRect));
+
+    if (!intersectsPlayer) {
+      return { index, obstacles: candidate };
+    }
+  }
+
+  return { index: preferredIndex % total, obstacles: [] };
+}
+
+function buildWalls(preferredIndex = 0, playerRect) {
+  const baseWalls = createBorderWalls();
+  const { index, obstacles } = selectObstacleLayout(preferredIndex, playerRect);
+  state.layoutIndex = index;
+  state.walls = baseWalls.concat(obstacles);
+}
+
+function cycleArena() {
+  const playerRect = getPlayerRect();
+  buildWalls(state.layoutIndex + 1, playerRect);
+
+  if (collidesWithWalls(playerRect)) {
+    resetPlayerPosition();
+  }
+
+  state.star = null;
+
+  if (state.playing) {
+    state.message = "Arena layout shifted!";
+    state.messageTimer = MESSAGE_DURATION;
+  }
+}
+
+function createSplitCorridor(bounds) {
+  const { left, top, width, height } = bounds;
+  const barThickness = Math.round(WALL_THICKNESS * 1.4);
+  const topY = top + Math.round(height * 0.25);
+  const bottomY = top + Math.round(height * 0.62);
+  const span = Math.round(width * 0.6);
+  const gap = Math.round(width * 0.22);
+  const startX = left + Math.round((width - span) / 2);
+  const segment = Math.max(barThickness, Math.round((span - gap) / 2));
+  const bottomWidth = Math.round(width * 0.64);
+  const bottomX = left + Math.round((width - bottomWidth) / 2);
+
+  return [
+    {
+      x: startX,
+      y: topY,
+      width: segment,
+      height: barThickness,
     },
     {
-      x: WALL_MARGIN + WALL_THICKNESS + horizontalOffset,
-      y: topMidY,
-      width: horizontalWidth,
-      height: WALL_THICKNESS,
+      x: startX + segment + gap,
+      y: topY,
+      width: segment,
+      height: barThickness,
     },
     {
-      x: WALL_MARGIN + WALL_THICKNESS + Math.round(horizontalOffset / 2),
-      y: bottomMidY,
-      width: horizontalWidth + horizontalOffset,
-      height: WALL_THICKNESS,
+      x: bottomX,
+      y: bottomY,
+      width: bottomWidth,
+      height: barThickness,
+    },
+  ];
+}
+
+function createSpiralLoop(bounds) {
+  const { left, top, width, height } = bounds;
+  const legThickness = Math.round(WALL_THICKNESS * 1.3);
+  const outerX = left + Math.round(width * 0.14);
+  const outerY = top + Math.round(height * 0.14);
+  const horizontalSpan = Math.round(width * 0.52);
+  const verticalSpan = Math.round(height * 0.54);
+  const innerOffset = Math.round(legThickness * 1.6);
+
+  return [
+    {
+      x: outerX,
+      y: outerY,
+      width: horizontalSpan,
+      height: legThickness,
     },
     {
-      x: Math.round(canvas.width / 2 - WALL_THICKNESS * 1.5),
-      y: WALL_MARGIN + WALL_THICKNESS + 40,
-      width: WALL_THICKNESS * 3,
-      height: pillarHeight,
+      x: outerX,
+      y: outerY,
+      width: legThickness,
+      height: verticalSpan,
+    },
+    {
+      x: outerX + horizontalSpan - legThickness,
+      y: outerY + legThickness,
+      width: legThickness,
+      height: Math.round(height * 0.52),
+    },
+    {
+      x: outerX + innerOffset,
+      y: outerY + verticalSpan,
+      width: Math.round(width * 0.36),
+      height: legThickness,
+    },
+  ];
+}
+
+function createStaggeredGates(bounds) {
+  const { left, top, width, height } = bounds;
+  const gateWidth = Math.round(WALL_THICKNESS * 1.2);
+  const gateHeight = Math.round(height * 0.56);
+  const step = Math.round(width * 0.18);
+  const baseX = left + Math.round(width * 0.2);
+  const topY = top + Math.round(height * 0.18);
+  const middleY = Math.min(top + height - gateHeight, topY + Math.round(height * 0.18));
+  const lowY = Math.max(top, topY - Math.round(height * 0.14));
+
+  return [
+    {
+      x: baseX,
+      y: topY,
+      width: gateWidth,
+      height: gateHeight,
+    },
+    {
+      x: baseX + step,
+      y: middleY,
+      width: gateWidth,
+      height: gateHeight,
+    },
+    {
+      x: baseX + step * 2,
+      y: lowY,
+      width: gateWidth,
+      height: gateHeight,
+    },
+  ];
+}
+
+function createCornerArches(bounds) {
+  const { left, top, right, bottom, width, height } = bounds;
+  const legThickness = Math.round(WALL_THICKNESS * 1.1);
+  const horizontalLength = Math.round(width * 0.22);
+  const verticalLength = Math.round(height * 0.32);
+  const offsetX = Math.round(width * 0.08);
+  const offsetY = Math.round(height * 0.1);
+
+  return [
+    {
+      x: left + offsetX,
+      y: top + offsetY,
+      width: horizontalLength,
+      height: legThickness,
+    },
+    {
+      x: left + offsetX,
+      y: top + offsetY,
+      width: legThickness,
+      height: verticalLength,
+    },
+    {
+      x: right - offsetX - horizontalLength,
+      y: bottom - offsetY - legThickness,
+      width: horizontalLength,
+      height: legThickness,
+    },
+    {
+      x: right - offsetX - legThickness,
+      y: bottom - offsetY - verticalLength,
+      width: legThickness,
+      height: verticalLength,
     },
   ];
 }
@@ -99,6 +286,7 @@ function spawnStar() {
   let x;
   let y;
   const size = 16;
+  const playerRect = getPlayerRect();
 
   do {
     x = randInt(padding, canvas.width - padding - size);
@@ -109,7 +297,8 @@ function spawnStar() {
         { x, y, width: size, height: size },
         wall
       )
-    )
+    ) ||
+    rectIntersect({ x, y, width: size, height: size }, playerRect)
   );
 
   state.star = { x, y, size, color: "#ffd966" };
@@ -126,6 +315,25 @@ function rectIntersect(a, b) {
 
 function collidesWithWalls(rect) {
   return state.walls.some((wall) => rectIntersect(rect, wall));
+}
+
+function getPlayerRect() {
+  return {
+    x: state.player.x,
+    y: state.player.y,
+    width: state.player.size,
+    height: state.player.size,
+  };
+}
+
+function getSpawnRect() {
+  const size = state.player.size;
+  return {
+    x: Math.round(canvas.width / 2 - size / 2),
+    y: Math.round(canvas.height / 2 - size / 2),
+    width: size,
+    height: size,
+  };
 }
 
 function updatePlayer(delta) {
@@ -178,6 +386,9 @@ function updatePlayer(delta) {
 
   if (rectIntersect(playerRect, starRect)) {
     state.score += 1;
+    if (state.score % SHAPE_CHANGE_INTERVAL === 0) {
+      cycleArena();
+    }
     spawnStar();
   }
 }
@@ -323,7 +534,10 @@ function resetPlayerPosition() {
 function resetGame(message = "Collect the stars!") {
   state.score = 0;
   state.player.dashCooldown = 0;
-  createWalls();
+  const spawnRect = getSpawnRect();
+  state.player.x = spawnRect.x;
+  state.player.y = spawnRect.y;
+  buildWalls(0, spawnRect);
   resetPlayerPosition();
   spawnStar();
   state.playing = true;
