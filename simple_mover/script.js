@@ -1,11 +1,10 @@
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
-const gameOverOverlay = document.getElementById("game-over");
-const retryButton = document.getElementById("retry-btn");
-const finalScoreEl = document.getElementById("final-score");
 
-const WALL_MARGIN = 90;
-const WALL_THICKNESS = 30;
+const WALL_MARGIN = 60;
+const WALL_THICKNESS = 24;
+const RESPAWN_DELAY = 1.1;
+const MESSAGE_DURATION = 1.6;
 
 const state = {
   player: {
@@ -13,8 +12,8 @@ const state = {
     y: 0,
     size: 36,
     color: "#4db5ff",
-    speed: 200,
-    dashSpeed: 380,
+    speed: 220,
+    dashSpeed: 400,
     dashCooldown: 0,
   },
   keys: new Set(),
@@ -22,6 +21,9 @@ const state = {
   score: 0,
   walls: [],
   playing: true,
+  respawnTimer: 0,
+  message: "",
+  messageTimer: 0,
 };
 
 function randInt(min, max) {
@@ -30,6 +32,17 @@ function randInt(min, max) {
 
 function createWalls() {
   const innerSpan = canvas.width - WALL_MARGIN * 2 - WALL_THICKNESS * 2;
+  const horizontalWidth = Math.round(innerSpan * 0.72);
+  const horizontalOffset = Math.round((innerSpan - horizontalWidth) / 2);
+
+  const topMidY = Math.round(canvas.height / 2 - WALL_THICKNESS * 2.2);
+  const bottomMidY = Math.round(canvas.height / 2 + WALL_THICKNESS * 0.9);
+  const pillarHeight = Math.max(
+    80,
+    Math.round(
+      canvas.height / 2 - WALL_MARGIN - WALL_THICKNESS * 3.2 - 40
+    )
+  );
 
   state.walls = [
     {
@@ -57,22 +70,28 @@ function createWalls() {
       height: canvas.height - WALL_MARGIN * 2,
     },
     {
-      x: WALL_MARGIN + WALL_THICKNESS + innerSpan * 0.1,
-      y: canvas.height / 2 - WALL_THICKNESS * 1.5,
-      width: innerSpan * 0.8,
+      x: WALL_MARGIN + WALL_THICKNESS + horizontalOffset,
+      y: topMidY,
+      width: horizontalWidth,
       height: WALL_THICKNESS,
     },
     {
-      x: WALL_MARGIN + WALL_THICKNESS + innerSpan * 0.1,
-      y: canvas.height / 2 + WALL_THICKNESS * 0.5,
-      width: innerSpan * 0.8,
+      x: WALL_MARGIN + WALL_THICKNESS + Math.round(horizontalOffset / 2),
+      y: bottomMidY,
+      width: horizontalWidth + horizontalOffset,
       height: WALL_THICKNESS,
+    },
+    {
+      x: Math.round(canvas.width / 2 - WALL_THICKNESS * 1.5),
+      y: WALL_MARGIN + WALL_THICKNESS + 40,
+      width: WALL_THICKNESS * 3,
+      height: pillarHeight,
     },
   ];
 }
 
 function spawnStar() {
-  const padding = 120;
+  const padding = 110;
   let x;
   let y;
   const size = 16;
@@ -115,9 +134,11 @@ function updatePlayer(delta) {
   if (state.keys.has("ArrowUp") || state.keys.has("w")) dy -= 1;
   if (state.keys.has("ArrowDown") || state.keys.has("s")) dy += 1;
 
-  const length = Math.hypot(dx, dy) || 1;
-  dx /= length;
-  dy /= length;
+  const length = Math.hypot(dx, dy);
+  if (length > 0) {
+    dx /= length;
+    dy /= length;
+  }
 
   const isDashing = state.keys.has(" ") && state.player.dashCooldown <= 0;
   const speed = isDashing ? p.dashSpeed : p.speed;
@@ -138,14 +159,6 @@ function updatePlayer(delta) {
 
   if (isDashing) {
     state.player.dashCooldown = 0.6;
-  }
-
-  if (state.player.dashCooldown > 0) {
-    state.player.dashCooldown -= delta;
-  }
-
-  if (state.player.dashCooldown < 0) {
-    state.player.dashCooldown = 0;
   }
 
   const starRect = {
@@ -180,7 +193,10 @@ function draw() {
 
   if (state.star) {
     ctx.save();
-    ctx.translate(state.star.x + state.star.size / 2, state.star.y + state.star.size / 2);
+    ctx.translate(
+      state.star.x + state.star.size / 2,
+      state.star.y + state.star.size / 2
+    );
     ctx.rotate(Date.now() / 300);
     ctx.fillStyle = state.star.color;
     ctx.beginPath();
@@ -196,10 +212,35 @@ function draw() {
 
   ctx.fillStyle = "#c7dfff";
   ctx.font = "20px 'Segoe UI', sans-serif";
+  ctx.textAlign = "left";
   ctx.fillText(`Score: ${state.score}`, 24, 36);
 
+  if (state.messageTimer > 0) {
+    const alpha = Math.min(1, state.messageTimer / MESSAGE_DURATION);
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = "#f2f8ff";
+    ctx.font = "28px 'Segoe UI', sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(
+      state.message,
+      canvas.width / 2,
+      canvas.height / 2 - WALL_THICKNESS * 2
+    );
+    ctx.restore();
+  }
+
   if (!state.playing) {
-    ctx.textAlign = "left";
+    ctx.save();
+    ctx.fillStyle = "rgba(199, 223, 255, 0.85)";
+    ctx.font = "22px 'Segoe UI', sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(
+      "Respawning...",
+      canvas.width / 2,
+      canvas.height / 2 + WALL_THICKNESS * 4
+    );
+    ctx.restore();
   }
 }
 
@@ -209,35 +250,67 @@ function loop(now) {
   const delta = (now - previous) / 1000;
   previous = now;
 
-  updatePlayer(delta);
+  if (state.playing) {
+    updatePlayer(delta);
+  }
+
+  if (state.player.dashCooldown > 0) {
+    state.player.dashCooldown = Math.max(
+      0,
+      state.player.dashCooldown - delta
+    );
+  }
+
+  if (!state.playing && state.respawnTimer > 0) {
+    state.respawnTimer -= delta;
+    if (state.respawnTimer <= 0) {
+      resetGame();
+    }
+  }
+
+  if (state.messageTimer > 0) {
+    state.messageTimer = Math.max(0, state.messageTimer - delta);
+  }
+
   draw();
   requestAnimationFrame(loop);
 }
 
 function resetPlayerPosition() {
   const p = state.player;
-
   p.x = canvas.width / 2 - p.size / 2;
 
-  const upperSafeY = WALL_MARGIN + WALL_THICKNESS + 20;
-  const lowerSafeY =
-    canvas.height / 2 - WALL_THICKNESS * 1.5 - p.size - 20;
+  const upperSafeY = WALL_MARGIN + WALL_THICKNESS + 24;
+  const blockingWalls = state.walls.filter(
+    (wall) =>
+      wall.height === WALL_THICKNESS &&
+      wall.y > WALL_MARGIN &&
+      wall.y < canvas.height / 2
+  );
+
+  let lowerSafeY = canvas.height / 2 - p.size - 24;
+
+  if (blockingWalls.length > 0) {
+    const minBlocking = Math.min(
+      ...blockingWalls.map((wall) => wall.y - p.size - 24)
+    );
+    lowerSafeY = Math.min(lowerSafeY, minBlocking);
+  }
 
   const preferredY = canvas.height / 2 - p.size / 2;
-  const clampedY = Math.min(lowerSafeY, preferredY);
-
-  p.y = Math.max(upperSafeY, clampedY);
+  p.y = Math.max(upperSafeY, Math.min(lowerSafeY, preferredY));
 }
 
-function resetGame() {
+function resetGame(message = "Collect the stars!") {
   state.score = 0;
   state.player.dashCooldown = 0;
-  state.keys.clear();
-  resetPlayerPosition();
   createWalls();
+  resetPlayerPosition();
   spawnStar();
   state.playing = true;
-  gameOverOverlay.hidden = true;
+  state.respawnTimer = 0;
+  state.message = message;
+  state.messageTimer = MESSAGE_DURATION;
   previous = performance.now();
 }
 
@@ -245,10 +318,12 @@ function endGame() {
   if (!state.playing) {
     return;
   }
+
   state.playing = false;
-  finalScoreEl.textContent = state.score.toString();
-  gameOverOverlay.hidden = false;
-  retryButton.focus();
+  state.respawnTimer = RESPAWN_DELAY;
+  state.message = `Score: ${state.score}`;
+  state.messageTimer = MESSAGE_DURATION;
+  state.keys.clear();
 }
 
 function init() {
@@ -269,11 +344,10 @@ window.addEventListener("keydown", (event) => {
     "d",
   ].includes(event.key);
 
-  if (!gameOverOverlay.hidden) {
-    resetGame();
-  }
-
   if (!state.playing) {
+    if (event.key.toLowerCase() === "r") {
+      resetGame();
+    }
     return;
   }
 
@@ -286,10 +360,6 @@ window.addEventListener("keydown", (event) => {
 
 window.addEventListener("keyup", (event) => {
   state.keys.delete(event.key);
-});
-
-retryButton.addEventListener("click", () => {
-  resetGame();
 });
 
 init();
