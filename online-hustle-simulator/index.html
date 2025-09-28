@@ -38,49 +38,15 @@
           <h2>Daily Hustles</h2>
           <p>Spend your time wisely. When the clock hits zero, the grind resets.</p>
         </div>
-        <div class="card-grid">
-          <article class="card" id="freelance-card">
-            <div class="card-header">
-              <h3>Freelance Writing</h3>
-              <span class="tag instant">Instant</span>
-            </div>
-            <p>Crank out a quick article for a client. Not Pulitzer material, but it pays.</p>
-            <ul class="details">
-              <li>⏳ Time: <strong>2h</strong></li>
-              <li>💵 Payout: <strong>$18</strong></li>
-            </ul>
-            <button class="primary" id="freelance-btn">Write Now</button>
-          </article>
+        <div class="card-grid" id="hustle-grid"></div>
+      </section>
 
-          <article class="card" id="blog-card">
-            <div class="card-header">
-              <h3>Personal Blog</h3>
-              <span class="tag passive">Passive</span>
-            </div>
-            <p>Launch a blog that trickles income while you sip questionable coffee.</p>
-            <ul class="details">
-              <li>⏳ Setup Time: <strong>3h</strong></li>
-              <li>💵 Setup Cost: <strong>$25</strong></li>
-              <li>💸 Income: <strong id="blog-income-rate">$3 / 10s</strong></li>
-            </ul>
-            <button class="primary" id="blog-btn">Launch Blog</button>
-          </article>
-
-          <article class="card" id="flip-card">
-            <div class="card-header">
-              <h3>eBay Flips</h3>
-              <span class="tag delayed">Delayed</span>
-            </div>
-            <p>Hunt for deals, flip them online. Profit arrives fashionably late.</p>
-            <ul class="details">
-              <li>⏳ Time: <strong>4h</strong></li>
-              <li>💵 Cost: <strong>$20</strong></li>
-              <li>💰 Payout: <strong>$48 after 30s</strong></li>
-            </ul>
-            <button class="primary" id="flip-btn">Start Flip</button>
-            <div class="pending" id="flip-status">No flips in progress.</div>
-          </article>
+      <section class="panel assets">
+        <div class="panel-header">
+          <h2>Passive Assets</h2>
+          <p>Build long-term plays that keep the cash flowing even when you log off.</p>
         </div>
+        <div class="card-grid" id="asset-grid"></div>
       </section>
 
       <section class="panel upgrades">
@@ -88,44 +54,7 @@
           <h2>Upgrades & Boosts</h2>
           <p>Invest in yourself to push the grind further.</p>
         </div>
-        <div class="card-grid">
-          <article class="card" id="assistant-card">
-            <div class="card-header">
-              <h3>Hire Virtual Assistant</h3>
-              <span class="tag unlock">Unlock</span>
-            </div>
-            <p>Add <strong>+2h</strong> to your daily grind. They handle the boring stuff.</p>
-            <ul class="details">
-              <li>💵 Cost: <strong>$180</strong></li>
-            </ul>
-            <button class="secondary" id="assistant-btn">Hire Assistant</button>
-          </article>
-
-          <article class="card" id="coffee-card">
-            <div class="card-header">
-              <h3>Turbo Coffee</h3>
-              <span class="tag boost">Boost</span>
-            </div>
-            <p>Instantly gain <strong>+1h</strong> of focus for today. Side effects include jittery success.</p>
-            <ul class="details">
-              <li>💵 Cost: <strong>$40</strong></li>
-            </ul>
-            <button class="secondary" id="coffee-btn">Brew Boost</button>
-          </article>
-
-          <article class="card locked" id="course-card">
-            <div class="card-header">
-              <h3>Automation Course</h3>
-              <span class="tag unlock">Unlock</span>
-            </div>
-            <p>Unlocks smarter blogging tools, boosting passive income by <strong>+50%</strong>.</p>
-            <ul class="details">
-              <li>💵 Cost: <strong>$260</strong></li>
-              <li>Requires active blog</li>
-            </ul>
-            <button class="secondary" id="course-btn">Study Up</button>
-          </article>
-        </div>
+        <div class="card-grid" id="upgrade-grid"></div>
       </section>
 
       <section class="panel log">
