@@ -27,24 +27,11 @@
           <div class="game-container">
             <canvas
               id="game"
-              width="960"
-              height="600"
+              width="1200"
+              height="720"
               aria-label="Simple mover game"
               role="img"
             ></canvas>
-            <div
-              id="game-over"
-              class="game-over"
-              role="alertdialog"
-              aria-modal="true"
-              aria-labelledby="game-over-title"
-              hidden
-            >
-              <h2 id="game-over-title">Game Over</h2>
-              <p>You bumped into a wall, but you can try again!</p>
-              <p class="game-over__score">Your score: <span id="final-score">0</span></p>
-              <button id="retry-btn" type="button" class="retry-button">Play again</button>
-            </div>
           </div>
         </section>
         <section class="info-panel">
@@ -55,8 +42,12 @@
           <ul>
             <li><strong>Arrow Keys / WASD</strong>: Move</li>
             <li><strong>Space</strong>: Dash (short burst of speed)</li>
+            <li><strong>R</strong>: Restart instantly after a crash</li>
           </ul>
-          <p>The game ends if you hit a wall, but you can instantly restart from the retry popup.</p>
+          <p>
+            Colliding with a wall pauses the action briefly before you respawn in a now-larger arena—press
+            <strong>R</strong> if you want to restart immediately.
+          </p>
         </section>
       </div>
     </main>
