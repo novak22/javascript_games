@@ -3,73 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Endless Runner · Pixel Playground</title>
-    <link rel="stylesheet" href="../arcade.css" />
-    <style>
-      body {
-        margin: 0;
-        min-height: 100vh;
-        display: grid;
-        place-items: center;
-        background: var(--brand-bg);
-        padding: 2.5rem 1.5rem;
-        text-align: center;
-      }
-
-      .coming-soon {
-        width: min(420px, 100%);
-        padding: 2.75rem 2.25rem;
-        gap: 1.5rem;
-        display: grid;
-      }
-
-      .coming-soon h1 {
-        margin: 0;
-        font-size: clamp(2rem, 6vw, 2.8rem);
-        font-weight: 700;
-      }
-
-      .coming-soon p {
-        margin: 0;
-        color: rgba(248, 249, 255, 0.78);
-        font-size: 1rem;
-      }
-
-      .coming-soon img {
-        width: 160px;
-        justify-self: center;
-      }
-
-      .home-link {
-        justify-self: center;
-        padding: 0.75rem 1.8rem;
-        border-radius: 999px;
-        background: var(--brand-accent);
-        color: #fff;
-        border: none;
-        cursor: pointer;
-        font-size: 1rem;
-        text-decoration: none;
-        box-shadow: 0 22px 40px rgba(80, 64, 255, 0.35);
-        transition: transform 180ms ease, box-shadow 180ms ease;
-      }
-
-      .home-link:hover,
-      .home-link:focus-visible {
-        transform: translateY(-3px);
-        box-shadow: 0 30px 60px rgba(80, 64, 255, 0.45);
-      }
-    </style>
+    <title>Endless Runner</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main class="coming-soon card-surface">
-      <img src="../assets/thumbnails/endless-runner.svg" alt="Endless runner landscape" />
-      <h1>Endless Runner is tuning its synths</h1>
-      <p>
-        We're syncing the neon skyline, obstacles, and soundtrack. Soon you'll be sprinting through
-        a neon canyon without limits.
-      </p>
-      <a class="home-link" href="../">Return to Arcade</a>
+    <main class="game-shell">
+      <header class="hud">
+        <h1 class="game-title">Neon Runner</h1>
+        <div class="scoreboard">
+          <span class="label">Score:</span>
+          <span id="score">0</span>
+        </div>
+      </header>
+      <section class="canvas-wrapper">
+        <canvas id="game" width="960" height="540" role="img" aria-label="Endless runner game"></canvas>
+        <div class="controls-hint" aria-hidden="true">
+          <p>Press <strong>Space</strong> / <strong>Up</strong> to Jump &middot; <strong>Down</strong> to Duck</p>
+          <p>Tap left/right side to Jump/Duck on touch</p>
+        </div>
+      </section>
+      <footer class="hud">
+        <button id="restart" type="button" class="hidden">Restart</button>
+      </footer>
     </main>
+    <script src="script.js" type="module"></script>
   </body>
 </html>
