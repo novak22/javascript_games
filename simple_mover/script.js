@@ -236,8 +236,29 @@ function init() {
 }
 
 window.addEventListener("keydown", (event) => {
+  const isMovementKey = [
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    " ",
+    "w",
+    "a",
+    "s",
+    "d",
+  ].includes(event.key);
+
+  if (!gameOverOverlay.hidden) {
+    resetGame();
+  }
+
+  if (!state.playing) {
+    return;
+  }
+
   state.keys.add(event.key);
-  if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " ", "w", "a", "s", "d"].includes(event.key)) {
+
+  if (isMovementKey) {
     event.preventDefault();
   }
 });
