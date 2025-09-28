@@ -1,0 +1,12 @@
+<svg width="160" height="120" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradRunner" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#11998e"/>
+      <stop offset="100%" stop-color="#38ef7d"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="160" height="120" rx="16" fill="url(#gradRunner)"/>
+  <path d="M40 90 L70 70 L90 78 L110 60 L130 72" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <circle cx="70" cy="54" r="12" fill="#fff" opacity="0.8"/>
+  <text x="80" y="104" font-size="16" fill="#fff" font-family="'Poppins', sans-serif" font-weight="600" text-anchor="middle">Keep running</text>
+</svg>
