@@ -1,0 +1,74 @@
+:root {
+  color-scheme: light dark;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #101820;
+  color: #f0f6ff;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 960px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.game-panel {
+  background: linear-gradient(145deg, #162a3b, #0d1722);
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.35);
+}
+
+canvas {
+  width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+  background: #05090f;
+  display: block;
+}
+
+.info-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  line-height: 1.2;
+}
+
+p {
+  margin: 0;
+  color: #ced9ec;
+}
+
+ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: #9fb6d4;
+}
+
+@media (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .info-panel {
+    align-items: center;
+  }
+}
