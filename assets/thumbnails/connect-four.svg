@@ -1,19 +1,65 @@
 <svg width="160" height="120" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="gradConnect" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#6a11cb"/>
-      <stop offset="100%" stop-color="#2575fc"/>
+    <linearGradient id="a" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#171e58" />
+      <stop offset="1" stop-color="#2e155c" />
+    </linearGradient>
+    <linearGradient id="b" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8ce4ff" />
+      <stop offset="1" stop-color="#cf91ff" />
+    </linearGradient>
+    <linearGradient id="c" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1c2d7c" />
+      <stop offset="1" stop-color="#090e27" />
+    </linearGradient>
+    <linearGradient id="d" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffd45f" />
+      <stop offset="1" stop-color="#ff8a66" />
+    </linearGradient>
+    <linearGradient id="e" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7d8eff" />
+      <stop offset="1" stop-color="#67d0ff" />
+    </linearGradient>
+    <linearGradient id="f" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffefb5" />
+      <stop offset="1" stop-color="#ffb15d" />
     </linearGradient>
   </defs>
-  <rect x="0" y="0" width="160" height="120" rx="16" fill="url(#gradConnect)"/>
-  <g fill="#fff">
-    <rect x="32" y="24" width="96" height="72" rx="12" opacity="0.3"/>
-    <circle cx="56" cy="42" r="10" opacity="0.9"/>
-    <circle cx="82" cy="42" r="10" opacity="0.6"/>
-    <circle cx="108" cy="42" r="10" opacity="0.9"/>
-    <circle cx="56" cy="66" r="10" opacity="0.6"/>
-    <circle cx="82" cy="66" r="10" opacity="0.9"/>
-    <circle cx="108" cy="66" r="10" opacity="0.6"/>
+  <rect width="160" height="120" rx="20" fill="url(#a)" />
+  <rect x="6" y="6" width="148" height="108" rx="16" fill="#090f28" />
+  <rect x="6" y="6" width="148" height="108" rx="16" fill="url(#c)" />
+  <rect x="6" y="6" width="148" height="108" rx="16" fill="none" stroke="url(#b)" stroke-width="1.4" />
+  <g transform="translate(32 24)">
+    <rect width="96" height="72" rx="12" fill="#10163d" />
+    <rect x="4" y="4" width="88" height="64" rx="10" fill="#18225a" />
+    <g fill="#070b22" opacity=".5">
+      <rect x="6" y="6" width="84" height="60" rx="8" />
+    </g>
+    <g transform="translate(14 12)" fill="none" stroke="#25348b" stroke-width="2" stroke-linecap="round">
+      <path d="M0 0h68" opacity=".45" />
+      <path d="M0 16h68" opacity=".45" />
+      <path d="M0 32h68" opacity=".45" />
+      <path d="M0 48h68" opacity=".45" />
+      <path d="M0 64h68" opacity=".45" />
+      <path d="M0 0v64" opacity=".45" />
+      <path d="M17 0v64" opacity=".45" />
+      <path d="M34 0v64" opacity=".45" />
+      <path d="M51 0v64" opacity=".45" />
+      <path d="M68 0v64" opacity=".45" />
+    </g>
+    <g transform="translate(14 12)">
+      <circle cx="17" cy="16" r="9" fill="url(#d)" />
+      <circle cx="34" cy="32" r="9" fill="url(#e)" />
+      <circle cx="51" cy="48" r="9" fill="url(#d)" />
+      <circle cx="68" cy="48" r="9" fill="url(#e)" />
+      <circle cx="34" cy="48" r="9" fill="#202f7a" opacity=".65" />
+      <circle cx="51" cy="16" r="9" fill="url(#e)" />
+      <circle cx="68" cy="16" r="9" fill="#1b265d" opacity=".45" />
+      <circle cx="17" cy="32" r="9" fill="#1b265d" opacity=".45" />
+    </g>
+    <path d="M14 55l20-20 20 20 20-20 12 12" fill="none" stroke="url(#f)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
   </g>
-  <text x="80" y="104" font-size="16" fill="#fff" font-family="'Poppins', sans-serif" font-weight="600" text-anchor="middle">Line up four</text>
+  <path d="M28 94h104" stroke="#7bd4ff" stroke-width="3" stroke-linecap="round" opacity=".5" />
+  <circle cx="46" cy="92" r="6" fill="#ffd469" />
+  <circle cx="114" cy="92" r="6" fill="#7ba5ff" />
 </svg>
