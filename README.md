@@ -13,6 +13,7 @@ A collection of bite-sized JavaScript arcade games wrapped in a unified retro ae
 | [Simple Mover](./simple_mover/) | Arcade trainer | Collect stars, dash through gaps, and dodge reactive walls. |
 | [Block Drop](./tetris_knockoff/) | Falling blocks | Rotate and stack tetrominoes to clear lines and level up. |
 | [Photon Trails](./photon-trails/) | Light puzzle | Rotate mirrors and splitters to connect every drifting crystal. |
+| [Petak](./petak/) | Word puzzle | Guess the hidden Serbian five-letter word with adaptive neon hints. |
 
 ## Running locally
 

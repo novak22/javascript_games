@@ -2,29 +2,58 @@
   color-scheme: dark;
 }
 
-body {
-  background: radial-gradient(circle at top, rgba(44, 20, 76, 0.9), #050513 72%);
-}
-
 .arcade-main {
   gap: clamp(1.5rem, 3vw, 2.5rem);
 }
 
-.memory {
+.arcade-game {
   display: grid;
-  gap: clamp(1.25rem, 2.5vw, 2rem);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+@media (min-width: 960px) {
+  .arcade-game {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    align-items: start;
+  }
+}
+
+.arcade-game__stage {
+  display: grid;
+  gap: clamp(1.25rem, 2.8vw, 2rem);
   padding: clamp(1.5rem, 3vw, 2.5rem);
+  border-radius: 20px;
   background: rgba(10, 15, 45, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 28px 60px rgba(8, 10, 30, 0.55);
 }
 
-.memory__top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: clamp(1rem, 3vw, 2.5rem);
-  flex-wrap: wrap;
+.arcade-game__frame {
+  --stage-card-size: clamp(72px, 21vw, 112px);
+  --stage-gap: clamp(0.75rem, 2vw, 1.15rem);
+  --stage-padding: clamp(1.1rem, 2.8vw, 1.75rem);
+  display: grid;
+  justify-items: center;
+  padding: var(--stage-padding);
+  border-radius: 20px;
+  background: linear-gradient(140deg, rgba(34, 38, 92, 0.9), rgba(12, 18, 42, 0.92));
+  border: 1px solid rgba(123, 91, 255, 0.35);
+  box-shadow: inset 0 0 24px rgba(12, 18, 48, 0.45), 0 22px 45px rgba(6, 8, 24, 0.55);
+}
+
+.arcade-game__sidebar {
+  display: grid;
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+.arcade-panel {
+  display: grid;
+  gap: clamp(0.85rem, 2vw, 1.25rem);
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  border-radius: 18px;
+  background: rgba(10, 15, 45, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 56px rgba(8, 12, 36, 0.5);
 }
 
 .memory__intro {
@@ -38,23 +67,45 @@ body {
   font-size: clamp(1.6rem, 3vw, 2rem);
 }
 
-.memory__intro p {
+.memory__intro p,
+.memory__status,
+.memory-panel p,
+.memory-panel li {
+  color: rgba(248, 249, 255, 0.72);
+}
+
+.memory__status {
   margin: 0;
-  color: rgba(248, 249, 255, 0.7);
   font-size: 0.98rem;
+}
+
+.memory__board {
+  width: min(100%, calc(var(--stage-card-size) * 4 + var(--stage-gap) * 3));
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, var(--stage-card-size)));
+  gap: var(--stage-gap);
+  justify-items: center;
+}
+
+.memory-panel__title {
+  margin: 0;
+  font-size: clamp(1.1rem, 2.6vw, 1.35rem);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(248, 249, 255, 0.82);
 }
 
 .memory__controls {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 0.75rem;
-  align-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: clamp(0.75rem, 2vw, 1rem);
+  align-items: stretch;
 }
 
 .memory__stat {
   display: grid;
-  gap: 0.25rem;
-  padding: 0.75rem 0.9rem;
+  gap: 0.35rem;
+  padding: 0.85rem 1rem;
   border-radius: 14px;
   background: rgba(14, 24, 64, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -62,19 +113,19 @@ body {
 }
 
 .memory__stat .label {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: rgba(248, 249, 255, 0.55);
 }
 
 .memory__stat .value {
-  font-size: 1.45rem;
+  font-size: clamp(1.35rem, 3vw, 1.6rem);
   font-weight: 600;
 }
 
 .memory__reset {
-  padding: 0.75rem 1.2rem;
+  padding: clamp(0.7rem, 2.2vw, 0.85rem) clamp(1rem, 3vw, 1.35rem);
   border-radius: 12px;
   border: 1px solid rgba(86, 220, 255, 0.5);
   background: linear-gradient(135deg, rgba(86, 220, 255, 0.15), rgba(147, 128, 255, 0.25));
@@ -84,6 +135,7 @@ body {
   cursor: pointer;
   transition: transform 160ms ease, box-shadow 160ms ease;
   box-shadow: 0 16px 38px rgba(6, 12, 44, 0.45);
+  justify-self: stretch;
 }
 
 .memory__reset:hover,
@@ -93,18 +145,41 @@ body {
   outline: none;
 }
 
-.memory__status {
+.memory-help__steps {
   margin: 0;
-  font-size: 0.95rem;
-  color: rgba(248, 249, 255, 0.7);
+  padding-left: 1.2rem;
+  list-style: decimal;
+  display: grid;
+  gap: 0.5rem;
 }
 
-.memory__board {
-  --card-size: min(120px, 24vw);
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--card-size), 1fr));
-  gap: clamp(0.75rem, 2vw, 1.25rem);
-  justify-items: center;
+.memory-help__tip {
+  margin: 0;
+  font-size: 0.95rem;
+  color: rgba(130, 221, 255, 0.85);
+}
+
+@media (max-width: 960px) {
+  .arcade-game__stage {
+    order: -1;
+  }
+}
+
+@media (max-width: 720px) {
+  .arcade-game__frame {
+    --stage-card-size: clamp(68px, 26vw, 108px);
+  }
+}
+
+@media (max-width: 560px) {
+  .arcade-game__frame {
+    --stage-card-size: clamp(64px, 30vw, 104px);
+    --stage-padding: clamp(0.9rem, 3vw, 1.25rem);
+  }
+
+  .memory__controls {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .memory-card {
@@ -178,44 +253,6 @@ body {
   opacity: 1;
   border-color: rgba(86, 220, 255, 0.85);
   box-shadow: 0 0 0 8px rgba(86, 220, 255, 0.22);
-}
-
-.memory-help {
-  padding: clamp(1.5rem, 3vw, 2.5rem);
-  display: grid;
-  gap: 1rem;
-  background: rgba(10, 15, 45, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 24px 56px rgba(8, 12, 36, 0.5);
-}
-
-.memory-help h2 {
-  margin: 0;
-}
-
-.memory-help ol {
-  margin: 0;
-  padding-left: 1.2rem;
-  color: rgba(248, 249, 255, 0.75);
-  display: grid;
-  gap: 0.5rem;
-}
-
-.memory-help__tip {
-  margin: 0;
-  color: rgba(86, 220, 255, 0.85);
-  font-size: 0.95rem;
-}
-
-@media (max-width: 640px) {
-  .memory__controls {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .memory__reset {
-    grid-column: span 2;
-    width: 100%;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

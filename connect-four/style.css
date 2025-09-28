@@ -4,6 +4,9 @@
     sans-serif;
   --background: radial-gradient(circle at top, #102449, #050914 60%);
   --arcade-border: linear-gradient(135deg, #25e0ff, #6748ff 55%, #fe61ff);
+  --board-cell-size: clamp(64px, 9.6vw, 88px);
+  --board-gap: clamp(8px, 1.6vw, 14px);
+  --frame-padding: clamp(1.25rem, 2vw, 2rem);
 }
 
 * {
@@ -13,23 +16,30 @@
 body {
   margin: 0;
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: clamp(1rem, 2vw, 3rem);
   background: var(--background);
   color: #f4f7ff;
 }
 
 .arcade-main {
-  align-items: center;
+  align-items: stretch;
 }
 
-.game-shell {
-  width: min(90vw, 960px);
+.arcade-game__layout {
+  display: flex;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: flex-start;
+}
+
+.arcade-game__frame {
+  flex: 1 1 0;
+  max-width: 780px;
+  width: 100%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: clamp(1rem, 2vw, 1.5rem);
+  padding: var(--frame-padding);
   background: rgba(6, 10, 25, 0.75);
   border-radius: 28px;
   border: 3px solid transparent;
@@ -38,14 +48,13 @@ body {
   background-origin: border-box;
   background-clip: padding-box, border-box;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), inset 0 0 40px rgba(111, 78, 255, 0.25);
-  padding: clamp(1.25rem, 2vw, 2rem);
 }
 
-.game-header {
+.arcade-game__header {
   text-align: center;
 }
 
-.game-header h2 {
+.arcade-game__header h2 {
   margin: 0 0 0.5rem;
   font-family: 'Press Start 2P', cursive;
   font-size: clamp(1.5rem, 3vw, 2.1rem);
@@ -60,27 +69,6 @@ body {
   color: rgba(216, 228, 255, 0.85);
 }
 
-.game-area {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: clamp(1rem, 2vw, 1.5rem);
-}
-
-.status-panel {
-  padding: 0.75rem 1.25rem;
-  background: rgba(20, 34, 68, 0.65);
-  border-radius: 16px;
-  box-shadow: inset 0 0 12px rgba(39, 93, 255, 0.35);
-}
-
-.status-text {
-  margin: 0;
-  font-weight: 500;
-  text-align: center;
-  line-height: 1.45;
-}
-
 .board-wrapper {
   width: 100%;
   display: flex;
@@ -88,8 +76,8 @@ body {
 }
 
 .board {
-  --cell-size: clamp(64px, 10vw, 86px);
-  --gap: clamp(8px, 1.6vw, 14px);
+  --cell-size: var(--board-cell-size);
+  --gap: var(--board-gap);
   display: grid;
   grid-template-columns: repeat(var(--cols, 7), var(--cell-size));
   grid-template-rows: repeat(var(--rows, 6), var(--cell-size));
@@ -105,6 +93,41 @@ body {
   cursor: pointer;
   touch-action: manipulation;
   user-select: none;
+}
+
+.arcade-game__sidebar {
+  width: min(320px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.arcade-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: clamp(1rem, 2vw, 1.25rem);
+  background: rgba(20, 34, 68, 0.72);
+  border-radius: 20px;
+  box-shadow: inset 0 0 12px rgba(39, 93, 255, 0.35), 0 14px 34px rgba(4, 10, 35, 0.45);
+  border: 1px solid rgba(123, 209, 255, 0.08);
+  text-align: center;
+}
+
+.panel-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(216, 228, 255, 0.78);
+}
+
+.status-text {
+  margin: 0;
+  font-weight: 500;
+  line-height: 1.45;
+  text-align: center;
 }
 
 .board::after {
@@ -189,6 +212,7 @@ body {
 }
 
 .reset-btn {
+  width: 100%;
   padding: 0.85rem 1.5rem;
   border-radius: 999px;
   border: 2px solid transparent;
@@ -223,16 +247,22 @@ body {
   }
 }
 
-@media (max-width: 640px) {
-  .status-panel {
+@media (max-width: 960px) {
+  .arcade-game__layout {
+    flex-direction: column;
+  }
+
+  .arcade-game__sidebar {
     width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  body {
+    padding: 1.25rem;
   }
 
   .status-text {
     font-size: 0.95rem;
-  }
-
-  .reset-btn {
-    width: 100%;
   }
 }

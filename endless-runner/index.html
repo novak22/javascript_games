@@ -22,24 +22,45 @@
       </header>
 
       <main class="arcade-main">
-        <section class="game-shell" aria-labelledby="runner-title">
-          <header class="hud">
-            <h2 id="runner-title" class="game-title">Neon Runner</h2>
-            <div class="scoreboard" role="status" aria-live="polite">
-              <span class="label">Score:</span>
-              <span id="score">0</span>
+        <section class="arcade-game" aria-labelledby="runner-title">
+          <div class="arcade-game__stage card-surface">
+            <div class="arcade-game__frame">
+              <canvas
+                id="game"
+                width="960"
+                height="540"
+                role="img"
+                aria-label="Endless runner game"
+              ></canvas>
             </div>
-          </header>
-          <section class="canvas-wrapper">
-            <canvas id="game" width="960" height="540" role="img" aria-label="Endless runner game"></canvas>
-            <div class="controls-hint" aria-hidden="true">
-              <p>Press <strong>Space</strong> / <strong>Up</strong> to Jump · <strong>Down</strong> to Duck</p>
-              <p>Tap left/right side to Jump/Duck on touch</p>
-            </div>
-          </section>
-          <footer class="hud">
-            <button id="restart" type="button" class="hidden">Restart</button>
-          </footer>
+          </div>
+
+          <aside class="arcade-game__sidebar">
+            <article class="arcade-panel card-surface hud-card" role="status" aria-live="polite">
+              <h2 id="runner-title" class="hud-card__title">Neon Runner</h2>
+              <p class="hud-card__subtitle">
+                Leap, duck, and dash through synthwave streets while pushing your high score higher.
+              </p>
+              <div class="hud-stat">
+                <span class="hud-stat__label">Score</span>
+                <span id="score" class="hud-stat__value">0</span>
+              </div>
+            </article>
+
+            <article class="arcade-panel card-surface">
+              <h3 class="hud-card__title">Controls</h3>
+              <p class="hud-text">
+                Press <strong>Space</strong> or <strong>Up</strong> to jump and <strong>Down</strong> to duck.
+              </p>
+              <p class="hud-text">Tap left to jump or right to duck on touch screens.</p>
+            </article>
+
+            <article class="arcade-panel card-surface">
+              <h3 class="hud-card__title">Session</h3>
+              <p class="hud-text">Start a fresh run whenever you wipe out.</p>
+              <button id="restart" type="button" class="hud-button hidden">Restart</button>
+            </article>
+          </aside>
         </section>
       </main>
 

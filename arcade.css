@@ -5,9 +5,16 @@
   --brand-surface: rgba(18, 18, 42, 0.9);
   --brand-border: rgba(255, 255, 255, 0.08);
   --brand-text: #f8f9ff;
+  --brand-text-soft: rgba(248, 249, 255, 0.72);
   --brand-accent: #7b5bff;
   --brand-accent-soft: rgba(123, 91, 255, 0.15);
   --brand-shadow: 0 24px 60px rgba(9, 12, 34, 0.45);
+
+  /* Game stage defaults ensure consistent centering across projects */
+  --arcade-stage-width: clamp(320px, 90vw, 960px);
+  --arcade-stage-ratio: 16 / 9;
+  --arcade-stage-gap: clamp(1.25rem, 4vw, 2.5rem);
+  --arcade-panel-padding: clamp(1rem, 2.4vw, 1.8rem);
 }
 
 *, *::before, *::after {
@@ -35,9 +42,33 @@ a {
 }
 
 button,
-.btn {
+.btn,
+.arcade-back {
   font-family: 'Poppins', 'Space Grotesk', sans-serif;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 999px;
+  padding: 0.75rem 1.5rem;
+  background: rgba(123, 91, 255, 0.25);
+  border: 1px solid rgba(123, 91, 255, 0.45);
+  color: inherit;
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+button:hover,
+button:focus-visible,
+.btn:hover,
+.btn:focus-visible,
+.arcade-back:hover,
+.arcade-back:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(123, 91, 255, 0.75);
+  box-shadow: 0 18px 34px rgba(9, 11, 28, 0.55);
 }
 
 .card-surface {
@@ -49,7 +80,72 @@ button,
 }
 
 .text-soft {
-  color: rgba(248, 249, 255, 0.72);
+  color: var(--brand-text-soft);
+}
+
+/*
+ * Game frame helpers -------------------------------------------------
+ * `.arcade-game` creates a predictable layout with a centered stage and
+ * optional sidebar panels. Games can rely on the CSS variables above to
+ * adjust the playable area without redefining page-level centering.
+ */
+
+.arcade-game {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: minmax(0, var(--arcade-stage-width)) minmax(220px, 26rem);
+  gap: var(--arcade-stage-gap);
+  width: min(100%, calc(var(--arcade-stage-width) + 26rem));
+  margin: 0 auto;
+  align-items: start;
+}
+
+.arcade-game__stage {
+  width: min(100%, var(--arcade-stage-width));
+  aspect-ratio: var(--arcade-stage-ratio);
+  display: grid;
+  place-items: center;
+  margin: 0 auto;
+  position: relative;
+}
+
+.arcade-game__frame {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: clamp(0.75rem, 2.2vw, 1.5rem);
+  border-radius: 22px;
+  background: rgba(8, 9, 28, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 60px rgba(8, 10, 28, 0.55);
+}
+
+.arcade-game__sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.9rem, 2vw, 1.5rem);
+  align-self: stretch;
+}
+
+.arcade-panel {
+  padding: var(--arcade-panel-padding);
+  background: var(--brand-surface);
+  border: 1px solid var(--brand-border);
+  border-radius: 18px;
+  box-shadow: var(--brand-shadow);
+  backdrop-filter: blur(14px);
+}
+
+.arcade-panel h2,
+.arcade-panel h3 {
+  margin-top: 0;
+  font-family: 'Space Grotesk', 'Poppins', sans-serif;
+  letter-spacing: 0.04em;
+}
+
+.arcade-panel p {
+  color: var(--brand-text-soft);
 }
 
 .arcade-page {
@@ -88,34 +184,18 @@ button,
 .arcade-header__meta p {
   margin: 0;
   font-size: clamp(0.95rem, 2.4vw, 1.125rem);
-  color: rgba(248, 249, 255, 0.72);
+  color: var(--brand-text-soft);
 }
 
 .arcade-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-weight: 600;
   font-size: 0.95rem;
   letter-spacing: 0.02em;
-  padding: 0.65rem 1.3rem;
-  border-radius: 999px;
   text-decoration: none;
-  background: rgba(123, 91, 255, 0.25);
-  border: 1px solid rgba(123, 91, 255, 0.45);
   box-shadow: 0 14px 30px rgba(9, 11, 28, 0.45);
-  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
 }
 
 .arcade-back span {
   font-size: 1rem;
-}
-
-.arcade-back:hover,
-.arcade-back:focus-visible {
-  transform: translateY(-2px);
-  border-color: rgba(123, 91, 255, 0.75);
-  box-shadow: 0 18px 34px rgba(9, 11, 28, 0.55);
 }
 
 .arcade-main {
@@ -154,5 +234,34 @@ button,
   .arcade-back {
     justify-content: center;
     width: 100%;
+  }
+}
+
+/* Responsive tweaks for the game frame -------------------------------- */
+
+@media (max-width: 960px) {
+  .arcade-game {
+    grid-template-columns: minmax(0, var(--arcade-stage-width));
+    width: min(100%, var(--arcade-stage-width));
+  }
+
+  .arcade-game__sidebar {
+    width: min(100%, var(--arcade-stage-width));
+    justify-self: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .arcade-game {
+    gap: clamp(1rem, 6vw, 1.5rem);
+  }
+
+  .arcade-game__stage,
+  .arcade-game__sidebar {
+    width: 100%;
+  }
+
+  .arcade-game__sidebar {
+    gap: clamp(0.75rem, 5vw, 1.25rem);
   }
 }
