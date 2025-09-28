@@ -18,9 +18,6 @@
   --arcade-stage-width: min(92vw, 520px);
   --board-padding: clamp(1rem, 3vw, 1.75rem);
   --tile-gap: clamp(0.5rem, 1.5vw, 1rem);
-  --tile-size: calc(
-    (var(--arcade-stage-width) - 2 * var(--board-padding) - 3 * var(--tile-gap)) / 4
-  );
   display: grid;
   gap: clamp(1.5rem, 3vw, 2.5rem);
   align-items: start;
@@ -34,6 +31,11 @@
   background: radial-gradient(circle at top, #f5efff 0%, #f0f4ff 45%, #f9f5ff 100%);
   border: 1px solid var(--panel-border);
   box-shadow: 0 2.5rem 4.5rem rgba(78, 61, 158, 0.18);
+  aspect-ratio: auto;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .arcade-game__frame {
@@ -41,6 +43,7 @@
   margin: 0 auto;
   display: grid;
   gap: clamp(1.5rem, 3vw, 2.5rem);
+  position: relative;
 }
 
 .game-brief {
@@ -61,6 +64,8 @@
 }
 
 .board {
+  --playfield-size: calc(100% - 2 * var(--board-padding));
+  --tile-size: calc((var(--playfield-size) - 3 * var(--tile-gap)) / 4);
   position: relative;
   width: 100%;
   max-width: var(--arcade-stage-width);
@@ -74,35 +79,32 @@
 }
 
 .grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--tile-gap);
   position: relative;
-  width: 100%;
-  aspect-ratio: 1 / 1;
+  width: var(--playfield-size);
+  height: var(--playfield-size);
   margin: 0 auto;
 }
 
 .grid-row {
-  display: flex;
-  gap: var(--tile-gap);
-  margin-bottom: var(--tile-gap);
-}
-
-.grid-row:last-child {
-  margin-bottom: 0;
+  display: contents;
 }
 
 .grid-cell {
-  flex: 1;
   background: rgba(142, 124, 255, 0.12);
   border-radius: 1rem;
   box-shadow: inset 0 0 0 1px rgba(137, 97, 255, 0.12);
+  aspect-ratio: 1 / 1;
 }
 
 .tile-container {
   position: absolute;
   top: var(--board-padding);
   left: var(--board-padding);
-  width: calc(var(--tile-size) * 4 + var(--tile-gap) * 3);
-  height: calc(var(--tile-size) * 4 + var(--tile-gap) * 3);
+  width: var(--playfield-size);
+  height: var(--playfield-size);
   pointer-events: none;
   overflow: visible;
 }

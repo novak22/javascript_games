@@ -2,6 +2,11 @@ const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 const scoreEl = document.getElementById("score");
 const restartButton = document.getElementById("restart");
+const overlay = document.getElementById("game-overlay");
+const overlayText = document.querySelector(".game-overlay__text");
+const overlayRestartButton = document.getElementById("overlay-restart");
+const touchButtons = document.querySelectorAll(".touch-button");
+const overlayDefaultText = overlayText ? overlayText.textContent : "";
 
 const BASE_WIDTH = 960;
 const BASE_HEIGHT = 540;
@@ -202,6 +207,16 @@ function resetGame() {
   state.clouds = generateClouds();
   runner.reset();
   restartButton.classList.add("hidden");
+  if (overlay) {
+    overlay.classList.add("hidden");
+  }
+  if (overlayText) {
+    overlayText.textContent = overlayDefaultText;
+  }
+  input.jump = false;
+  input.duck = false;
+  input.pointerLeft = false;
+  input.pointerRight = false;
   scoreEl.textContent = "0";
   state.lastTimestamp = performance.now();
   requestAnimationFrame(loop);
@@ -294,10 +309,6 @@ function draw() {
   drawGround();
   runner.draw(ctx);
   state.obstacles.forEach((obstacle) => obstacle.draw(ctx));
-
-  if (state.gameOver) {
-    drawGameOver();
-  }
 }
 
 function drawClouds() {
@@ -450,33 +461,34 @@ function colorToCss(rgb) {
   return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
 }
 
-function drawGameOver() {
-  ctx.save();
-  ctx.fillStyle = "rgba(5, 2, 15, 0.8)";
-  ctx.fillRect(canvas.width / 2 - 180, canvas.height / 2 - 70, 360, 140);
-  ctx.strokeStyle = "#ff2bd6";
-  ctx.lineWidth = 3;
-  ctx.strokeRect(canvas.width / 2 - 180, canvas.height / 2 - 70, 360, 140);
-
-  ctx.fillStyle = "#39ff14";
-  ctx.font = `${32 * dpr}px 'Press Start 2P', 'Segoe UI', sans-serif`;
-  ctx.textAlign = "center";
-  ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2 - 10);
-
-  ctx.fillStyle = "#fdf6ff";
-  ctx.font = `${18 * dpr}px 'Press Start 2P', 'Segoe UI', sans-serif`;
-  ctx.fillText("Tap / Press Restart", canvas.width / 2, canvas.height / 2 + 40);
-  ctx.restore();
-}
-
 function handleGameOver() {
   state.gameOver = true;
   state.running = false;
   restartButton.classList.remove("hidden");
+  if (overlay) {
+    overlay.classList.remove("hidden");
+  }
+  if (overlayText) {
+    overlayText.textContent = `Score: ${Math.floor(state.score)} · Tap restart to try again.`;
+  }
+  input.pointerLeft = false;
+  input.pointerRight = false;
+  input.jump = false;
+  input.duck = false;
 }
 
 function randomRange(min, max) {
   return Math.random() * (max - min) + min;
+}
+
+function setTouchControl(action, active) {
+  if (action === "jump") {
+    input.pointerLeft = active;
+    input.jump = active;
+  } else if (action === "duck") {
+    input.pointerRight = active;
+    input.duck = active;
+  }
 }
 
 function handleKeyDown(event) {
@@ -552,6 +564,28 @@ canvas.addEventListener("touchend", () => handlePointerUp());
 canvas.addEventListener("touchcancel", () => handlePointerUp());
 
 restartButton.addEventListener("click", resetGame);
+if (overlayRestartButton) {
+  overlayRestartButton.addEventListener("click", resetGame);
+}
+
+touchButtons.forEach((button) => {
+  const action = button.dataset.action;
+  if (!action) return;
+  const press = (event) => {
+    if (event.pointerType === "mouse" && event.button !== 0) {
+      return;
+    }
+    event.preventDefault();
+    setTouchControl(action, true);
+  };
+  const release = () => {
+    setTouchControl(action, false);
+  };
+  button.addEventListener("pointerdown", press);
+  button.addEventListener("pointerup", release);
+  button.addEventListener("pointerleave", release);
+  button.addEventListener("pointercancel", release);
+});
 
 resize();
 resetGame();

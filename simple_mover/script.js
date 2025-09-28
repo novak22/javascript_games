@@ -18,7 +18,7 @@ const state = {
   player: {
     x: 0,
     y: 0,
-    size: 36,
+    size: 44,
     color: "#4db5ff",
     speed: 220,
     dashSpeed: 400,
@@ -393,6 +393,72 @@ function updatePlayer(delta) {
   }
 }
 
+function drawPlayer() {
+  const p = state.player;
+  const size = p.size;
+  const half = size / 2;
+  const centerX = p.x + half;
+  const centerY = p.y + half;
+  const now = performance.now ? performance.now() : Date.now();
+  const pulse = Math.sin(now / 220) * (size * 0.04);
+  const leanRight = state.keys.has("ArrowRight") || state.keys.has("d");
+  const leanLeft = state.keys.has("ArrowLeft") || state.keys.has("a");
+  const tilt = (leanRight ? 1 : 0) - (leanLeft ? 1 : 0);
+
+  ctx.save();
+  ctx.translate(centerX, centerY);
+  ctx.rotate(tilt * 0.15);
+
+  const glow = ctx.createRadialGradient(0, 0, size * 0.15, 0, 0, size * 0.6 + pulse);
+  glow.addColorStop(0, "rgba(77, 181, 255, 0.9)");
+  glow.addColorStop(1, "rgba(77, 181, 255, 0)");
+  ctx.fillStyle = glow;
+  ctx.beginPath();
+  ctx.arc(0, 0, size * 0.6 + pulse, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = "#4db5ff";
+  ctx.beginPath();
+  ctx.moveTo(0, -half * 0.95);
+  ctx.lineTo(half * 0.75, half * 0.6);
+  ctx.lineTo(-half * 0.75, half * 0.6);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.fillStyle = "rgba(9, 22, 38, 0.65)";
+  ctx.beginPath();
+  ctx.moveTo(0, -half * 0.55);
+  ctx.quadraticCurveTo(half * 0.4, half * 0.2, 0, half * 0.45);
+  ctx.quadraticCurveTo(-half * 0.4, half * 0.2, 0, -half * 0.55);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.fillStyle = "#f2fbff";
+  ctx.beginPath();
+  ctx.ellipse(0, -half * 0.18, half * 0.35, half * 0.45, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = "rgba(77, 181, 255, 0.35)";
+  ctx.beginPath();
+  ctx.ellipse(0, -half * 0.16, half * 0.25, half * 0.32, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  const thrusterBase = half * 0.55;
+  const thrusterLength = half * 0.35 + pulse * 0.6;
+  const thruster = ctx.createLinearGradient(0, thrusterBase, 0, thrusterBase + thrusterLength);
+  thruster.addColorStop(0, "rgba(255, 174, 94, 0.85)");
+  thruster.addColorStop(1, "rgba(255, 109, 132, 0.6)");
+  ctx.fillStyle = thruster;
+  ctx.beginPath();
+  ctx.moveTo(-half * 0.32, thrusterBase);
+  ctx.lineTo(0, thrusterBase + thrusterLength);
+  ctx.lineTo(half * 0.32, thrusterBase);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.restore();
+}
+
 function draw() {
   ctx.fillStyle = "#030712";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -406,9 +472,7 @@ function draw() {
     ctx.fillRect(wall.x, wall.y, wall.width, wall.height);
   });
 
-  const p = state.player;
-  ctx.fillStyle = p.color;
-  ctx.fillRect(p.x, p.y, p.size, p.size);
+  drawPlayer();
 
   if (state.star) {
     ctx.save();

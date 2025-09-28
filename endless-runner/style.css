@@ -38,7 +38,10 @@ body {
   border: 1px solid var(--runner-border-soft);
   box-shadow: 0 1.5rem 3.5rem rgba(5, 2, 15, 0.75), 0 0 1.35rem rgba(255, 43, 214, 0.2);
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  gap: clamp(1rem, 2.5vw, 1.5rem);
 }
 
 .arcade-game__frame {
@@ -48,12 +51,93 @@ body {
   box-shadow: 0 1.25rem 2.75rem rgba(5, 2, 15, 0.7), 0 0 1.2rem rgba(57, 255, 20, 0.35);
   background: linear-gradient(180deg, #12062b 0%, #04010e 100%);
   overflow: hidden;
+  position: relative;
 }
 
 canvas {
   display: block;
   width: 100%;
   height: auto;
+}
+
+.game-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 3vw, 1.75rem);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  text-align: center;
+  background: rgba(5, 2, 15, 0.82);
+  backdrop-filter: blur(6px);
+}
+
+.game-overlay.hidden {
+  display: none;
+}
+
+.game-overlay__panel {
+  display: grid;
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+  max-width: min(24rem, 90%);
+}
+
+.game-overlay__title {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  color: var(--runner-highlight);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.game-overlay__text {
+  margin: 0;
+  color: rgba(248, 247, 255, 0.8);
+  line-height: 1.6;
+}
+
+.touch-controls {
+  display: none;
+  width: 100%;
+  max-width: min(var(--arcade-stage-width), 100%);
+  justify-content: center;
+  gap: clamp(1rem, 5vw, 2rem);
+}
+
+.touch-button {
+  flex: 1;
+  font: inherit;
+  font-size: clamp(1rem, 4vw, 1.25rem);
+  padding: clamp(0.85rem, 4vw, 1.2rem);
+  border-radius: 999px;
+  border: 1px solid var(--runner-border);
+  color: var(--runner-text);
+  box-shadow: 0 1rem 2.5rem rgba(5, 2, 15, 0.6);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.touch-button--jump {
+  background: linear-gradient(135deg, rgba(57, 255, 20, 0.35), rgba(57, 255, 20, 0.18));
+}
+
+.touch-button--duck {
+  background: linear-gradient(135deg, rgba(255, 43, 214, 0.32), rgba(255, 43, 214, 0.18));
+}
+
+.touch-button:active {
+  transform: scale(0.97);
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .touch-controls {
+    display: flex;
+  }
 }
 
 .arcade-game__sidebar {
