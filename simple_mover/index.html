@@ -31,6 +31,26 @@
             aria-label="Simple mover game"
             role="img"
           ></canvas>
+          <div class="touch-controls" data-touch-controls>
+            <span class="touch-controls__title">Touch controls</span>
+            <div class="touch-pad" role="group" aria-label="Move player">
+              <button type="button" class="touch-pad__button touch-pad__button--up" data-control="up" aria-label="Move up">
+                <span aria-hidden="true">▲</span>
+              </button>
+              <button type="button" class="touch-pad__button touch-pad__button--left" data-control="left" aria-label="Move left">
+                <span aria-hidden="true">◀</span>
+              </button>
+              <button type="button" class="touch-pad__button touch-pad__button--right" data-control="right" aria-label="Move right">
+                <span aria-hidden="true">▶</span>
+              </button>
+              <button type="button" class="touch-pad__button touch-pad__button--down" data-control="down" aria-label="Move down">
+                <span aria-hidden="true">▼</span>
+              </button>
+            </div>
+            <button type="button" class="touch-controls__dash" data-control="dash" aria-label="Dash">
+              Dash
+            </button>
+          </div>
         </section>
         <aside class="arcade-game__sidebar">
           <article class="arcade-panel card-surface">
@@ -40,12 +60,14 @@
             </p>
             <ul>
               <li><strong>Arrow Keys / WASD</strong>: Move</li>
+              <li><strong>On-screen pad</strong>: Tap arrows &amp; Dash on touch devices</li>
               <li><strong>Space</strong>: Dash (short burst of speed)</li>
               <li><strong>R</strong>: Restart instantly after a crash</li>
             </ul>
             <p>
               Colliding with a wall pauses the action briefly before you respawn in a now-larger arena—press
-              <strong>R</strong> if you want to restart immediately.
+              <strong>R</strong> if you want to restart immediately. On touch screens the on-screen pad keeps you moving
+              while the arena resets.
             </p>
           </article>
         </aside>

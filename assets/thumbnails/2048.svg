@@ -1,43 +1,60 @@
 <svg width="160" height="120" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="a" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#141a4f" />
-      <stop offset="1" stop-color="#251251" />
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#201d52" />
+      <stop offset="1" stop-color="#331e60" />
     </linearGradient>
-    <linearGradient id="b" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#8ae0ff" />
-      <stop offset="1" stop-color="#c287ff" />
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1232" />
+      <stop offset="1" stop-color="#0b0d24" />
     </linearGradient>
-    <linearGradient id="c" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#1b2b74" stop-opacity=".85" />
-      <stop offset="1" stop-color="#0a0d28" stop-opacity=".85" />
+    <radialGradient id="halo" cx="0.5" cy="0.35" r="0.7">
+      <stop offset="0" stop-color="#8bc6ff" stop-opacity="0.25" />
+      <stop offset="1" stop-color="transparent" />
+    </radialGradient>
+    <linearGradient id="tile2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff5d8" />
+      <stop offset="1" stop-color="#ffe1a8" />
     </linearGradient>
-    <linearGradient id="d" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#ffe2a8" />
-      <stop offset="1" stop-color="#ff9b55" />
+    <linearGradient id="tile4" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffe7c0" />
+      <stop offset="1" stop-color="#ffd099" />
     </linearGradient>
-    <linearGradient id="e" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#fff4ce" />
-      <stop offset="1" stop-color="#ffbe66" />
+    <linearGradient id="tile8" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffbed4" />
+      <stop offset="1" stop-color="#ff8cbc" />
+    </linearGradient>
+    <linearGradient id="tile16" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9fd5ff" />
+      <stop offset="1" stop-color="#6da8ff" />
     </linearGradient>
   </defs>
-  <rect width="160" height="120" rx="20" fill="url(#a)" />
-  <rect x="6" y="6" width="148" height="108" rx="16" fill="#0b102b" />
-  <rect x="6" y="6" width="148" height="108" rx="16" fill="url(#c)" />
-  <rect x="6" y="6" width="148" height="108" rx="16" fill="none" stroke="url(#b)" stroke-width="1.4" />
-  <g transform="translate(40 26)" fill="#182055">
-    <rect width="32" height="32" rx="7" fill="#1d2a67" />
-    <rect x="36" width="32" height="32" rx="7" fill="#1a2760" />
-    <rect y="36" width="32" height="32" rx="7" fill="#1a2661" />
-    <rect x="36" y="36" width="32" height="32" rx="7" fill="url(#d)" />
-    <rect x="19" y="-10" width="30" height="10" rx="4" fill="#222f7b" opacity=".65" />
-    <rect x="55" y="26" width="22" height="8" rx="4" fill="#fff" opacity=".18" />
+  <rect width="160" height="120" rx="24" fill="url(#bg)" />
+  <rect x="8" y="8" width="144" height="104" rx="20" fill="url(#panel)" stroke="rgba(124, 206, 255, 0.25)" stroke-width="1.4" />
+  <rect x="8" y="8" width="144" height="104" rx="20" fill="url(#halo)" />
+  <g transform="translate(0.5 0.5)" opacity="0.18" stroke="rgba(148, 201, 255, 0.6)" stroke-linecap="round">
+    <path d="M32 28h96" />
+    <path d="M32 92h96" />
+    <path d="M32 60h96" />
+    <path d="M52 16v88" />
+    <path d="M84 16v88" />
+    <path d="M116 16v88" />
   </g>
-  <g fill="#fff" font-family="'Space Grotesk', 'Poppins', sans-serif" font-weight="700" text-anchor="middle">
-    <text x="92" y="65" font-size="24" fill="#ffe7b7">2048</text>
-    <text x="92" y="83" font-size="10" fill="#f6b574">CHAIN COMBO</text>
-    <text x="92" y="98" font-size="9" fill="#7bd4ff" letter-spacing=".3em">MERGE</text>
+  <g fill="#10162e" opacity="0.5">
+    <path d="M46 30h68a6 6 0 0 1 6 6v48a6 6 0 0 1-6 6H46a6 6 0 0 1-6-6V36a6 6 0 0 1 6-6z" />
   </g>
-  <rect x="80" y="44" width="48" height="32" rx="8" fill="url(#e)" transform="rotate(-6 80 44)" />
-  <text x="103" y="66" font-family="'Space Grotesk', 'Poppins', sans-serif" font-size="20" font-weight="700" fill="#b34d00" transform="rotate(-6 103 66)">2048</text>
+  <g font-family="'Space Grotesk', 'Poppins', sans-serif" font-weight="600" text-anchor="middle" dominant-baseline="middle">
+    <rect x="34" y="26" width="40" height="40" rx="12" fill="url(#tile2)" />
+    <text x="54" y="46" fill="#46331a" font-size="18">2</text>
+    <rect x="86" y="26" width="40" height="40" rx="12" fill="url(#tile4)" />
+    <text x="106" y="46" fill="#4d3518" font-size="18">4</text>
+    <rect x="34" y="78" width="40" height="40" rx="12" fill="url(#tile8)" />
+    <text x="54" y="98" fill="#512638" font-size="18">8</text>
+    <rect x="86" y="78" width="40" height="40" rx="12" fill="url(#tile16)" />
+    <text x="106" y="98" fill="#163357" font-size="18">16</text>
+  </g>
+  <g stroke="rgba(124, 206, 255, 0.45)" stroke-width="2" stroke-linecap="round" opacity="0.6">
+    <path d="M20 104c18-10 102-10 120 0" />
+    <path d="M20 20c24 10 98 10 120 0" opacity="0.4" />
+  </g>
 </svg>

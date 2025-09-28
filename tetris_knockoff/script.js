@@ -381,6 +381,106 @@ restartBtn.addEventListener("click", () => {
   restartGame();
 });
 
+const touchButtons = document.querySelectorAll('[data-touch-control]');
+
+if (touchButtons.length) {
+  const actionMap = {
+    left: () => playerMove(-1),
+    right: () => playerMove(1),
+    down: () => playerDrop(),
+    rotate: () => playerRotate(1),
+    hard: () => hardDrop(),
+  };
+
+  const holdState = new Map();
+
+  const runAction = (name) => {
+    const action = actionMap[name];
+    if (action) {
+      action();
+    }
+  };
+
+  const releaseHold = (pointerId) => {
+    const state = holdState.get(pointerId);
+    if (!state) {
+      return;
+    }
+    if (state.timeoutId) {
+      window.clearTimeout(state.timeoutId);
+    }
+    if (state.intervalId) {
+      window.clearInterval(state.intervalId);
+    }
+    state.button.classList.remove('is-active');
+    holdState.delete(pointerId);
+  };
+
+  touchButtons.forEach((button) => {
+    button.addEventListener(
+      'pointerdown',
+      (event) => {
+        if (event.pointerType === 'mouse' && event.button !== 0) {
+          return;
+        }
+        const actionName = button.dataset.touchControl;
+        if (!actionName || !actionMap[actionName]) {
+          return;
+        }
+        event.preventDefault();
+        const pointerId = event.pointerId ?? 'mouse';
+        releaseHold(pointerId);
+        runAction(actionName);
+        button.classList.add('is-active');
+
+        const repeat = button.dataset.repeat === 'true';
+        const state = { button };
+
+        if (repeat) {
+          state.timeoutId = window.setTimeout(() => {
+            state.intervalId = window.setInterval(() => {
+              runAction(actionName);
+            }, 110);
+          }, 220);
+        }
+
+        holdState.set(pointerId, state);
+
+        if (typeof button.setPointerCapture === 'function' && event.pointerId !== undefined) {
+          button.setPointerCapture(event.pointerId);
+        }
+      },
+      { passive: false }
+    );
+
+    const endHandler = (event) => {
+      const pointerId = event.pointerId ?? 'mouse';
+      releaseHold(pointerId);
+    };
+
+    button.addEventListener('pointerup', endHandler);
+    button.addEventListener('pointercancel', endHandler);
+    button.addEventListener('lostpointercapture', endHandler);
+    button.addEventListener('pointerleave', (event) => {
+      const pointerId = event.pointerId ?? 'mouse';
+      releaseHold(pointerId);
+    });
+  });
+
+  window.addEventListener('blur', () => {
+    holdState.forEach((state) => {
+      if (state.timeoutId) {
+        window.clearTimeout(state.timeoutId);
+      }
+      if (state.intervalId) {
+        window.clearInterval(state.intervalId);
+      }
+      state.button.classList.remove('is-active');
+    });
+    holdState.clear();
+  });
+}
+
 restartGame();
 updateStats();
 requestAnimationFrame(update);

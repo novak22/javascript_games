@@ -1,57 +1,39 @@
-<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="256" height="256" rx="46" fill="url(#bg)" />
-  <g filter="url(#glow)">
-    <circle cx="84" cy="96" r="38" fill="url(#pulse)" fill-opacity="0.9" />
-  </g>
-  <g filter="url(#glow2)">
-    <circle cx="176" cy="160" r="34" fill="#FF5C97" fill-opacity="0.85" />
-  </g>
-  <path
-    d="M32 128C32 116.954 40.9543 108 52 108H204C215.046 108 224 116.954 224 128C224 139.046 215.046 148 204 148H52C40.9543 148 32 139.046 32 128Z"
-    fill="url(#beam)"
-    fill-opacity="0.6"
-  />
-  <path
-    d="M44 128C44 123.582 47.5817 120 52 120H204C208.418 120 212 123.582 212 128C212 132.418 208.418 136 204 136H52C47.5817 136 44 132.418 44 128Z"
-    fill="url(#beamCore)"
-  />
-  <g filter="url(#glow3)">
-    <path
-      d="M128 64C145.673 64 160 78.3269 160 96C160 113.673 145.673 128 128 128C110.327 128 96 113.673 96 96C96 78.3269 110.327 64 128 64Z"
-      stroke="#7BFFFE"
-      stroke-width="10"
-      stroke-linecap="round"
-      stroke-dasharray="22 18"
-    />
-  </g>
+<svg width="160" height="120" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="bg" x1="36" y1="26" x2="220" y2="230" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#05091F" />
-      <stop offset="1" stop-color="#0A132C" />
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#081a38" />
+      <stop offset="1" stop-color="#241a4c" />
     </linearGradient>
-    <linearGradient id="beam" x1="32" y1="128" x2="224" y2="128" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#6EE7FF" stop-opacity="0" />
-      <stop offset="0.5" stop-color="#6EE7FF" />
-      <stop offset="1" stop-color="#6EE7FF" stop-opacity="0" />
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#061028" />
+      <stop offset="1" stop-color="#0b1732" />
     </linearGradient>
-    <linearGradient id="beamCore" x1="44" y1="128" x2="212" y2="128" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#7BFFFE" stop-opacity="0" />
-      <stop offset="0.5" stop-color="#7BFFFE" />
-      <stop offset="1" stop-color="#7BFFFE" stop-opacity="0" />
+    <linearGradient id="laneA" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7be0ff" />
+      <stop offset="1" stop-color="#3a9dff" />
     </linearGradient>
-    <radialGradient id="pulse" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="rotate(45 11.5 138.5) scale(56)">
-      <stop stop-color="#FFFFFF" />
-      <stop offset="0.42" stop-color="#7BFFFE" />
-      <stop offset="1" stop-color="#7BFFFE" stop-opacity="0" />
-    </radialGradient>
-    <filter id="glow" x="14" y="26" width="140" height="140" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-      <feGaussianBlur stdDeviation="12" result="effect1_foregroundBlur" />
-    </filter>
-    <filter id="glow2" x="108" y="92" width="136" height="136" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-      <feGaussianBlur stdDeviation="16" result="effect1_foregroundBlur" />
-    </filter>
-    <filter id="glow3" x="84" y="52" width="88" height="88" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-      <feGaussianBlur stdDeviation="2" result="effect1_foregroundBlur" />
-    </filter>
+    <linearGradient id="laneB" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ff9ad5" />
+      <stop offset="1" stop-color="#ff7a6f" />
+    </linearGradient>
   </defs>
+  <rect width="160" height="120" rx="24" fill="url(#bg)" />
+  <rect x="8" y="8" width="144" height="104" rx="20" fill="url(#panel)" stroke="rgba(132, 197, 255, 0.22)" stroke-width="1.4" />
+  <g opacity="0.3" stroke="rgba(123, 209, 255, 0.3)" stroke-width="1.4" stroke-linecap="round">
+    <path d="M32 32h96" />
+    <path d="M32 88h96" />
+  </g>
+  <path d="M36 40c24-12 52-12 76 0s52 12 76 0" fill="none" stroke="url(#laneA)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.55" />
+  <path d="M36 100c24-12 52-12 76 0s52 12 76 0" fill="none" stroke="url(#laneB)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.55" />
+  <g transform="translate(0 -4)">
+    <rect x="48" y="44" width="12" height="52" rx="6" fill="rgba(123, 209, 255, 0.2)" stroke="rgba(123, 209, 255, 0.3)" stroke-width="1" />
+    <rect x="100" y="44" width="12" height="52" rx="6" fill="rgba(255, 154, 213, 0.2)" stroke="rgba(255, 154, 213, 0.32)" stroke-width="1" />
+    <path d="M54 48c14 12 30 18 48 18" fill="none" stroke="url(#laneA)" stroke-width="4" stroke-linecap="round" />
+    <path d="M106 82c-14-12-30-18-48-18" fill="none" stroke="url(#laneB)" stroke-width="4" stroke-linecap="round" />
+    <circle cx="82" cy="66" r="8" fill="#0b152f" stroke="rgba(123, 209, 255, 0.5)" stroke-width="2" />
+    <circle cx="82" cy="66" r="4" fill="url(#laneA)" />
+  </g>
+  <g stroke="rgba(123, 209, 255, 0.45)" stroke-linecap="round" stroke-width="2" opacity="0.7">
+    <path d="M24 108c30-6 90-6 112 0" />
+  </g>
 </svg>
