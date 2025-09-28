@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Online Hustle Simulator</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app">
+    <header class="top-bar">
+      <div class="stat">
+        <span class="label">Money</span>
+        <span id="money" class="value">$0</span>
+      </div>
+      <div class="stat time">
+        <span class="label">Time Left</span>
+        <div class="time-wrapper">
+          <span id="time" class="value">14h</span>
+          <div class="time-bar">
+            <div id="time-progress" class="time-progress"></div>
+          </div>
+        </div>
+      </div>
+      <div class="stat">
+        <span class="label">Day</span>
+        <span id="day" class="value">1</span>
+      </div>
+      <button id="end-day" class="end-day">End Day</button>
+    </header>
+
+    <main>
+      <section class="panel hustles">
+        <div class="panel-header">
+          <h2>Daily Hustles</h2>
+          <p>Spend your time wisely. When the clock hits zero, the grind resets.</p>
+        </div>
+        <div class="card-grid">
+          <article class="card" id="freelance-card">
+            <div class="card-header">
+              <h3>Freelance Writing</h3>
+              <span class="tag instant">Instant</span>
+            </div>
+            <p>Crank out a quick article for a client. Not Pulitzer material, but it pays.</p>
+            <ul class="details">
+              <li>⏳ Time: <strong>2h</strong></li>
+              <li>💵 Payout: <strong>$18</strong></li>
+            </ul>
+            <button class="primary" id="freelance-btn">Write Now</button>
+          </article>
+
+          <article class="card" id="blog-card">
+            <div class="card-header">
+              <h3>Personal Blog</h3>
+              <span class="tag passive">Passive</span>
+            </div>
+            <p>Launch a blog that trickles income while you sip questionable coffee.</p>
+            <ul class="details">
+              <li>⏳ Setup Time: <strong>3h</strong></li>
+              <li>💵 Setup Cost: <strong>$25</strong></li>
+              <li>💸 Income: <strong id="blog-income-rate">$3 / 10s</strong></li>
+            </ul>
+            <button class="primary" id="blog-btn">Launch Blog</button>
+          </article>
+
+          <article class="card" id="flip-card">
+            <div class="card-header">
+              <h3>eBay Flips</h3>
+              <span class="tag delayed">Delayed</span>
+            </div>
+            <p>Hunt for deals, flip them online. Profit arrives fashionably late.</p>
+            <ul class="details">
+              <li>⏳ Time: <strong>4h</strong></li>
+              <li>💵 Cost: <strong>$20</strong></li>
+              <li>💰 Payout: <strong>$48 after 30s</strong></li>
+            </ul>
+            <button class="primary" id="flip-btn">Start Flip</button>
+            <div class="pending" id="flip-status">No flips in progress.</div>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel upgrades">
+        <div class="panel-header">
+          <h2>Upgrades & Boosts</h2>
+          <p>Invest in yourself to push the grind further.</p>
+        </div>
+        <div class="card-grid">
+          <article class="card" id="assistant-card">
+            <div class="card-header">
+              <h3>Hire Virtual Assistant</h3>
+              <span class="tag unlock">Unlock</span>
+            </div>
+            <p>Add <strong>+2h</strong> to your daily grind. They handle the boring stuff.</p>
+            <ul class="details">
+              <li>💵 Cost: <strong>$180</strong></li>
+            </ul>
+            <button class="secondary" id="assistant-btn">Hire Assistant</button>
+          </article>
+
+          <article class="card" id="coffee-card">
+            <div class="card-header">
+              <h3>Turbo Coffee</h3>
+              <span class="tag boost">Boost</span>
+            </div>
+            <p>Instantly gain <strong>+1h</strong> of focus for today. Side effects include jittery success.</p>
+            <ul class="details">
+              <li>💵 Cost: <strong>$40</strong></li>
+            </ul>
+            <button class="secondary" id="coffee-btn">Brew Boost</button>
+          </article>
+
+          <article class="card locked" id="course-card">
+            <div class="card-header">
+              <h3>Automation Course</h3>
+              <span class="tag unlock">Unlock</span>
+            </div>
+            <p>Unlocks smarter blogging tools, boosting passive income by <strong>+50%</strong>.</p>
+            <ul class="details">
+              <li>💵 Cost: <strong>$260</strong></li>
+              <li>Requires active blog</li>
+            </ul>
+            <button class="secondary" id="course-btn">Study Up</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel log">
+        <div class="panel-header">
+          <h2>Event Log</h2>
+          <p id="log-tip">Welcome! Start hustling to fill your feed.</p>
+        </div>
+        <div id="log-feed" class="log-feed"></div>
+      </section>
+    </main>
+  </div>
+
+  <template id="log-template">
+    <div class="log-entry">
+      <span class="timestamp"></span>
+      <p class="message"></p>
+    </div>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
