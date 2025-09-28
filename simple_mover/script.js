@@ -30,6 +30,10 @@ function randInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
 function createWalls() {
   const innerSpan = canvas.width - WALL_MARGIN * 2 - WALL_THICKNESS * 2;
   const horizontalWidth = Math.round(innerSpan * 0.72);
@@ -118,6 +122,10 @@ function rectIntersect(a, b) {
     a.y < b.y + b.height &&
     a.y + a.height > b.y
   );
+}
+
+function collidesWithWalls(rect) {
+  return state.walls.some((wall) => rectIntersect(rect, wall));
 }
 
 function updatePlayer(delta) {
@@ -278,27 +286,38 @@ function loop(now) {
 
 function resetPlayerPosition() {
   const p = state.player;
-  p.x = canvas.width / 2 - p.size / 2;
+  const centerX = canvas.width / 2 - p.size / 2;
+  const topLimit = WALL_MARGIN + WALL_THICKNESS + 16;
+  const bottomLimit = canvas.height - WALL_MARGIN - WALL_THICKNESS - p.size - 16;
+  const preferredY = clamp(canvas.height / 2 - p.size / 2, topLimit, bottomLimit);
 
-  const upperSafeY = WALL_MARGIN + WALL_THICKNESS + 24;
-  const blockingWalls = state.walls.filter(
-    (wall) =>
-      wall.height === WALL_THICKNESS &&
-      wall.y > WALL_MARGIN &&
-      wall.y < canvas.height / 2
-  );
+  const step = 4;
+  const span = Math.max(0, bottomLimit - topLimit);
+  const maxIterations = Math.floor(span / step) + 1;
+  const offsets = [0];
 
-  let lowerSafeY = canvas.height / 2 - p.size - 24;
-
-  if (blockingWalls.length > 0) {
-    const minBlocking = Math.min(
-      ...blockingWalls.map((wall) => wall.y - p.size - 24)
-    );
-    lowerSafeY = Math.min(lowerSafeY, minBlocking);
+  for (let i = 1; i <= maxIterations; i += 1) {
+    offsets.push(i * step, -i * step);
   }
 
-  const preferredY = canvas.height / 2 - p.size / 2;
-  p.y = Math.max(upperSafeY, Math.min(lowerSafeY, preferredY));
+  for (const offset of offsets) {
+    const candidateY = clamp(preferredY + offset, topLimit, bottomLimit);
+    const candidateRect = {
+      x: centerX,
+      y: candidateY,
+      width: p.size,
+      height: p.size,
+    };
+
+    if (!collidesWithWalls(candidateRect)) {
+      p.x = centerX;
+      p.y = candidateY;
+      return;
+    }
+  }
+
+  p.x = centerX;
+  p.y = topLimit;
 }
 
 function resetGame(message = "Collect the stars!") {
