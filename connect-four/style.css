@@ -29,10 +29,12 @@ body {
   display: flex;
   gap: clamp(1.5rem, 3vw, 2.5rem);
   align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .arcade-game__frame {
-  flex: 1 1 0;
+  flex: 1 1 min(100%, 780px);
   max-width: 780px;
   width: 100%;
   margin: 0 auto;
@@ -187,14 +189,14 @@ body {
   height: var(--cell-size);
   border-radius: 50%;
   top: calc(var(--gap) * 0.2);
-  left: calc(var(--gap) * 0.8);
+  left: 0;
   background: radial-gradient(circle at 30% 25%, rgba(255, 198, 205, 0.85), rgba(255, 79, 96, 0.65));
   box-shadow: inset 0 6px 12px rgba(255, 255, 255, 0.45), inset 0 -10px 18px rgba(0, 0, 0, 0.4);
   opacity: 0;
   transform: translate3d(0, -110%, 0);
   transition: opacity 150ms ease, transform 150ms ease;
   pointer-events: none;
-  z-index: 2;
+  z-index: 4;
 }
 
 .preview-disc.visible {
@@ -204,6 +206,48 @@ body {
 
 .preview-disc.ai-turn {
   background: radial-gradient(circle at 30% 25%, rgba(255, 247, 193, 0.85), rgba(255, 212, 59, 0.7));
+}
+
+.column-target {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  border: none;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  z-index: 3;
+  touch-action: manipulation;
+}
+
+.column-target::after {
+  content: '';
+  position: absolute;
+  inset: calc(var(--gap) * 0.15);
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(72, 248, 255, 0.18), rgba(103, 72, 255, 0.24));
+  opacity: 0;
+  transition: opacity 140ms ease;
+}
+
+.column-target.is-active::after {
+  opacity: 0.45;
+}
+
+.column-target.is-disabled::after {
+  opacity: 0;
+}
+
+.column-target:disabled {
+  cursor: not-allowed;
+}
+
+.column-target:focus-visible {
+  outline: 3px solid rgba(96, 240, 255, 0.85);
+  outline-offset: -4px;
 }
 
 .board.disabled {
@@ -247,19 +291,42 @@ body {
   }
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1024px) {
   .arcade-game__layout {
     flex-direction: column;
+    align-items: center;
+  }
+
+  .arcade-game__frame {
+    max-width: 100%;
   }
 
   .arcade-game__sidebar {
-    width: 100%;
+    width: min(100%, 640px);
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(1rem, 3vw, 1.5rem);
+  }
+
+  .arcade-panel {
+    flex: 1 1 240px;
+    max-width: 320px;
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 680px) {
   body {
     padding: 1.25rem;
+  }
+
+  .arcade-game__sidebar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .arcade-panel {
+    max-width: 100%;
   }
 
   .status-text {

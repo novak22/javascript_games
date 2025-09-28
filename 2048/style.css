@@ -15,8 +15,8 @@
 }
 
 .arcade-game {
-  --arcade-stage-width: min(90vw, 640px);
-  --board-padding: clamp(1.25rem, 3vw, 2rem);
+  --arcade-stage-width: min(92vw, 520px);
+  --board-padding: clamp(1rem, 3vw, 1.75rem);
   --tile-gap: clamp(0.5rem, 1.5vw, 1rem);
   --tile-size: calc(
     (var(--arcade-stage-width) - 2 * var(--board-padding) - 3 * var(--tile-gap)) / 4
@@ -70,6 +70,7 @@
   background: var(--panel);
   border: 1px solid var(--panel-border);
   box-shadow: 0 2.5rem 4.5rem rgba(78, 61, 158, 0.18);
+  overflow: hidden;
 }
 
 .grid {
@@ -99,10 +100,9 @@
 .tile-container {
   position: absolute;
   top: var(--board-padding);
-  left: 50%;
+  left: var(--board-padding);
   width: calc(var(--tile-size) * 4 + var(--tile-gap) * 3);
   height: calc(var(--tile-size) * 4 + var(--tile-gap) * 3);
-  transform: translateX(-50%);
   pointer-events: none;
   overflow: visible;
 }
