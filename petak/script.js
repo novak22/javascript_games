@@ -6,14 +6,7 @@ const languages = {
       ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
       ["č", "ć", "š", "đ", "ž", "y", "x", "c", "v", "b", "n", "m"],
     ],
-    words: [
-      "petak", "slovo", "sunce", "mesto", "trava", "bravo", "staza", "krila",
-      "plavo", "duvan", "kruna", "jedan", "pesma", "broje", "uspeh", "uzrok",
-      "ogrev", "vreme", "svila", "olovo", "izvor", "putem", "igrač", "pruga",
-      "tabla", "korak", "oblak", "smeće", "vrata", "stena", "istok", "pismo",
-      "lekar", "torba", "ustav", "talas", "snaga", "sirup", "mladi", "nacin",
-      "kamen", "slast", "cesta", "dunav", "zubat", "miris", "zraka", "slana",
-    ].map((word) => word.normalize("NFC")),
+    words: [],
   },
   en: {
     name: "English (demo)",
@@ -50,6 +43,21 @@ let targetWord = "";
 let guesses = [];
 let currentGuess = "";
 let isGameOver = false;
+
+async function loadSerbianWords() {
+  if (languages.sr.words.length > 0) return;
+  try {
+    const response = await fetch("data/serbian_nouns_5.json");
+    if (!response.ok) {
+      throw new Error(`Greška pri učitavanju reči: ${response.status}`);
+    }
+    const words = await response.json();
+    languages.sr.words = words.map((word) => word.normalize("NFC"));
+  } catch (error) {
+    console.error("Failed to load Serbian nouns", error);
+    throw error;
+  }
+}
 
 function pickRandomWord(words) {
   return words[Math.floor(Math.random() * words.length)].toLowerCase();
@@ -293,8 +301,19 @@ function populateLanguageSelect() {
   });
 }
 
-populateLanguageSelect();
-startGame(currentLanguageKey);
+async function initializeGame() {
+  try {
+    await loadSerbianWords();
+  } catch (error) {
+    showMessage("Nije moguće učitati listu reči. Osvežite stranicu ili pokušajte kasnije.");
+    return;
+  }
+
+  populateLanguageSelect();
+  startGame(currentLanguageKey);
+}
+
+initializeGame();
 
 window.addEventListener("keydown", handlePhysicalKeyboard);
 
