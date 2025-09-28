@@ -6,14 +6,7 @@ const languages = {
       ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
       ["č", "ć", "š", "đ", "ž", "y", "x", "c", "v", "b", "n", "m"],
     ],
-    words: [
-      "petak", "slovo", "sunce", "mesto", "trava", "bravo", "staza", "krila",
-      "plavo", "duvan", "kruna", "jedan", "pesma", "broje", "uspeh", "uzrok",
-      "ogrev", "vreme", "svila", "olovo", "izvor", "putem", "igrač", "pruga",
-      "tabla", "korak", "oblak", "smeće", "vrata", "stena", "istok", "pismo",
-      "lekar", "torba", "ustav", "talas", "snaga", "sirup", "mladi", "nacin",
-      "kamen", "slast", "cesta", "dunav", "zubat", "miris", "zraka", "slana",
-    ].map((word) => word.normalize("NFC")),
+    wordsFile: "words-sr.txt",
   },
   en: {
     name: "English (demo)",
@@ -50,6 +43,9 @@ let targetWord = "";
 let guesses = [];
 let currentGuess = "";
 let isGameOver = false;
+
+const wordListCache = {};
+let startGameRequestId = 0;
 
 function pickRandomWord(words) {
   return words[Math.floor(Math.random() * words.length)].toLowerCase();
@@ -95,6 +91,58 @@ function createKey(value, label = value, extraClass = "") {
   button.textContent = label;
   button.addEventListener("click", () => handleKey(value));
   return button;
+}
+
+async function loadWords(languageKey) {
+  const language = languages[languageKey];
+
+  if (!language) {
+    throw new Error("Nepoznat jezik.");
+  }
+
+  if (wordListCache[languageKey]) {
+    language.words = wordListCache[languageKey];
+    return language.words;
+  }
+
+  if (Array.isArray(language.words)) {
+    const normalized = language.words
+      .map((word) => word.normalize("NFC").toLowerCase())
+      .filter((word) => word.length === WORD_LENGTH);
+    wordListCache[languageKey] = normalized;
+    language.words = normalized;
+    return normalized;
+  }
+
+  if (language.wordsFile) {
+    const response = await fetch(language.wordsFile, { cache: "no-cache" });
+    if (!response.ok) {
+      throw new Error(`Ne mogu da učitam reči za jezik "${language.name}".`);
+    }
+
+    const text = await response.text();
+    const words = text
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .filter(Boolean)
+      .map((word) => word.normalize("NFC").toLowerCase())
+      .filter((word) => word.length === WORD_LENGTH);
+
+    const uniqueWords = [];
+    const seen = new Set();
+    words.forEach((word) => {
+      if (!seen.has(word)) {
+        seen.add(word);
+        uniqueWords.push(word);
+      }
+    });
+
+    wordListCache[languageKey] = uniqueWords;
+    language.words = uniqueWords;
+    return uniqueWords;
+  }
+
+  throw new Error(`Lista reči za jezik "${language.name}" nije definisana.`);
 }
 
 function updateBoard() {
@@ -265,18 +313,34 @@ function handlePhysicalKeyboard(event) {
   }
 }
 
-function startGame(languageKey) {
-  currentLanguageKey = languageKey;
-  const { words, rows } = languages[languageKey];
-  targetWord = pickRandomWord(words);
-  guesses = [];
-  currentGuess = "";
-  isGameOver = false;
+async function startGame(languageKey) {
+  const language = languages[languageKey];
+  if (!language) {
+    showMessage("Nepoznat jezik.");
+    return;
+  }
 
-  createBoard();
-  createKeyboard(rows);
-  updateBoard();
-  updateKeyboard();
+  try {
+    const requestId = ++startGameRequestId;
+    const words = await loadWords(languageKey);
+    if (requestId !== startGameRequestId) {
+      return;
+    }
+    currentLanguageKey = languageKey;
+    targetWord = pickRandomWord(words);
+    guesses = [];
+    currentGuess = "";
+    isGameOver = false;
+
+    createBoard();
+    createKeyboard(language.rows);
+    updateBoard();
+    updateKeyboard();
+  } catch (error) {
+    console.error(error);
+    showMessage(error.message || "Došlo je do greške pri učitavanju reči.");
+    throw error;
+  }
 }
 
 function populateLanguageSelect() {
@@ -289,12 +353,16 @@ function populateLanguageSelect() {
 
   languageSelect.value = currentLanguageKey;
   languageSelect.addEventListener("change", (event) => {
-    startGame(event.target.value);
+    startGame(event.target.value).catch(() => {
+      // Greška je već prikazana korisniku.
+    });
   });
 }
 
 populateLanguageSelect();
-startGame(currentLanguageKey);
+startGame(currentLanguageKey).catch(() => {
+  // Greška je već prikazana korisniku.
+});
 
 window.addEventListener("keydown", handlePhysicalKeyboard);
 
