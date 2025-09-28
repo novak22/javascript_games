@@ -1,0 +1,40 @@
+<svg width="160" height="120" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ce-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071326" />
+      <stop offset="1" stop-color="#1a1140" />
+    </linearGradient>
+    <linearGradient id="ce-ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7be0ff" />
+      <stop offset="1" stop-color="#7b5bff" />
+    </linearGradient>
+    <radialGradient id="ce-core" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.95" />
+      <stop offset="1" stop-color="#7b5bff" stop-opacity="0.1" />
+    </radialGradient>
+  </defs>
+  <rect width="160" height="120" rx="24" fill="url(#ce-bg)" />
+  <rect x="10" y="10" width="140" height="100" rx="22" fill="rgba(12, 18, 40, 0.9)" stroke="rgba(123, 209, 255, 0.22)" stroke-width="1.4" />
+  <g opacity="0.18" stroke="rgba(123, 209, 255, 0.35)" stroke-width="1">
+    <path d="M30 36h100" />
+    <path d="M30 60h100" />
+    <path d="M30 84h100" />
+    <path d="M58 24v72" />
+    <path d="M102 24v72" />
+  </g>
+  <g opacity="0.35">
+    <circle cx="80" cy="60" r="44" fill="none" stroke="url(#ce-ring)" stroke-width="4" stroke-dasharray="6 12" />
+    <circle cx="80" cy="60" r="28" fill="none" stroke="rgba(123, 209, 255, 0.45)" stroke-width="3" stroke-dasharray="4 8" />
+  </g>
+  <g>
+    <circle cx="80" cy="60" r="14" fill="url(#ce-core)" stroke="rgba(255, 255, 255, 0.6)" stroke-width="2" />
+    <circle cx="44" cy="48" r="8" fill="rgba(123, 209, 255, 0.18)" stroke="rgba(123, 209, 255, 0.7)" stroke-width="2" />
+    <circle cx="120" cy="48" r="8" fill="rgba(255, 154, 213, 0.18)" stroke="rgba(255, 154, 213, 0.7)" stroke-width="2" />
+    <circle cx="64" cy="88" r="6" fill="rgba(159, 255, 109, 0.18)" stroke="rgba(159, 255, 109, 0.7)" stroke-width="2" />
+    <circle cx="104" cy="88" r="6" fill="rgba(255, 210, 115, 0.18)" stroke="rgba(255, 210, 115, 0.7)" stroke-width="2" />
+  </g>
+  <path d="M44 48c14 4 22 12 28 20" fill="none" stroke="rgba(123, 209, 255, 0.55)" stroke-width="2.5" stroke-linecap="round" />
+  <path d="M120 48c-14 4-22 12-28 20" fill="none" stroke="rgba(255, 154, 213, 0.55)" stroke-width="2.5" stroke-linecap="round" />
+  <path d="M64 88c6-6 10-14 16-20" fill="none" stroke="rgba(159, 255, 109, 0.5)" stroke-width="2" stroke-linecap="round" />
+  <path d="M104 88c-6-6-10-14-16-20" fill="none" stroke="rgba(255, 210, 115, 0.5)" stroke-width="2" stroke-linecap="round" />
+</svg>

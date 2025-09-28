@@ -1,0 +1,232 @@
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 14% 16%, rgba(123, 209, 255, 0.18), transparent 58%),
+    radial-gradient(circle at 82% 8%, rgba(255, 142, 214, 0.22), transparent 60%),
+    radial-gradient(circle at 50% 88%, rgba(124, 99, 255, 0.18), transparent 62%),
+    #050814;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chrono {
+  --arcade-stage-width: clamp(320px, 58vw, 680px);
+  --arcade-stage-ratio: 1;
+}
+
+.chrono .arcade-header {
+  align-items: stretch;
+  gap: clamp(1.25rem, 3vw, 2.75rem);
+}
+
+.chrono__readout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.85rem;
+  margin: 0;
+}
+
+.chrono__readout div {
+  padding: 1rem 1.1rem;
+  border-radius: 16px;
+  background: rgba(12, 18, 42, 0.85);
+  border: 1px solid rgba(123, 209, 255, 0.2);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  display: grid;
+  gap: 0.35rem;
+}
+
+.chrono__readout dt {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(199, 215, 255, 0.75);
+}
+
+.chrono__readout dd {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.chrono__frame {
+  position: relative;
+  overflow: hidden;
+}
+
+#stage {
+  width: min(100%, 640px);
+  height: auto;
+  border-radius: 26px;
+  border: 1px solid rgba(123, 209, 255, 0.28);
+  background: radial-gradient(circle at top, rgba(125, 209, 255, 0.12), rgba(8, 13, 34, 0.92));
+  box-shadow:
+    inset 0 0 40px rgba(6, 10, 32, 0.8),
+    0 28px 60px rgba(5, 7, 24, 0.55);
+}
+
+.chrono__overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  background: rgba(4, 7, 22, 0.86);
+  backdrop-filter: blur(18px);
+  border-radius: 26px;
+  border: 1px solid rgba(123, 209, 255, 0.35);
+  transition: opacity 200ms ease, visibility 200ms ease;
+  text-align: center;
+}
+
+.chrono__overlay[hidden] {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.chrono__overlay-inner {
+  display: grid;
+  gap: 1rem;
+}
+
+.chrono__overlay h2 {
+  margin: 0;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+}
+
+.chrono__overlay-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.chrono__overlay button {
+  background: linear-gradient(135deg, #7be0ff, #7b5bff);
+  border: none;
+  color: #040a1a;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.85rem 1.8rem;
+  border-radius: 999px;
+  box-shadow: 0 20px 40px rgba(5, 8, 22, 0.55);
+  cursor: pointer;
+  transition: transform 140ms ease;
+}
+
+.chrono__overlay button:active {
+  transform: scale(0.97);
+}
+
+.chrono__touch {
+  position: absolute;
+  inset: auto 1.5rem 1.5rem auto;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  gap: 0.5rem;
+  align-items: center;
+  justify-items: center;
+  pointer-events: none;
+}
+
+.chrono__touch button {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 999px;
+  border: 1px solid rgba(123, 209, 255, 0.4);
+  background: rgba(10, 16, 34, 0.8);
+  color: rgba(226, 238, 255, 0.9);
+  font-size: 1.1rem;
+  display: grid;
+  place-items: center;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.chrono__touch button:active {
+  transform: translateY(1px);
+}
+
+.chrono__touch-middle {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 0.5rem;
+}
+
+.chrono__log {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.chrono__log p {
+  margin: 0;
+  color: rgba(209, 220, 255, 0.82);
+  line-height: 1.6;
+}
+
+.chrono__next {
+  justify-self: flex-start;
+  padding-inline: 1.5rem;
+}
+
+.chrono__intel ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.65rem;
+  color: rgba(199, 212, 255, 0.75);
+}
+
+.chrono__intel li {
+  line-height: 1.5;
+}
+
+.glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25em;
+  height: 1.25em;
+  border-radius: 0.35em;
+  background: rgba(123, 209, 255, 0.18);
+  border: 1px solid rgba(123, 209, 255, 0.35);
+  font-size: 0.85em;
+}
+
+@media (max-width: 1024px) {
+  .arcade-game {
+    grid-template-columns: 1fr;
+  }
+
+  .chrono__touch {
+    position: static;
+    margin-top: 1rem;
+    grid-template-columns: 1fr;
+  }
+
+  .chrono__touch-middle {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .chrono__touch button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 720px) {
+  .arcade-page {
+    padding: clamp(1.25rem, 4vw, 2rem);
+  }
+
+  .chrono__readout {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
