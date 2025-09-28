@@ -4,7 +4,8 @@
     el.textContent = year;
   });
 
-  const cards = Array.from(document.querySelectorAll('.game-grid .game-card'));
+  const allCards = Array.from(document.querySelectorAll('.game-grid .game-card'));
+  const playableCards = allCards.filter((card) => card.getAttribute('aria-disabled') !== 'true');
   const totalGamesEl = document.querySelector('[data-total-games]');
   const newGamesEl = document.querySelector('[data-new-games]');
   const statusEl = document.querySelector('[data-status-rotator]');
@@ -12,11 +13,11 @@
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (totalGamesEl) {
-    totalGamesEl.textContent = cards.length.toString();
+    totalGamesEl.textContent = playableCards.length.toString();
   }
 
   if (newGamesEl) {
-    const newGames = cards.filter((card) => card.dataset.status === 'new').length;
+    const newGames = playableCards.filter((card) => card.dataset.status === 'new').length;
     newGamesEl.textContent = newGames.toString();
   }
 
@@ -24,6 +25,7 @@
     'Queueing power-ups... almost there!',
     'Cycling neon lights for optimal vibes.',
     'Listening for high-score whispers in the cabinet.',
+    'Syncing the uniform cabinet shell for your run.',
     'Spinning the arcade wheel for your next run.',
   ];
 
@@ -35,13 +37,13 @@
     }, 7000);
   }
 
-  if (shuffleButton && cards.length) {
+  if (shuffleButton && playableCards.length) {
     let highlightTimeout;
 
     shuffleButton.addEventListener('click', () => {
-      const choice = cards[Math.floor(Math.random() * cards.length)];
+      const choice = playableCards[Math.floor(Math.random() * playableCards.length)];
 
-      cards.forEach((card) => card.classList.remove('is-highlighted'));
+      allCards.forEach((card) => card.classList.remove('is-highlighted'));
       choice.classList.add('is-highlighted');
 
       const gameName = choice.querySelector('h2')?.textContent?.trim() ?? 'your next game';
