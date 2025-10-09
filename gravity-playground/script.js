@@ -19,7 +19,7 @@ const outputs = {
   gravity: document.getElementById('gravityValue'),
   elasticity: document.getElementById('elasticityValue'),
   drag: document.getElementById('dragValue'),
-  energy: document.getElementById('energyValue'),
+  spawnEnergy: document.getElementById('energyValue'),
   orbCount: document.getElementById('orbCount'),
   energyReadout: document.getElementById('energyReadout'),
 };
@@ -28,14 +28,14 @@ const sliders = {
   gravity: document.getElementById('gravity'),
   elasticity: document.getElementById('elasticity'),
   drag: document.getElementById('drag'),
-  energy: document.getElementById('energy'),
+  spawnEnergy: document.getElementById('energy'),
 };
 
 const formatters = {
   gravity: (v) => `${Math.round(v)} px/s²`,
   elasticity: (v) => v.toFixed(2),
   drag: (v) => v.toFixed(2),
-  energy: (v) => `${Math.round(v)} px/s`,
+  spawnEnergy: (v) => `${Math.round(v)} px/s`,
 };
 
 function resizeCanvas() {
