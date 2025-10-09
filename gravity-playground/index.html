@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gravity Playground · Pixel Playground</title>
+    <link rel="stylesheet" href="../arcade.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="arcade-page">
+      <header class="arcade-header card-surface">
+        <div class="arcade-header__meta">
+          <span class="brand-title">Pixel Playground</span>
+          <h1>Gravity Playground</h1>
+          <p>
+            Drop shimmering particles into a reactive physics sandbox. Adjust gravity, elasticity,
+            and drag to sculpt the motion, then tap anywhere to spawn another ball.
+          </p>
+        </div>
+        <a class="arcade-back" href="../index.html">
+          <span aria-hidden="true">⟵</span>
+          Back to Arcade
+        </a>
+      </header>
+
+      <main class="arcade-main">
+        <div class="arcade-game">
+          <section class="arcade-game__frame">
+            <canvas
+              id="sandbox"
+              width="1280"
+              height="720"
+              aria-label="Gravity playground physics sandbox"
+              role="img"
+            ></canvas>
+            <div class="sandbox-hint card-surface" aria-hidden="true">
+              <span>Click or tap anywhere inside the field to spawn a new orb.</span>
+            </div>
+          </section>
+          <aside class="arcade-game__sidebar">
+            <article class="arcade-panel card-surface">
+              <h2>Simulation controls</h2>
+              <p>
+                The physics simulation runs in real time with a semi-implicit Euler integrator and
+                circle collision resolution. Use the sliders below to tune how the sandbox feels:
+              </p>
+              <form class="control-grid" aria-label="Simulation settings">
+                <label class="control">
+                  <span class="control__label">
+                    Gravity
+                    <output id="gravityValue" for="gravity">600</output>
+                  </span>
+                  <input type="range" id="gravity" min="0" max="1400" value="600" step="20" />
+                </label>
+                <label class="control">
+                  <span class="control__label">
+                    Elasticity
+                    <output id="elasticityValue" for="elasticity">0.80</output>
+                  </span>
+                  <input type="range" id="elasticity" min="0.1" max="1" value="0.8" step="0.01" />
+                </label>
+                <label class="control">
+                  <span class="control__label">
+                    Air Drag
+                    <output id="dragValue" for="drag">0.08</output>
+                  </span>
+                  <input type="range" id="drag" min="0" max="0.25" value="0.08" step="0.01" />
+                </label>
+                <label class="control">
+                  <span class="control__label">
+                    Spawn Energy
+                    <output id="energyValue" for="energy">280</output>
+                  </span>
+                  <input type="range" id="energy" min="0" max="600" value="280" step="10" />
+                </label>
+              </form>
+              <div class="control-buttons">
+                <button type="button" id="addBurst">Spawn burst</button>
+                <button type="button" id="clearAll" class="secondary">Clear all</button>
+              </div>
+              <p class="control-note">
+                Collision impulses respect the selected elasticity and conserve momentum between
+                balls. Drag gradually dampens their velocity. Use "Spawn burst" to add a cluster of
+                orbs with randomized sizes and velocities.
+              </p>
+            </article>
+            <article class="arcade-panel card-surface status-panel">
+              <h2>World status</h2>
+              <dl>
+                <div>
+                  <dt>Active orbs</dt>
+                  <dd id="orbCount">0</dd>
+                </div>
+                <div>
+                  <dt>Average energy</dt>
+                  <dd id="energyReadout">0</dd>
+                </div>
+                <div>
+                  <dt>Time scale</dt>
+                  <dd>1× real time</dd>
+                </div>
+              </dl>
+            </article>
+          </aside>
+        </div>
+      </main>
+
+      <footer class="arcade-footer">
+        © <span class="js-year"></span> Pixel Playground · Build mesmerizing motion sculptures.
+      </footer>
+    </div>
+    <script src="script.js" type="module"></script>
+    <script src="../assets/js/arcade.js" defer></script>
+  </body>
+</html>
