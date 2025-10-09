@@ -159,7 +159,10 @@ function handleCollisions() {
         return;
       }
     } else if (entity.type === 'gate') {
-      if (!entity.hit && entity.x < PLAYER_X + PLAYER_RADIUS && entity.x + entity.width > PLAYER_X - PLAYER_RADIUS) {
+      const halfWidth = entity.width / 2;
+      const gateLeft = entity.x - halfWidth;
+      const gateRight = entity.x + halfWidth;
+      if (!entity.hit && gateLeft < PLAYER_X + PLAYER_RADIUS && gateRight > PLAYER_X - PLAYER_RADIUS) {
         if (player.targetLane !== entity.openLane) {
           crash();
           return;
