@@ -14,13 +14,17 @@ const OBSTACLE_SHAPES = [
   createCornerArches,
 ];
 
+const MIN_SPEED = 0;
+const MAX_SPEED = 400;
+const SPEED_ADJUST_RATE = 320;
+
 const state = {
   player: {
     x: 0,
     y: 0,
     size: 44,
     color: "#4db5ff",
-    speed: 220,
+    speed: MIN_SPEED,
     dashSpeed: 400,
     dashCooldown: 0,
     angle: -Math.PI / 2,
@@ -369,6 +373,15 @@ function updatePlayer(delta) {
 
   p.turnInput = turnInput;
 
+  const accelerating = state.keys.has("ArrowUp") || state.keys.has("w");
+  const decelerating = state.keys.has("ArrowDown") || state.keys.has("s");
+
+  if (accelerating && !decelerating) {
+    p.speed = clamp(p.speed + SPEED_ADJUST_RATE * delta, MIN_SPEED, MAX_SPEED);
+  } else if (decelerating && !accelerating) {
+    p.speed = clamp(p.speed - SPEED_ADJUST_RATE * delta, MIN_SPEED, MAX_SPEED);
+  }
+
   const isDashing = state.keys.has(" ") && state.player.dashCooldown <= 0;
   const speed = isDashing ? p.dashSpeed : p.speed;
 
@@ -615,6 +628,7 @@ function resetPlayerPosition() {
 function resetGame(message = "Collect the stars!") {
   state.score = 0;
   state.player.dashCooldown = 0;
+  state.player.speed = MIN_SPEED;
   const spawnRect = getSpawnRect();
   state.player.x = spawnRect.x;
   state.player.y = spawnRect.y;
