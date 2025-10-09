@@ -23,6 +23,9 @@ const state = {
     speed: 220,
     dashSpeed: 400,
     dashCooldown: 0,
+    angle: -Math.PI / 2,
+    turnSpeed: Math.PI * 1.8,
+    turnInput: 0,
   },
   keys: new Set(),
   star: null,
@@ -49,6 +52,11 @@ function randInt(min, max) {
 
 function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
+}
+
+function normalizeAngle(angle) {
+  const fullTurn = Math.PI * 2;
+  return ((angle % fullTurn) + fullTurn) % fullTurn;
 }
 
 function getArenaBounds() {
@@ -345,31 +353,28 @@ function getSpawnRect() {
 }
 
 function updatePlayer(delta) {
+  const p = state.player;
   if (!state.playing) {
+    p.turnInput = 0;
     return;
   }
 
-  const p = state.player;
-  let dx = 0;
-  let dy = 0;
+  const turningLeft = state.keys.has("ArrowLeft") || state.keys.has("a");
+  const turningRight = state.keys.has("ArrowRight") || state.keys.has("d");
+  const turnInput = (turningRight ? 1 : 0) - (turningLeft ? 1 : 0);
 
-  if (state.keys.has("ArrowLeft") || state.keys.has("a")) dx -= 1;
-  if (state.keys.has("ArrowRight") || state.keys.has("d")) dx += 1;
-  if (state.keys.has("ArrowUp") || state.keys.has("w")) dy -= 1;
-  if (state.keys.has("ArrowDown") || state.keys.has("s")) dy += 1;
-
-  const length = Math.hypot(dx, dy);
-  if (length > 0) {
-    dx /= length;
-    dy /= length;
+  if (turnInput !== 0) {
+    p.angle = normalizeAngle(p.angle + turnInput * p.turnSpeed * delta);
   }
+
+  p.turnInput = turnInput;
 
   const isDashing = state.keys.has(" ") && state.player.dashCooldown <= 0;
   const speed = isDashing ? p.dashSpeed : p.speed;
 
   const distance = speed * delta;
-  const nextX = p.x + dx * distance;
-  const nextY = p.y + dy * distance;
+  const nextX = p.x + Math.cos(p.angle) * distance;
+  const nextY = p.y + Math.sin(p.angle) * distance;
 
   const playerRect = { x: nextX, y: nextY, width: p.size, height: p.size };
 
@@ -385,14 +390,15 @@ function updatePlayer(delta) {
     state.player.dashCooldown = 0.6;
   }
 
-  const starRect = {
-    x: state.star.x,
-    y: state.star.y,
-    width: state.star.size,
-    height: state.star.size,
-  };
-
-  if (rectIntersect(playerRect, starRect)) {
+  if (
+    state.star &&
+    rectIntersect(playerRect, {
+      x: state.star.x,
+      y: state.star.y,
+      width: state.star.size,
+      height: state.star.size,
+    })
+  ) {
     state.score += 1;
     if (state.score % SHAPE_CHANGE_INTERVAL === 0) {
       cycleArena();
@@ -409,13 +415,12 @@ function drawPlayer() {
   const centerY = p.y + half;
   const now = performance.now ? performance.now() : Date.now();
   const pulse = Math.sin(now / 220) * (size * 0.04);
-  const leanRight = state.keys.has("ArrowRight") || state.keys.has("d");
-  const leanLeft = state.keys.has("ArrowLeft") || state.keys.has("a");
-  const tilt = (leanRight ? 1 : 0) - (leanLeft ? 1 : 0);
+  const rotation = p.angle + Math.PI / 2;
+  const tilt = p.turnInput * 0.12;
 
   ctx.save();
   ctx.translate(centerX, centerY);
-  ctx.rotate(tilt * 0.15);
+  ctx.rotate(rotation + tilt);
 
   const glow = ctx.createRadialGradient(0, 0, size * 0.15, 0, 0, size * 0.6 + pulse);
   glow.addColorStop(0, "rgba(77, 181, 255, 0.9)");
@@ -595,12 +600,16 @@ function resetPlayerPosition() {
     if (!collidesWithWalls(candidateRect)) {
       p.x = centerX;
       p.y = candidateY;
+      p.angle = -Math.PI / 2;
+      p.turnInput = 0;
       return;
     }
   }
 
   p.x = centerX;
   p.y = topLimit;
+  p.angle = -Math.PI / 2;
+  p.turnInput = 0;
 }
 
 function resetGame(message = "Collect the stars!") {
@@ -609,6 +618,8 @@ function resetGame(message = "Collect the stars!") {
   const spawnRect = getSpawnRect();
   state.player.x = spawnRect.x;
   state.player.y = spawnRect.y;
+  state.player.angle = -Math.PI / 2;
+  state.player.turnInput = 0;
   buildWalls(0, spawnRect);
   resetPlayerPosition();
   spawnStar();
